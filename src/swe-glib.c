@@ -2,7 +2,7 @@
 #define GETTEXT_PACKAGE "swe-glib"
 #include <glib/gi18n-lib.h>
 
-#include "../../swe/src/swephexp.h"
+#include "../swe/src/swephexp.h"
 #include "swe-glib.h"
 
 gboolean gswe_initialized = FALSE;

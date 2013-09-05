@@ -3,7 +3,7 @@
 #include "gswe-moment.h"
 #include "swe-glib-private.h"
 
-#include "../../swe/src/swephexp.h"
+#include "../swe/src/swephexp.h"
 
 #define SYNODIC 29.53058867
 

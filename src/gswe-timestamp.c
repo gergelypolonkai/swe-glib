@@ -1,7 +1,7 @@
 #include <math.h>
 #include <glib.h>
 
-#include "../../swe/src/swephexp.h"
+#include "../swe/src/swephexp.h"
 #include "swe-glib-private.h"
 #include "gswe-timestamp.h"
 
