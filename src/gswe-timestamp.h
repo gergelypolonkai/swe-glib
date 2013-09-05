@@ -17,6 +17,13 @@ typedef struct _GsweTimestampPrivate GsweTimestampPrivate;
 #define GSWE_TIMESTAMP_ERROR (gswe_timestamp_error_quark())
 GQuark gswe_timestamp_error_quark(void);
 
+/**
+ * GsweTimestampError:
+ * @GSWE_TIMESTAMP_ERROR_INVALID_DATE: the Gregorian date specified in this
+ *                                     #GsweTimestamp is invalid
+ * @GSWE_TIMESTAMP_ERROR_INVALID_TIME: the time specified in this
+ *                                     #GsweTimestamp is invalid
+ */
 typedef enum {
     GSWE_TIMESTAMP_ERROR_INVALID_DATE,
     GSWE_TIMESTAMP_ERROR_INVALID_TIME
@@ -32,11 +39,16 @@ struct _GsweTimestamp {
     GsweTimestampPrivate *priv;
 };
 
+/**
+ * GsweTimestampClass:
+ * @parent_class: the parent class structure (#GObjectClass)
+ */
 struct _GsweTimestampClass {
     /* Parent class */
     GObjectClass parent_class;
 
     /* Class members */
+    /*< private >*/
     void (*changed)(GsweTimestamp *self);
 };
 

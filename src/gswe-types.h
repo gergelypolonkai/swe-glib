@@ -3,6 +3,33 @@
 
 #include <glib.h>
 
+/**
+ * GswePlanet:
+ * @GSWE_PLANET_NONE: no planet
+ * @GSWE_PLANET_SUN: the Sun
+ * @GSWE_PLANET_MOON: the Moon
+ * @GSWE_PLANET_MERCURY: planet Mercury
+ * @GSWE_PLANET_VENUS: planet Venus
+ * @GSWE_PLANET_EARTH: planet Earth
+ * @GSWE_PLANET_MARS: planet Mars
+ * @GSWE_PLANET_JUPITER: planet Jupiter
+ * @GSWE_PLANET_SATURN: planet Saturn
+ * @GSWE_PLANET_URANUS: planet Uranus
+ * @GSWE_PLANET_NEPTUNE: planet Neptune
+ * @GSWE_PLANET_PLUTO: planet Pluto
+ * @GSWE_PLANET_CHIRON: dwarf planet Chiron
+ * @GSWE_PLANET_CERES: dwarf planet Ceres
+ * @GSWE_PLANET_PALLAS: dwarf planet Pallas
+ * @GSWE_PLANET_JUNO: dwarf planet Juno
+ * @GSWE_PLANET_VESTA: dwarf planet Vesta
+ * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
+ * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
+ *                           or Lilith)
+ * @GSWE_PLANET_ASCENDENT: the ascendent
+ * @GSWE_PLANET_MC: midheaven (Medium Coeli)
+ * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
+ *                      primal vertical)
+ */
 typedef enum {
     GSWE_PLANET_NONE,
     GSWE_PLANET_SUN,
@@ -28,6 +55,22 @@ typedef enum {
     GSWE_PLANET_VERTEX
 } GswePlanet;
 
+/**
+ * GsweZodiac:
+ * @GSWE_SIGN_NONE: no sign
+ * @GSWE_SIGN_ARIES: the Aries sign (Ram)
+ * @GSWE_SIGN_TAURUS: the Taurus sign (Bull)
+ * @GSWE_SIGN_GEMINI: the Gemini sign (Twins)
+ * @GSWE_SIGN_CANCER: the Cancer sign (Crab)
+ * @GSWE_SIGN_LEO: the Leo sign (Lion)
+ * @GSWE_SIGN_VIRGO: the Virgo sign (Maid)
+ * @GSWE_SIGN_LIBRA: the Libra sign (Scales)
+ * @GSWE_SIGN_SCORPIO: the Scorpio sign (Scorpion)
+ * @GSWE_SIGN_SAGITTARIUS: the Sagittarius sign (Archer)
+ * @GSWE_SIGN_CAPRICORN: the Capricorn sign (Goat)
+ * @GSWE_SIGN_AQUARIUS: the Aquarius sign (Water Bearer)
+ * @GSWE_SIGN_PISCES: the Pisces sign (Fish)
+ */
 typedef enum {
     GSWE_SIGN_NONE,
     GSWE_SIGN_ARIES,

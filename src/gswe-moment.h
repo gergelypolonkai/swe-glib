@@ -46,6 +46,7 @@ typedef struct _GsweCoordinates {
  * @planet_id: A GswePlanet, the identifier of the planet
  * @planet_info: A GswePlanetInfo structure, holding every information about the planet
  * @position: The longitude position of the planet
+ * @retrograde: TRUE if the planet is in retrograde motion
  * @house: Number of the house in which the planet is in
  * @sign: A GsweSignInfo structure, holding every information about the sign the planet is in
  * @revision: An internal version number of the calculation
@@ -60,17 +61,40 @@ typedef struct {
     guint revision;
 } GswePlanetData;
 
+/**
+ * GsweHouseData:
+ * @house: the number of the house (usually in the range [1;12]. Sometimes may
+ *         be [1;36].
+ * @cusp_position: the position of the house's cusp on the sky
+ * @sign: the #GsweSignInfo structure associated with the sign in which the
+ *        house cusp is in
+ */
 typedef struct {
     guint house;
     gdouble cusp_position;
     GsweSignInfo *sign;
 } GsweHouseData;
 
+/**
+ * GsweMoonPhaseData:
+ * @phase: the current phase of the Moon
+ * @illumination: the portion of the Moon that is currently illuminated
+ */
 typedef struct {
     GsweMoonPhase phase;
     gdouble illumination;
 } GsweMoonPhaseData;
 
+/**
+ * GsweAspectData:
+ * @planet1: the first planet in the aspect
+ * @planet2: the second planet in the aspect
+ * @distance: the distance between the two planets, in degrees
+ * @aspect: the aspect between the two planets
+ * @aspect_info: the #GsweAspectInfo structure associated with the aspect
+ * @difference: the difference in percent between an exact aspect and this
+ *              given aspect
+ */
 typedef struct {
     GswePlanetData *planet1;
     GswePlanetData *planet2;
@@ -80,6 +104,15 @@ typedef struct {
     gdouble difference;
 } GsweAspectData;
 
+/**
+ * GsweMirrorData:
+ * @planet1: the first planet in the mirror
+ * @planet2: the second planet in the mirror
+ * @mirror: the mirror on which this mirrorpoint is
+ * @mirror_info: the #GsweMirrorInfo structure associated with this mirror
+ * @difference: the difference in degrees between an exact mirror and this
+ *              given mirrorpoint
+ */
 typedef struct {
     GswePlanetData *planet1;
     GswePlanetData *planet2;
@@ -98,6 +131,10 @@ struct _GsweMoment {
     GsweMomentPrivate *priv;
 };
 
+/**
+ * GsweMomentClass:
+ * @parent_class: the parent class (#GObjectClass)
+ */
 struct _GsweMomentClass {
     /* Parent class structure */
     GObjectClass parent_class;

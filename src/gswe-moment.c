@@ -344,6 +344,14 @@ gswe_moment_calculate_house_positions(GsweMoment *moment)
     }
 }
 
+/**
+ * gswe_moment_get_house_cusps:
+ * @moment: The GsweMoment object to operate on
+ *
+ * Calculate house cusp positions based on the house system, location and time set in @moment.
+ *
+ * Returns: (element-type GsweHouseData) (transfer none): a GList of #GsweHouseData
+ */
 GList *
 gswe_moment_get_house_cusps(GsweMoment *moment)
 {
@@ -452,6 +460,14 @@ gswe_moment_calculate_all_planets(GsweMoment *moment)
     g_list_foreach(moment->priv->planet_list, calculate_planet, moment);
 }
 
+/**
+ * gswe_moment_get_planets:
+ * @moment: The GsweMoment to operate on
+ *
+ * Get all the planets added to @moment.
+ *
+ * Returns: (element-type GswePlanetData) (transfer none): A #GList of #GswePlanetData.
+ */
 GList *
 gswe_moment_get_planets(GsweMoment *moment)
 {
@@ -700,8 +716,9 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
  * Gets all planetary aspects between the planets added by
  * gswe_moment_add_planet() or gswe_moment_add_all_planets().
  *
- * Returns: a GList of #GsweAspectData. Both the GList and GsweAspectData
- *          objects belong to @moment, and should not be freed or modified.
+ * Returns: (element-type GsweAspectData) (transfer none): a GList of
+ *          #GsweAspectData. Both the GList and GsweAspectData objects belong
+ *          to @moment, and should not be freed or modified.
  */
 GList *
 gswe_moment_get_aspects(GsweMoment *moment)
@@ -719,9 +736,10 @@ gswe_moment_get_aspects(GsweMoment *moment)
  * Get all the aspects between @planet and all the other planets added with
  * gswe_moment_add_planet() or gswe_moment_add_all_planets().
  *
- * Returns: a GList of #GsweAspectData. The GsweAspectData structures belong to
- *          @moment, but the GList should be freed using g_list_free(). If the
- *          planet has no aspects, or the planet has not been added to @moment,
+ * Returns: (element-type GsweAspectData) (transfer container): a #GList of
+ *          #GsweAspectData. The GsweAspectData structures belong to @moment,
+ *          but the GList should be freed using g_list_free(). If the planet
+ *          has no aspects, or the planet has not been added to @moment,
  *          returns NULL.
  */
 GList *
@@ -839,6 +857,15 @@ gswe_moment_calculate_mirrorpoints(GsweMoment *moment)
     moment->priv->mirrorpoint_revision = moment->priv->revision;
 }
 
+/**
+ * gswe_moment_get_all_mirrorpoints:
+ * @moment: The GsweMoment object to operate on.
+ *
+ * Get all found mirrorpoints between planets in @moment.
+ *
+ * Returns: (element-type GsweMirrorData) (transfer none): A #GList of
+ *          #GsweMirrorData.
+ */
 GList *
 gswe_moment_get_all_mirrorpoints(GsweMoment *moment)
 {
@@ -847,6 +874,19 @@ gswe_moment_get_all_mirrorpoints(GsweMoment *moment)
     return moment->priv->mirrorpoint_list;
 }
 
+/**
+ * gswe_moment_get_all_planet_mirrorpoints:
+ * @moment: The GsweMoment object to operate on.
+ * @planet: The planet whose mirrorpoint planets are requested.
+ *
+ * Get all the mirrorpoint planets on all registered mirrors for @planet.
+ *
+ * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
+ *          #GsweMirrorData. The GsweMirrorData structures belong to @moment,
+ *          but the GList should be freed using g_list_free(). If no planet
+ *          has any mirrorpoints, or the planet has not been added to @moment,
+ *          returns NULL.
+ */
 GList *
 gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet)
 {
@@ -866,6 +906,18 @@ gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet)
     return ret;
 }
 
+/**
+ * gswe_moment_get_mirror_mirrorpoints:
+ * @moment: The GsweMoment object to operate on.
+ * @mirror: The mirror on which you want to search for mirrored planets.
+ *
+ * Get all the mirrorpoint planets on the specified mirror @mirror.
+ *
+ * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
+ *          #GsweMirrorData. The GsweMirrorData structures belong to @moment,
+ *          but the GList should be freed using g_list_free(). If there are
+ *          no mirrored planets on the given mirror, returns NULL.
+ */
 GList *
 gswe_moment_get_mirror_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
 {
@@ -885,6 +937,20 @@ gswe_moment_get_mirror_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
     return ret;
 }
 
+/**
+ * gswe_moment_get_mirror_planet_mirrorpoints:
+ * @moment: the GsweMoment object to operate on
+ * @mirror: the mirror on which you want to search for mirrored planets
+ * @planet: the planet whose mirrorpoint planets are requested
+ *
+ * Get the mirrorpoint planets of @planet as seen in @mirror.
+ *
+ * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
+ *          #GsweMirrorData. The GsweMirrorData structires belong to @moment,
+ *          but the GList should be freed using g_list_free(). If the planet
+ *          has no mirrorpoints, or the planet has not been added to @moment,
+ *          returns NULL.
+ */
 GList *
 gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet)
 {
