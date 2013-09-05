@@ -39,5 +39,6 @@ AC_CONFIG_FILES([
     src/Makefile
     po/Makefile.in
     docs/reference/swe-glib/Makefile
+    swe-glib.pc
 ])
 AC_OUTPUT
