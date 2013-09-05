@@ -1,3 +1,5 @@
+m4_define([swe_glib_api_version], [1.0])
+
 AC_INIT([swe-glib], [0.1], [gergely@polonkai.eu])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall foreign])
@@ -7,6 +9,9 @@ AC_ARG_ENABLE(debug, [AC_HELP_STRING([--enable-debug], [compile with debugging s
 if test "x$enable_debug" = "xyes" ; then
     AC_DEFINE([DEBUG], [1], [Define if debugging is enabled])
 fi
+
+AC_SUBST([SWE_GLIB_API_VERSION], [swe_glib_api_version])
+AC_SUBST([SWE_GLIB_API_VERSION_U], [AS_TR_SH([swe_glib_api_version])])
 
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -21,6 +26,7 @@ AM_GNU_GETTEXT_VERSION([0.17])
 LT_INIT
 AC_CHECK_LIB([m], [atan])
 GTK_DOC_CHECK([1.19], [--flavour no-tmpl])
+GOBJECT_INTROSPECTION_CHECK([1.0])
 PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
 PKG_CHECK_MODULES([GLIB], [glib-2.0])

@@ -92,7 +92,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
     g_object_class_install_property(gobject_class, PROP_INSTANT_RECALC, g_param_spec_boolean("instant-recalc", "Instant recalculation", "Instantly recalculate values upon parameter change", FALSE, G_PARAM_READWRITE));
 
     /**
-     * GsweTimestamp:gregorian-valid
+     * GsweTimestamp:gregorian-valid:
      *
      * If TRUE, the Gregorian value stored in the GsweTimestamp object is
      * currently considered as valid, thus, no recalculation is needed.
@@ -158,7 +158,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
     g_object_class_install_property(gobject_class, PROP_GREGORIAN_TIMEZONE_OFFSET, g_param_spec_double("gregorian-timezone-offset", "Gregorian timezone offset", "The offset relative to UTC in the Gregorian calendar", -24.0, 24.0, 0.0, G_PARAM_READWRITE));
 
     /**
-     * GsweTimestamp:julian-day-valid
+     * GsweTimestamp:julian-day-valid:
      *
      * If TRUE, the Julian day value stored in the GsweTimestamp object is
      * currently considered as valid, thus, no recalculation is needed.
