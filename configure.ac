@@ -30,6 +30,9 @@ AC_CONFIG_MACRO_DIR([m4])
 LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.75.la'
 AC_SUBST(LIBSWE_LIBS)
 
+LIBSWE_GLIB_LIBS='$(top_builddir)/src/libswe-glib-0.1.la'
+AC_SUBST(LIBSWE_GLIB_LIBS)
+
 AC_CONFIG_FILES([
     Makefile
     swe/src/Makefile
