@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="astrognome"
+PKG_NAME="swe-glib"
 
 (test -f $srcdir/configure.ac \
   && test -f $srcdir/src/swe-glib.c) || {
