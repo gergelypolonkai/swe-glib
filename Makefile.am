@@ -9,6 +9,12 @@ pkgconfig_DATA = swe-glib.pc $(NULL)
 headerdir = $(includedir)/swe-glib
 header_DATA = src/swe-glib.h $(NULL)
 
+intltool_extra = intltool-extract.in intltool-merge.in intltool-update.in
+
+EXTRA_DIST = $(intltool_extra) $(header_DATA) autogen.sh
+
+DISTCLEANFILES = intltool-extract intltool-merge intltool-update
+
 MAINTAINERCLEANFILES = ChangeLog
 
 distclean-local:
