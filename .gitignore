@@ -8,10 +8,22 @@
 *.lo
 *.la
 /tags
+/*.orig
+/*.rej
+/*.tab.c
+/.dirstamp
 
 # Files created by the build tools
 Makefile
 Makefile.in
+/GPATH
+/GRTAGS
+/GSYMS
+/GTAGS
+/ID
+/TAGS
+/_libs
+/config.cache
 /config.h
 /config.h.in
 /aclocal.m4
@@ -24,13 +36,17 @@ Makefile.in
 /config.guess
 /config.log
 /config.rpath
+/config.lt
 /config.status
 /config.sub
+/config.status.lineno
 /configure
 /depcomp
 /install-sh
+/configure.lineno
 /libtool
 /compile
+/so_locations
 
 # Translation related files
 /ABOUT-NLS
@@ -39,6 +55,7 @@ Makefile.in
 /po/Makefile.in.in
 /po/stamp-it
 /po/*.gmo
+/po/*.mo
 /po/*.pot
 /po/Rules-quot
 /po/boldquot.sed
@@ -47,11 +64,19 @@ Makefile.in
 /po/insert-header.sin
 /po/quot.sed
 /po/remove-potcdate.sin
+/po/.intltool-merge-cache
+/intltool-extract
+/intltool-extract.in
+/intltool-merge
+/intltool-merge.in
+/intltool-update
+/intltool-update.in
 
 # SWE-GLib related files
 src/enumtypes.c
 src/enumtypes.h
 src/gswetest
+/swe-glib.pc
 
 # Documentation related files
 /docs/reference/*/*.args
