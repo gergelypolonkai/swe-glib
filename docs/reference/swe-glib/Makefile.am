@@ -12,7 +12,7 @@ AUTOMAKE_OPTIONS = 1.6
 DOC_MODULE=swe-glib
 
 # Uncomment for versioned docs and specify the version of the module, e.g. '2'.
-DOC_MODULE_VERSION=0
+DOC_MODULE_VERSION=$(SWE_GLIB_API_VERSION)
 
 
 # The top-level XML file (SGML in the past). You can change this if you want to.
