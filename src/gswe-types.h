@@ -87,6 +87,21 @@ typedef enum {
     GSWE_SIGN_PISCES
 } GsweZodiac;
 
+/**
+ * GsweAspect:
+ * @GSWE_ASPECT_NONE: no aspect
+ * @GSWE_ASPECT_CONJUCTION: conjuction (0°)
+ * @GSWE_ASPECT_SEXTILE: sextile (60°)
+ * @GSWE_ASPECT_SQUARE: square (or quadrat; 90°)
+ * @GSWE_ASPECT_TRINE: trine (or trigon; 120°)
+ * @GSWE_ASPECT_OPPOSITION: opposition (180°)
+ * @GSWE_ASPECT_SEMISEXTILE: semi-sextile (30°)
+ * @GSWE_ASPECT_SEMISQUARE: semi-square (45°)
+ * @GSWE_ASPECT_QUINTILE: quintile (72°)
+ * @GSWE_ASPECT_SESQUISQUARE: sesqui-square (135°)
+ * @GSWE_ASPECT_BIQUINTILE: bi-quintile (144°)
+ * @GSWE_ASPECT_QUINCUNX: quincunx (150°)
+ */
 typedef enum {
     GSWE_ASPECT_NONE,
     GSWE_ASPECT_CONJUCTION,
@@ -102,6 +117,14 @@ typedef enum {
     GSWE_ASPECT_QUINCUNX
 } GsweAspect;
 
+/**
+ * GsweMirror:
+ * @GSWE_MIRROR_NONE: no mirror
+ * @GSWE_MIRROR_ARIES: mirror on the Aries/Libra (0°-180°) axis
+ * @GSWE_MIRROR_MID_TAURUS: mirror on the middle of Taurus/Scorpio (45°-225°) axis
+ * @GSWE_MIRROR_CANCER: mirror on the Cancer/Capricorn (90°-270°) axis
+ * @GSWE_MIRROR_MID_LEO: mirror on the middle of Leo/Aquarius (135°-315°) axis
+ */
 typedef enum {
     GSWE_MIRROR_NONE,
     GSWE_MIRROR_ARIES,
@@ -110,6 +133,14 @@ typedef enum {
     GSWE_MIRROR_MID_LEO
 } GsweMirror;
 
+/**
+ * GsweElement:
+ * @GSWE_ELEMENT_NONE: no element
+ * @GSWE_ELEMENT_FIRE: the Fire element
+ * @GSWE_ELEMENT_EARTH: the Earth element
+ * @GSWE_ELEMENT_AIR: the Air element
+ * @GSWE_ELEMENT_WATER: the Water element
+ */
 typedef enum {
     GSWE_ELEMENT_NONE,
     GSWE_ELEMENT_FIRE,
@@ -118,6 +149,13 @@ typedef enum {
     GSWE_ELEMENT_WATER
 } GsweElement;
 
+/**
+ * GsweQuality:
+ * @GSWE_QUALITY_NONE: no quality
+ * @GSWE_QUALITY_CARDINAL: Cardinal quality
+ * @GSWE_QUALITY_FIX: Fix quality
+ * @GSWE_QUALITY_MUTABLE: Mutable quality
+ */
 typedef enum {
     GSWE_QUALITY_NONE,
     GSWE_QUALITY_CARDINAL,
@@ -125,6 +163,13 @@ typedef enum {
     GSWE_QUALITY_MUTABLE
 } GsweQuality;
 
+/**
+ * GsweHouseSystem:
+ * @GSWE_HOUSE_SYSTEM_NONE: no house system
+ * @GSWE_HOUSE_SYSTEM_PLACIDUS: Placidus house system
+ * @GSWE_HOUSE_SYSTEM_KOCH: Koch house system
+ * @GSWE_HOUSE_SISTEM_EQUAL: Equal house system
+ */
 typedef enum {
     GSWE_HOUSE_SYSTEM_NONE,
     GSWE_HOUSE_SYSTEM_PLACIDUS,
@@ -132,6 +177,18 @@ typedef enum {
     GSWE_HOUSE_SISTEM_EQUAL
 } GsweHouseSystem;
 
+/**
+ * GsweMoonPhase:
+ * @GSWE_MOON_PHASE_NEW: New Moon
+ * @GSWE_MOON_PHASE_WAXING_CRESCENT: Waxing crescent Moon
+ * @GSWE_MOON_PHASE_WAXING_HALF: First half
+ * @GSWE_MOON_PHASE_WAXING_GIBBOUS: Waxing gibbous Moon
+ * @GSWE_MOON_PHASE_FULL: Full Moon
+ * @GSWE_MOON_PHASE_WANING_GIBBOUS: Waning gibbous Moon
+ * @GSWE_MOON_PHASE_WANING_HALF: Second Half
+ * @GSWE_MOON_PHASE_WANING_CRESCENT: Waning crescent Moon
+ * @GSWE_MOON_PHASE_DARK: Dark Moon
+ */
 typedef enum {
     GSWE_MOON_PHASE_NEW,
     GSWE_MOON_PHASE_WAXING_CRESCENT,
@@ -179,6 +236,13 @@ typedef struct {
     GsweZodiac fall_sign;
 } GswePlanetInfo;
 
+/**
+ * GsweSignInfo:
+ * @sign_id: the identifier for this sign
+ * @name: the name of this sign
+ * @element: the element of the sign
+ * @quality: the quality of the sign
+ */
 typedef struct {
     GsweZodiac sign_id;
     gchar *name;
@@ -198,6 +262,15 @@ typedef struct {
     gchar *name;
 } GsweHouseSystemInfo;
 
+/**
+ * GsweAspectInfo:
+ * @aspect: the identifier of this aspect
+ * @name: the name of the aspect
+ * @size: the size of the aspect, in degrees
+ * @orb_modifier: the modifier of the orb (the maximum allowable difference from an exact orb)
+ * @harmonic: shows whether this aspect is harmonic or not
+ * @major: shows whether this aspect is major (Ptolemaic) or not
+ */
 typedef struct {
     GsweAspect aspect;
     gchar *name;
@@ -207,6 +280,13 @@ typedef struct {
     gboolean major;
 } GsweAspectInfo;
 
+/**
+ * GsweMirrorInfo:
+ * @mirror_id: the identifier of this mirror axis
+ * @start_sign: represents the sign in whict the mirror axis starts
+ * @name: the name of the mirror
+ * @middle_axis: if TRUE, the axis runs through the middle of its starting sign
+ */
 typedef struct {
     GsweMirror mirror_id;
     GsweSignInfo *start_sign;

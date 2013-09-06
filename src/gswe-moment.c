@@ -987,6 +987,14 @@ gswe_moon_phase_data_free(GsweMoonPhaseData *moon_phase_data)
     g_free(moon_phase_data);
 }
 
+/**
+ * gswe_moon_phase_data_get_type: (skip)
+ *
+ * Register the #GsweMoonPhaseData struct as a #GBoxedType. It is required for
+ * GObject Introspection. You should never need to call this directly.
+ *
+ * Returns: the newly registered type ID
+ */
 GType
 gswe_moon_phase_data_get_type(void)
 {
@@ -1015,6 +1023,13 @@ gswe_planet_data_free(GswePlanetData *planet_data)
     g_free(planet_data);
 }
 
+/**
+ * gswe_planet_data_get_type: (skip)
+ *
+ * Register the #GswePlanetData struct as a #GBoxedType. It is required for GObject Introspection. You should never need to call this directly.
+ *
+ * Returns: the newly registered type ID
+ */
 GType
 gswe_planet_data_get_type(void)
 {
