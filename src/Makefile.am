@@ -9,28 +9,28 @@ INST_H_SRC_FILES = \
 	gswe-timestamp.h
 
 INST_H_BUILT_FILES = \
-	enumtypes.h
+	gswe-enumtypes.h
 
-libswe_glib_sources = swe-glib.c gswe-moment.c gswe-timestamp.c enumtypes.c
+libswe_glib_sources = swe-glib.c gswe-moment.c gswe-timestamp.c gswe-enumtypes.c
 gswe_headers = gswe-timestamp.h gswe-types.h
 
 libswe_glib_0_1_la_SOURCES = $(libswe_glib_sources)
 libswe_glib_0_1_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
 libswe_glib_0_1_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
 
-BUILT_SOURCES = enumtypes.c enumtypes.h
+BUILT_SOURCES = gswe-enumtypes.c gswe-enumtypes.h
 
 CLEANFILES = $(BUILT_SOURCES)
 
-EXTRA_DIST = enumtypes.h.template enumtypes.c.template
+EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template
 
-enumtypes.h: $(gswe_headers) enumtypes.h.template
+gswe-enumtypes.h: $(gswe_headers) gswe-enumtypes.h.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \
-	enumtypes.h.tmp && mv enumtypes.h.tmp enumtypes.h
+	gswe-enumtypes.h.tmp && mv gswe-enumtypes.h.tmp gswe-enumtypes.h
 
-enumtypes.c: $(gswe_headers) enumtypes.h enumtypes.c.template
+gswe-enumtypes.c: $(gswe_headers) gswe-enumtypes.h gswe-enumtypes.c.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \
-	enumtypes.c.tmp && mv enumtypes.c.tmp enumtypes.c
+	gswe-enumtypes.c.tmp && mv gswe-enumtypes.c.tmp gswe-enumtypes.c
 
 if HAVE_INTROSPECTION
 
