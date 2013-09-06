@@ -1,5 +1,5 @@
 /*** BEGIN file-header ***/
-#include "enumtypes.h"
+#include "gswe-enumtypes.h"
 #include "@filename@"
 
 /*** END file-header ***/

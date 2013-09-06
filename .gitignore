@@ -73,8 +73,8 @@ Makefile.in
 /intltool-update.in
 
 # SWE-GLib related files
-src/enumtypes.c
-src/enumtypes.h
+src/gswe-enumtypes.c
+src/gswe-enumtypes.h
 src/gswetest
 /swe-glib.pc
 
