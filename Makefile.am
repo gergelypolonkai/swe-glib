@@ -7,7 +7,13 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = swe-glib.pc $(NULL)
 
 headerdir = $(includedir)/swe-glib
-header_DATA = src/swe-glib.h $(NULL)
+header_DATA =            \
+	src/swe-glib.h       \
+	src/gswe-types.h     \
+	src/gswe-enumtypes.h \
+	src/gswe-moment.h    \
+	src/gswe-timestamp.h \
+	$(NULL)
 
 intltool_extra = intltool-extract.in intltool-merge.in intltool-update.in
 
