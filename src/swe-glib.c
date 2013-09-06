@@ -101,7 +101,7 @@ gswe_free_mirror_info(gpointer mirror_info)
  * are made.
  */
 void
-gswe_init(gchar *sweph_path)
+gswe_init(void)
 {
     GswePlanetInfo *planet_info;
     GsweSignInfo *sign_info;
@@ -184,8 +184,8 @@ gswe_init(gchar *sweph_path)
 
     gswe_full_moon_base_date = gswe_timestamp_new_from_gregorian_full(2005, 5, 8, 3, 48, 0, 0, 0.0);
 
-    gswe_ephe_path = g_strdup(sweph_path);
-    swe_set_ephe_path(sweph_path);
+    gswe_ephe_path = g_strdup(PKGDATADIR);
+    swe_set_ephe_path(PKGDATADIR);
     gswe_initialized = TRUE;
 }
 

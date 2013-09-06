@@ -12,7 +12,7 @@ extern GHashTable *gswe_house_system_info_table;
 extern GHashTable *gswe_aspect_info_table;
 extern GHashTable *gswe_mirror_info_table;
 
-void gswe_init(gchar *sweph_path);
+void gswe_init();
 
 #endif /* __SWE_GLIB_H__ */
 
