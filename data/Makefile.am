@@ -1,4 +1,5 @@
-EXTRA_DIST = \
+swephdir = $(pkgdatadir)
+sweph_DATA = \
 	sweph-data/seas_00.se1 \
 	sweph-data/seas_06.se1 \
 	sweph-data/seas_12.se1 \
@@ -54,3 +55,6 @@ EXTRA_DIST = \
 	sweph-data/seplm48.se1 \
 	sweph-data/seplm54.se1 \
 	$(NULL)
+
+EXTRA_DIST = $(sweph_DATA)
+

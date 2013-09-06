@@ -43,6 +43,7 @@ AC_CONFIG_FILES([
     Makefile
     swe/src/Makefile
     src/Makefile
+    data/Makefile
     po/Makefile.in
     docs/reference/swe-glib/Makefile
     swe-glib.pc
