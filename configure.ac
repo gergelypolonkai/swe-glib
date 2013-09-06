@@ -1,6 +1,6 @@
 m4_define([swe_glib_api_version], [1.0])
 
-AC_INIT([swe-glib], [0.1], [gergely@polonkai.eu])
+AC_INIT([swe-glib], [1.0], [gergely@polonkai.eu])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AM_SILENT_RULES([yes])
