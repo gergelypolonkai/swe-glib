@@ -12,6 +12,8 @@
 /*.rej
 /*.tab.c
 /.dirstamp
+*.gir
+*.typelib
 
 # Files created by the build tools
 Makefile
