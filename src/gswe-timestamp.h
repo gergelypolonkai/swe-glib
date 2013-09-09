@@ -58,6 +58,7 @@ GType gswe_timestamp_get_type(void);
 GsweTimestamp *gswe_timestamp_new(void);
 GsweTimestamp *gswe_timestamp_new_from_julian_day(gdouble julian_day);
 GsweTimestamp * gswe_timestamp_new_from_gregorian_full(gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset);
+void gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset);
 void gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp, gboolean instant_recalc);
 gboolean gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp);
 void gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year);

@@ -369,6 +369,26 @@ gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp)
 }
 
 void
+gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset)
+{
+    timestamp->priv->gregorian_year = year;
+    timestamp->priv->gregorian_month = month;
+    timestamp->priv->gregorian_day = day;
+    timestamp->priv->gregorian_hour = hour;
+    timestamp->priv->gregorian_minute = minute;
+    timestamp->priv->gregorian_second = second;
+    timestamp->priv->gregorian_microsecond = microsecond;
+    timestamp->priv->gregorian_timezone_offset = time_zone_offset;
+    timestamp->priv->valid_dates = VALID_GREGORIAN;
+
+    if (timestamp->priv->instant_recalc == TRUE) {
+        gswe_timestamp_calculate_all(timestamp);
+    }
+
+    gswe_timestamp_emit_changed(timestamp);
+}
+
+void
 gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year)
 {
     timestamp->priv->gregorian_year = gregorian_year;
