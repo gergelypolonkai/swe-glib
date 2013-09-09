@@ -117,7 +117,7 @@ gswe_moment_init(GsweMoment *moment)
 }
 
 static void
-gswe_moment_timestamp_changed(GsweMoment *moment, gpointer data)
+gswe_moment_timestamp_changed(GsweTimestamp *timestamp, GsweMoment *moment)
 {
     moment->priv->revision++;
     gswe_moment_emit_changed(moment);
@@ -204,7 +204,7 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
 
     moment->priv->timestamp = timestamp;
     g_object_ref(timestamp);
-    g_signal_connect(G_OBJECT(timestamp), "changed", G_CALLBACK(gswe_moment_timestamp_changed), NULL);
+    g_signal_connect(G_OBJECT(timestamp), "changed", G_CALLBACK(gswe_moment_timestamp_changed), moment);
 
     /* Emit the changed signal to notify registrants of the change */
     gswe_moment_emit_changed(moment);
@@ -245,7 +245,7 @@ gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitu
 
     moment->priv->timestamp = timestamp;
     g_object_ref(timestamp);
-    g_signal_connect(G_OBJECT(timestamp), "changed", G_CALLBACK(gswe_moment_timestamp_changed), NULL);
+    g_signal_connect(G_OBJECT(timestamp), "changed", G_CALLBACK(gswe_moment_timestamp_changed), moment);
     moment->priv->coordinates.longitude = longitude;
     moment->priv->coordinates.latitude = latitude;
     moment->priv->coordinates.altitude = altitude;
