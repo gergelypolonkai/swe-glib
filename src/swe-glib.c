@@ -95,7 +95,6 @@ gswe_free_mirror_info(gpointer mirror_info)
 
 /**
  * gswe_init:
- * @sweph_path: the file system path to the Swiss Ephemeris data files
  *
  * Initializes the SWE-GLib library. It must be called before any calculations
  * are made.
