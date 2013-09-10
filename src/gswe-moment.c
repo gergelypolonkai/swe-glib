@@ -710,7 +710,7 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
 }
 
 /**
- * gswe_moment_get_aspects:
+ * gswe_moment_get_all_aspects:
  * @moment: the GsweMoment to operate on
  *
  * Gets all planetary aspects between the planets added by
@@ -721,7 +721,7 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
  *          to @moment, and should not be freed or modified.
  */
 GList *
-gswe_moment_get_aspects(GsweMoment *moment)
+gswe_moment_get_all_aspects(GsweMoment *moment)
 {
     gswe_moment_calculate_aspects(moment);
 
