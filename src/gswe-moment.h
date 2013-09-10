@@ -24,8 +24,14 @@ GQuark gswe_moment_error_quark(void);
  *
  * Error values for GsweTimestamp initialization
  */
-//typedef enum {
-//} GsweMomentError;
+typedef enum {
+    GSWE_MOMENT_ERROR_SUCCESS,
+    GSWE_MOMENT_ERROR_UNKNOWN_HSYS,
+    GSWE_MOMENT_ERROR_UNKNOWN_SIGN,
+    GSWE_MOMENT_ERROR_NONADDED_PLANET,
+    GSWE_MOMENT_ERROR_SWE_ERROR_NONFATAL,
+    GSWE_MOMENT_ERROR_SWE_ERROR_FATAL
+} GsweMomentError;
 
 /**
  * GsweCoordinates:
@@ -139,9 +145,7 @@ struct _GsweMomentClass {
     /* Parent class structure */
     GObjectClass parent_class;
 
-    /* Class members */
-
-    /*< private >*/
+    /* Signals */
     void (*changed)(GsweMoment *moment);
 
     /* Padding for future expansion */
@@ -174,22 +178,22 @@ GType gswe_moment_get_type(void);
 GsweMoment *gswe_moment_new(void);
 GsweMoment *gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitude, gdouble altitude, GsweHouseSystem house_system);
 void gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp);
-GList *gswe_moment_get_house_cusps(GsweMoment *moment);
-gint gswe_moment_get_house(GsweMoment *moment, gdouble position);
+GList *gswe_moment_get_house_cusps(GsweMoment *moment, GError **err);
+gint gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err);
 gboolean gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet);
 void gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet);
 void gswe_moment_add_all_planets(GsweMoment *moment);
 GList *gswe_moment_get_planets(GsweMoment *moment);
-GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet);
+GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err);
 guint gswe_moment_get_element_points(GsweMoment *moment, GsweElement element);
 guint gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality);
-GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment);
+GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment, GError **err);
 GList *gswe_moment_get_all_aspects(GsweMoment *moment);
-GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet);
+GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **err);
 GList *gswe_moment_get_all_mirrorpoints(GsweMoment *moment);
-GList *gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet);
+GList *gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, GError **err);
 GList *gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror);
-GList *gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet);
+GList *gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet, GError **err);
 
 GType gswe_moon_phase_data_get_type(void);
 #define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())

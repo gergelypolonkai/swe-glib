@@ -268,7 +268,7 @@ find_by_planet_id(gconstpointer a, gconstpointer b)
 }
 
 static void
-gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble position)
+gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble position, GError **err)
 {
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
     GsweZodiac sign;
@@ -290,16 +290,17 @@ gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble p
 
     planet_data->position = position;
     planet_data->retrograde = FALSE;
-    planet_data->house = gswe_moment_get_house(moment, position);
+    planet_data->house = gswe_moment_get_house(moment, position, err);
     planet_data->sign = sign_info;
     planet_data->revision = moment->priv->revision;
 }
 
 static void
-gswe_moment_calculate_house_positions(GsweMoment *moment)
+gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 {
     gdouble cusps[13],
-            ascmc[10];
+            ascmc[10],
+            jd;
     gint i;
     GsweHouseSystemInfo *house_system_data;
 
@@ -308,14 +309,26 @@ gswe_moment_calculate_house_positions(GsweMoment *moment)
     }
 
     if ((house_system_data = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(moment->priv->house_system))) == NULL) {
-        g_error("Unknown house system!");
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_HSYS, "Unknown house system");
+
+        return;
     }
 
-    swe_houses(gswe_timestamp_get_julian_day(moment->priv->timestamp), moment->priv->coordinates.latitude, moment->priv->coordinates.longitude, house_system_data->sweph_id, cusps, ascmc);
+    jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+
+    if ((err) && (*err)) {
+        return;
+    }
+
+    swe_houses(jd, moment->priv->coordinates.latitude, moment->priv->coordinates.longitude, house_system_data->sweph_id, cusps, ascmc);
 
     g_list_free_full(moment->priv->house_list, g_free);
     moment->priv->house_list = NULL;
 
+    /* TODO: SWE house system 'G' (Gauquelin sector cusps) have 36 houses; we
+     * should detect that somehow (house system 'G' is not implemented yet in
+     * GsweHouseSystem, and all other house systems have exactly 12 houses, so
+     * this should not cause trouble yet, though) */
     for (i = 12; i >= 1; i--) {
         GsweHouseData *house_data = g_new0(GsweHouseData, 1);
 
@@ -323,7 +336,10 @@ gswe_moment_calculate_house_positions(GsweMoment *moment)
         house_data->cusp_position = cusps[i];
 
         if ((house_data->sign = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER((gint)ceilf(cusps[i] / 30.0)))) == NULL) {
-            g_error("Calculations brought an unknown sign!");
+            g_list_free_full(moment->priv->house_list, g_free);
+            g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_SIGN, "Calculation brought an unknown sign");
+
+            return;
         }
 
         moment->priv->house_list = g_list_prepend(moment->priv->house_list, house_data);
@@ -332,15 +348,15 @@ gswe_moment_calculate_house_positions(GsweMoment *moment)
     moment->priv->house_revision = moment->priv->revision;
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_ASCENDENT)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0]);
+        gswe_calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0], err);
     }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_MC)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_MC, ascmc[1]);
+        gswe_calculate_data_by_position(moment, GSWE_PLANET_MC, ascmc[1], err);
     }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_VERTEX)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_VERTEX, ascmc[3]);
+        gswe_calculate_data_by_position(moment, GSWE_PLANET_VERTEX, ascmc[3], err);
     }
 }
 
@@ -353,10 +369,10 @@ gswe_moment_calculate_house_positions(GsweMoment *moment)
  * Returns: (element-type GsweHouseData) (transfer none): a GList of #GsweHouseData
  */
 GList *
-gswe_moment_get_house_cusps(GsweMoment *moment)
+gswe_moment_get_house_cusps(GsweMoment *moment, GError **err)
 {
     if (moment->priv->house_revision != moment->priv->revision) {
-        gswe_moment_calculate_house_positions(moment);
+        gswe_moment_calculate_house_positions(moment, err);
     }
 
     return moment->priv->house_list;
@@ -410,12 +426,14 @@ gswe_moment_add_all_planets(GsweMoment *moment)
 }
 
 static void
-gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet)
+gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
     gchar serr[AS_MAXCH];
     gint ret;
-    gdouble x2[6];
+    gdouble x2[6],
+            jd;
+    GError *calc_err = NULL;
 
     if (planet_data == NULL) {
         return;
@@ -432,32 +450,43 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet)
     }
 
     swe_set_topo(moment->priv->coordinates.longitude, moment->priv->coordinates.latitude, moment->priv->coordinates.altitude);
-    if ((ret = swe_calc(gswe_timestamp_get_julian_day(moment->priv->timestamp), planet_data->planet_info->sweph_id, SEFLG_SPEED | SEFLG_TOPOCTR, x2, serr)) < 0) {
-        g_warning("Swiss Ephemeris error: %s", serr);
+    jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+
+    if ((err) && (*err)) {
+        return;
+    }
+
+    if ((ret = swe_calc(jd, planet_data->planet_info->sweph_id, SEFLG_SPEED | SEFLG_TOPOCTR, x2, serr)) < 0) {
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_SWE_ERROR_FATAL, "Swiss Ephemeris error: %s", serr);
 
         return;
     } else if (ret != (SEFLG_SPEED | SEFLG_TOPOCTR)) {
-        g_warning("Swiss Ephemeris error: %s", serr);
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_SWE_ERROR_NONFATAL, "Swiss Ephemeris error: %s", serr);
     }
 
-    gswe_calculate_data_by_position(moment, planet, x2[0]);
+    gswe_calculate_data_by_position(moment, planet, x2[0], &calc_err);
+
+    if (calc_err != NULL) {
+        g_clear_error(err);
+
+        if (err) {
+            *err = calc_err;
+        }
+    }
 
     planet_data->retrograde = (x2[3] < 0);
 }
 
-void
-calculate_planet(gpointer data, gpointer user_data)
+static void
+calculate_planet(GswePlanetData *planet_data, GsweMoment *moment)
 {
-    GswePlanetData *planet_data = data;
-    GsweMoment *moment = user_data;
-
-    gswe_moment_calculate_planet(moment, planet_data->planet_id);
+    gswe_moment_calculate_planet(moment, planet_data->planet_id, NULL);
 }
 
-void
+static void
 gswe_moment_calculate_all_planets(GsweMoment *moment)
 {
-    g_list_foreach(moment->priv->planet_list, calculate_planet, moment);
+    g_list_foreach(moment->priv->planet_list, (GFunc)calculate_planet, moment);
 }
 
 /**
@@ -475,11 +504,15 @@ gswe_moment_get_planets(GsweMoment *moment)
 }
 
 gint
-gswe_moment_get_house(GsweMoment *moment, gdouble position)
+gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
 {
     gint i;
-    gswe_moment_calculate_house_positions(moment);
+    gswe_moment_calculate_house_positions(moment, err);
 
+    /* TODO: SWE house system 'G' (Gauquelin sector cusps) have 36 houses; we
+     * should detect that somehow (house system 'G' is not implemented yet in
+     * GsweHouseSystem, and all other house systems have exactly 12 houses, so
+     * this should not cause trouble yet, though) */
     for (i = 1; i <= 12; i++) {
         gint j = (i < 12) ? i + 1 : 1;
         gdouble cusp_i = *(gdouble *)g_list_nth_data(moment->priv->house_list, i - 1),
@@ -500,15 +533,17 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position)
 }
 
 GswePlanetData *
-gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet)
+gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
 
     if (planet_data == NULL) {
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+
         return NULL;
     }
 
-    gswe_moment_calculate_planet(moment, planet);
+    gswe_moment_calculate_planet(moment, planet, err);
 
     return planet_data;
 }
@@ -518,7 +553,7 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
 {
     guint point;
 
-    gswe_moment_calculate_planet(moment, planet_data->planet_id);
+    gswe_moment_calculate_planet(moment, planet_data->planet_id, NULL);
 
     point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element))) + planet_data->planet_info->points;
     g_hash_table_replace(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element), GINT_TO_POINTER(point));
@@ -569,16 +604,30 @@ gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality)
 }
 
 GsweMoonPhaseData *
-gswe_moment_get_moon_phase(GsweMoment *moment)
+gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 {
     gdouble difference,
-            phase_percent;
+            phase_percent,
+            jd,
+            jdb;
 
     if (moment->priv->moon_phase_revision == moment->priv->revision) {
         return &(moment->priv->moon_phase);
     }
 
-    difference = (gswe_timestamp_get_julian_day(moment->priv->timestamp) - gswe_timestamp_get_julian_day(gswe_full_moon_base_date));
+    jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+
+    if ((err) && (*err)) {
+        return NULL;
+    }
+
+    jdb = gswe_timestamp_get_julian_day(gswe_full_moon_base_date, err);
+
+    if ((err) && (*err)) {
+        return NULL;
+    }
+
+    difference = (jd - jdb);
     phase_percent = fmod((difference * 100) / SYNODIC, 100);
 
     if (phase_percent < 0) {
@@ -743,10 +792,16 @@ gswe_moment_get_all_aspects(GsweMoment *moment)
  *          returns NULL.
  */
 GList *
-gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet)
+gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
           *aspect;
+
+    if (!gswe_moment_has_planet(moment, planet)) {
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+
+        return NULL;
+    }
 
     gswe_moment_calculate_aspects(moment);
 
@@ -888,10 +943,16 @@ gswe_moment_get_all_mirrorpoints(GsweMoment *moment)
  *          returns NULL.
  */
 GList *
-gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet)
+gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
           *mirror;
+
+    if (!gswe_moment_has_planet(moment, planet)) {
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+
+        return NULL;
+    }
 
     gswe_moment_calculate_mirrorpoints(moment);
 
@@ -952,10 +1013,16 @@ gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
  *          returns NULL.
  */
 GList *
-gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet)
+gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
           *mirror_l;
+
+    if (!gswe_moment_has_planet(moment, planet)) {
+        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+
+        return NULL;
+    }
 
     gswe_moment_calculate_mirrorpoints(moment);
 

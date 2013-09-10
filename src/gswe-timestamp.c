@@ -54,9 +54,9 @@ static void gswe_timestamp_dispose(GObject *gobject);
 static void gswe_timestamp_finalize(GObject *gobject);
 static void gswe_timestamp_set_property(GObject *gobject, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void gswe_timestamp_get_property(GObject *gobject, guint prop_id, GValue *value, GParamSpec *pspec);
-static void gswe_timestamp_calculate_all(GsweTimestamp *timestamp);
+static void gswe_timestamp_calculate_all(GsweTimestamp *timestamp, GError **err);
 static void gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp);
-static void gswe_timestamp_calculate_julian(GsweTimestamp *timestamp);
+static void gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err);
 
 G_DEFINE_TYPE(GsweTimestamp, gswe_timestamp, G_TYPE_OBJECT);
 
@@ -87,7 +87,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * If set to TRUE, recalculate timestamp values instantly, when changing a
      * parameter (e.g. recalculate Julian date when changing Gregorian year).
      * Otherwise, the values are recalculated only upon request (e.g. on
-     * calling #gswe_timestamp_get_julian_day()).
+     * calling gswe_timestamp_get_julian_day()).
      */
     g_object_class_install_property(gobject_class, PROP_INSTANT_RECALC, g_param_spec_boolean("instant-recalc", "Instant recalculation", "Instantly recalculate values upon parameter change", FALSE, G_PARAM_READWRITE));
 
@@ -200,47 +200,47 @@ gswe_timestamp_set_property(GObject *object, guint prop_id, const GValue *value,
 
     switch (prop_id) {
         case PROP_INSTANT_RECALC:
-            gswe_timestamp_calculate_all(timestamp);
+            gswe_timestamp_calculate_all(timestamp, NULL);
 
             break;
 
         case PROP_GREGORIAN_YEAR:
-            gswe_timestamp_set_gregorian_year(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_year(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_MONTH:
-            gswe_timestamp_set_gregorian_month(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_month(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_DAY:
-            gswe_timestamp_set_gregorian_day(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_day(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_HOUR:
-            gswe_timestamp_set_gregorian_hour(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_hour(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_MINUTE:
-            gswe_timestamp_set_gregorian_minute(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_minute(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_SECOND:
-            gswe_timestamp_set_gregorian_second(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_second(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_MICROSECOND:
-            gswe_timestamp_set_gregorian_microsecond(timestamp, g_value_get_int(value));
+            gswe_timestamp_set_gregorian_microsecond(timestamp, g_value_get_int(value), NULL);
 
             break;
 
         case PROP_GREGORIAN_TIMEZONE_OFFSET:
-            gswe_timestamp_set_gregorian_timezone(timestamp, g_value_get_double(value));
+            gswe_timestamp_set_gregorian_timezone(timestamp, g_value_get_double(value), NULL);
 
             break;
 
@@ -327,10 +327,10 @@ gswe_timestamp_get_property(GObject *object, guint prop_id, GValue *value, GPara
 }
 
 static void
-gswe_timestamp_calculate_all(GsweTimestamp *timestamp)
+gswe_timestamp_calculate_all(GsweTimestamp *timestamp, GError **err)
 {
     if ((timestamp->priv->valid_dates & VALID_JULIAN_DAY) != VALID_JULIAN_DAY) {
-        gswe_timestamp_calculate_julian(timestamp);
+        gswe_timestamp_calculate_julian(timestamp, err);
     }
 
     if ((timestamp->priv->valid_dates & VALID_GREGORIAN) != VALID_GREGORIAN) {
@@ -353,12 +353,12 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp, gboolean instant_recalc)
+gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp, gboolean instant_recalc, GError **err)
 {
     timestamp->priv->instant_recalc = instant_recalc;
 
     if (instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 }
 
@@ -369,7 +369,7 @@ gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset)
+gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset, GError **err)
 {
     timestamp->priv->gregorian_year = year;
     timestamp->priv->gregorian_month = month;
@@ -382,20 +382,20 @@ gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint mont
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
 }
 
 void
-gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year)
+gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year, GError **err)
 {
     timestamp->priv->gregorian_year = gregorian_year;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -410,13 +410,13 @@ gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp, gint gregorian_month)
+gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp, gint gregorian_month, GError **err)
 {
     timestamp->priv->gregorian_month = gregorian_month;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -431,13 +431,13 @@ gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp, gint gregorian_day)
+gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp, gint gregorian_day, GError **err)
 {
     timestamp->priv->gregorian_day = gregorian_day;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -452,13 +452,13 @@ gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp, gint gregorian_hour)
+gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp, gint gregorian_hour, GError **err)
 {
     timestamp->priv->gregorian_hour = gregorian_hour;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -473,13 +473,13 @@ gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp, gint gregorian_minute)
+gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp, gint gregorian_minute, GError **err)
 {
     timestamp->priv->gregorian_minute = gregorian_minute;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -494,13 +494,13 @@ gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp, gint gregorian_second)
+gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp, gint gregorian_second, GError **err)
 {
     timestamp->priv->gregorian_second = gregorian_second;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -515,13 +515,13 @@ gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gregorian_microsecond)
+gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gregorian_microsecond, GError **err)
 {
     timestamp->priv->gregorian_microsecond = gregorian_microsecond;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -536,13 +536,13 @@ gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp)
 }
 
 void
-gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregorian_timezone_offset)
+gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregorian_timezone_offset, GError **err)
 {
     timestamp->priv->gregorian_timezone_offset = gregorian_timezone_offset;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, err);
     }
 
     gswe_timestamp_emit_changed(timestamp);
@@ -557,7 +557,7 @@ gswe_timestamp_get_gregorian_timezone(GsweTimestamp *timestamp)
 }
 
 static void
-gswe_timestamp_calculate_julian(GsweTimestamp *timestamp)
+gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err)
 {
     gint utc_year,
          utc_month,
@@ -574,13 +574,14 @@ gswe_timestamp_calculate_julian(GsweTimestamp *timestamp)
     }
 
     if (timestamp->priv->valid_dates == 0) {
-        g_error("This timestamp object holds no valid values. This can't be good.");
+        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_NO_VALID, "This timestamp object holds no valid values");
+        return;
     }
 
     swe_utc_time_zone(timestamp->priv->gregorian_year, timestamp->priv->gregorian_month, timestamp->priv->gregorian_day, timestamp->priv->gregorian_hour, timestamp->priv->gregorian_minute, timestamp->priv->gregorian_second + timestamp->priv->gregorian_microsecond / 1000.0, timestamp->priv->gregorian_timezone_offset, &utc_year, &utc_month, &utc_day, &utc_hour, &utc_minute, &utc_second);
 
     if ((retval = swe_utc_to_jd(utc_year, utc_month, utc_day, utc_hour, utc_minute, utc_second, SE_GREG_CAL, dret, serr)) == ERR) {
-        g_error("Swiss Ephemeris error: %s", serr);
+        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_SWE_ERROR, "Swiss Ephemeris error: %s", serr);
     } else {
         timestamp->priv->julian_day = dret[0];
         timestamp->priv->valid_dates |= VALID_JULIAN_DAY;
@@ -594,16 +595,16 @@ gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day)
     timestamp->priv->valid_dates = VALID_JULIAN_DAY;
 
     if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp);
+        gswe_timestamp_calculate_all(timestamp, NULL);
     }
 
     gswe_timestamp_emit_changed(timestamp);
 }
 
 gdouble
-gswe_timestamp_get_julian_day(GsweTimestamp *timestamp)
+gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_julian(timestamp);
+    gswe_timestamp_calculate_julian(timestamp, err);
 
     return timestamp->priv->julian_day;
 }
