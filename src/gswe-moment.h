@@ -143,6 +143,28 @@ struct _GsweMomentClass {
 
     /*< private >*/
     void (*changed)(GsweMoment *moment);
+
+    /* Padding for future expansion */
+    void (*_swe_glib_reserved1)(void);
+    void (*_swe_glib_reserved2)(void);
+    void (*_swe_glib_reserved3)(void);
+    void (*_swe_glib_reserved4)(void);
+    void (*_swe_glib_reserved5)(void);
+    void (*_swe_glib_reserved6)(void);
+    void (*_swe_glib_reserved7)(void);
+    void (*_swe_glib_reserved8)(void);
+    void (*_swe_glib_reserved9)(void);
+    void (*_swe_glib_reserved10)(void);
+    void (*_swe_glib_reserved11)(void);
+    void (*_swe_glib_reserved12)(void);
+    void (*_swe_glib_reserved13)(void);
+    void (*_swe_glib_reserved14)(void);
+    void (*_swe_glib_reserved15)(void);
+    void (*_swe_glib_reserved16)(void);
+    void (*_swe_glib_reserved17)(void);
+    void (*_swe_glib_reserved18)(void);
+    void (*_swe_glib_reserved19)(void);
+    void (*_swe_glib_reserved20)(void);
 };
 
 /* used by GSWE_TYPE_MOMENT */
