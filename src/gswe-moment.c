@@ -363,6 +363,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 /**
  * gswe_moment_get_house_cusps:
  * @moment: The GsweMoment object to operate on
+ * @err: a #GError
  *
  * Calculate house cusp positions based on the house system, location and time set in @moment.
  *
@@ -781,6 +782,7 @@ gswe_moment_get_all_aspects(GsweMoment *moment)
  * gswe_moment_get_planet_aspects:
  * @moment: the GsweMoment to operate on
  * @planet: the planet whose aspects you want to get
+ * @err: a #GError
  *
  * Get all the aspects between @planet and all the other planets added with
  * gswe_moment_add_planet() or gswe_moment_add_all_planets().
@@ -933,6 +935,7 @@ gswe_moment_get_all_mirrorpoints(GsweMoment *moment)
  * gswe_moment_get_all_planet_mirrorpoints:
  * @moment: The GsweMoment object to operate on.
  * @planet: The planet whose mirrorpoint planets are requested.
+ * @err: a #GError
  *
  * Get all the mirrorpoint planets on all registered mirrors for @planet.
  *
@@ -1003,6 +1006,7 @@ gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
  * @moment: the GsweMoment object to operate on
  * @mirror: the mirror on which you want to search for mirrored planets
  * @planet: the planet whose mirrorpoint planets are requested
+ * @err: a #GError
  *
  * Get the mirrorpoint planets of @planet as seen in @mirror.
  *
