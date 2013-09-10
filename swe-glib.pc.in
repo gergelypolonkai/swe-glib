@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: SWE-GLib
 Description: GLib wrapper functions for the Swiss Ephemeris library
-Version: 0.1
+Version: @SWE_GLIB_API_VERSION@
 Requires: glib-2.0
 Libs: -L${libdir} -lswe-glib-@VERSION@
 Cflags: -I${includedir}/swe-glib
