@@ -49,6 +49,7 @@ struct _GsweTimestampClass {
     /* Parent class */
     GObjectClass parent_class;
 
+    /*< private >*/
     /* Signals */
     void (*changed)(GsweTimestamp *self);
 
