@@ -19,12 +19,19 @@ GQuark gswe_timestamp_error_quark(void);
 
 /**
  * GsweTimestampError:
+ * @GSWE_TIMESTAMP_ERROR_SUCCESS: no error
  * @GSWE_TIMESTAMP_ERROR_INVALID_DATE: the Gregorian date specified in this
- *                                     #GsweTimestamp is invalid
+ *                                     GsweTimestamp is invalid
  * @GSWE_TIMESTAMP_ERROR_INVALID_TIME: the time specified in this
- *                                     #GsweTimestamp is invalid
+ *                                     GsweTimestamp is invalid
+ * @GSWE_TIMESTAMP_ERROR_NO_VALID: the GsweTimestamp object holds no valid
+ *                                 timestamp
+ * @GSWE_TIMESTAMP_ERROR_SWE_ERROR: denotes an error detected by the Swiss
+ *                                  Ephemeris library, converted from their
+ *                                  static char array to a #GError
  */
 typedef enum {
+    GSWE_TIMESTAMP_ERROR_SUCCESS,
     GSWE_TIMESTAMP_ERROR_INVALID_DATE,
     GSWE_TIMESTAMP_ERROR_INVALID_TIME,
     GSWE_TIMESTAMP_ERROR_NO_VALID,

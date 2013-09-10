@@ -19,8 +19,20 @@ typedef struct _GsweMomentPrivate GsweMomentPrivate;
 #define GSWE_MOMENT_ERROR gswe_moment_error_quark()
 GQuark gswe_moment_error_quark(void);
 
-/*
+/**
  * GsweMomentError:
+ * @GSWE_MOMENT_ERROR_SUCCESS: no error
+ * @GSWE_MOMENT_ERROR_UNKNOWN_HSYS: house system provided is unknown (a
+ *                                  #GsweHouseSystem value must be passed)
+ * @GSWE_MOMENT_ERROR_UNKNOWN_SIGN: an unknown zodiac sign is calculated
+ * @GSWE_MOMENT_ERROR_NONADDED_PLANET: the referenced planet is not added to
+ *                                     the GsweMoment object
+ * @GSWE_MOMENT_ERROR_SWE_ERROR_NONFATAL: an error reported by the Swiss
+ *                                        Ephemeris library. Errors marked with
+ *                                        this value are not fatal, so it's
+ *                                        more like a warning
+ * @GSWE_MOMENT_ERROR_SWE_ERROR_FATAL: a fatal error reported by the Swiss
+ *                                     Ephemeris library
  *
  * Error values for GsweTimestamp initialization
  */
