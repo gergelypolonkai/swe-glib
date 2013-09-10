@@ -1,0 +1,224 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013 Gergely Polonkai
+# This file is distributed under the same license as the SWE-GLib package.
+# Gergely Polonkai <gergely@polonkai.eu>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SWE-GLib 1.0\n"
+"Report-Msgid-Bugs-To: gergely@polonkai.eu\n"
+"POT-Creation-Date: 2013-09-10 00:51+0200\n"
+"PO-Revision-Date: 2013-09-10 00:55+0100\n"
+"Last-Translator: Gergely Polonkai <gergely@polonkai.eu>\n"
+"Language-Team: Hungarian <astrognome-hu@polonkai.eu>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/swe-glib.c:116
+msgid "Sun"
+msgstr "Nap"
+
+#: ../src/swe-glib.c:117
+msgid "Moon"
+msgstr "Hold"
+
+#: ../src/swe-glib.c:118
+msgid "Mercury"
+msgstr "Merkúr"
+
+#: ../src/swe-glib.c:119
+msgid "Venus"
+msgstr "Vénusz"
+
+#: ../src/swe-glib.c:120
+msgid "Mars"
+msgstr "Mars"
+
+#: ../src/swe-glib.c:121
+msgid "Jupiter"
+msgstr "Jupiter"
+
+#: ../src/swe-glib.c:122
+msgid "Saturn"
+msgstr "Szaturnusz"
+
+#: ../src/swe-glib.c:123
+msgid "Uranus"
+msgstr "Uránusz"
+
+#: ../src/swe-glib.c:124
+msgid "Neptune"
+msgstr "Neptunusz"
+
+#: ../src/swe-glib.c:125
+msgid "Pluto"
+msgstr "Plútó"
+
+#: ../src/swe-glib.c:126
+msgid "Chiron"
+msgstr "Chiron"
+
+#: ../src/swe-glib.c:127
+msgid "Ceres"
+msgstr "Ceresz"
+
+#: ../src/swe-glib.c:128
+msgid "Pallas"
+msgstr "Pallasz"
+
+#: ../src/swe-glib.c:129
+msgid "Juno"
+msgstr "Júnó"
+
+#: ../src/swe-glib.c:130
+msgid "Vesta"
+msgstr "Veszta"
+
+#: ../src/swe-glib.c:131
+msgid "Ascending Moon Node"
+msgstr "Felszálló Hold-csomópont"
+
+#: ../src/swe-glib.c:132
+msgid "Dark Moon"
+msgstr "Sötét Hold"
+
+#: ../src/swe-glib.c:133
+msgid "Ascendent"
+msgstr "Aszcendens"
+
+#: ../src/swe-glib.c:134
+msgid "Midheaven"
+msgstr "MC"
+
+#: ../src/swe-glib.c:135
+msgid "Vertex"
+msgstr "Vertex"
+
+#: ../src/swe-glib.c:139
+msgid "Aries"
+msgstr "Kos"
+
+#: ../src/swe-glib.c:140
+msgid "Taurus"
+msgstr "Bika"
+
+#: ../src/swe-glib.c:141
+msgid "Gemini"
+msgstr "Ikrek"
+
+#: ../src/swe-glib.c:142
+msgid "Cancer"
+msgstr "Rák"
+
+#: ../src/swe-glib.c:143
+msgid "Leo"
+msgstr "Oroszlán"
+
+#: ../src/swe-glib.c:144
+msgid "Virgo"
+msgstr "Szűz"
+
+#: ../src/swe-glib.c:145
+msgid "Libra"
+msgstr "Mérleg"
+
+#: ../src/swe-glib.c:146
+msgid "Scorpio"
+msgstr "Skorpió"
+
+#: ../src/swe-glib.c:147
+msgid "Sagittarius"
+msgstr "Nyilas"
+
+#: ../src/swe-glib.c:148
+msgid "Capricorn"
+msgstr "Bak"
+
+#: ../src/swe-glib.c:149
+msgid "Aquarius"
+msgstr "Vízöntő"
+
+#: ../src/swe-glib.c:150
+msgid "Pisces"
+msgstr "Halak"
+
+#. Note that because all aspects must be <= 180°, GSWE_ASPECT_NONE can
+#. never really exist. It is provided for name fetching purposes only.
+#: ../src/swe-glib.c:154 ../src/swe-glib.c:163 ../src/swe-glib.c:178
+msgid "None"
+msgstr "Nincs"
+
+#: ../src/swe-glib.c:155
+msgid "Placidus"
+msgstr "Placidus"
+
+#: ../src/swe-glib.c:156
+msgid "Koch"
+msgstr "Koch"
+
+#: ../src/swe-glib.c:157
+msgid "Equal"
+msgstr "Egyenlő"
+
+#: ../src/swe-glib.c:164
+msgid "Conjuction"
+msgstr "Együtállás"
+
+#: ../src/swe-glib.c:165
+msgid "Opposition"
+msgstr "Szembenállás"
+
+#: ../src/swe-glib.c:166
+msgid "Trine"
+msgstr "Trigon"
+
+#: ../src/swe-glib.c:167
+msgid "Square"
+msgstr "Kvadrát"
+
+#: ../src/swe-glib.c:168
+msgid "Sextile"
+msgstr "Szextil"
+
+#: ../src/swe-glib.c:169
+msgid "Quincunx"
+msgstr "Kvinkunx"
+
+#: ../src/swe-glib.c:170
+msgid "Semi-sextile"
+msgstr "Fél-szextil"
+
+#: ../src/swe-glib.c:171
+msgid "Semi-square"
+msgstr "Fél-kvadrát"
+
+#: ../src/swe-glib.c:172
+msgid "Sesqui-square"
+msgstr "Másfél-kvadrát"
+
+#: ../src/swe-glib.c:173
+msgid "Quintile"
+msgstr "Kvintil"
+
+#: ../src/swe-glib.c:174
+msgid "Bi-quintile"
+msgstr "Bi-kvintil"
+
+#: ../src/swe-glib.c:179
+msgid "Aries/Libra"
+msgstr "Kos/Mérleg"
+
+#: ../src/swe-glib.c:180
+msgid "mid Taurus/Scorpio"
+msgstr "Bika/Skorpió közepe"
+
+#: ../src/swe-glib.c:181
+msgid "Cancer/Capricorn"
+msgstr "Rák/Bak"
+
+#: ../src/swe-glib.c:182
+msgid "mid Leo/Aquarius"
+msgstr "Oroszlán/Vízöntő közepe"

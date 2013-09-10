@@ -1,6 +1,6 @@
 m4_define([swe_glib_api_version], [1.0])
 
-AC_INIT([swe-glib], [1.0], [gergely@polonkai.eu])
+AC_INIT([swe-glib], [swe_glib_api_version], [gergely@polonkai.eu])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AM_SILENT_RULES([yes])
@@ -36,12 +36,14 @@ AC_CONFIG_MACRO_DIR([m4])
 LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.75.la'
 AC_SUBST(LIBSWE_LIBS)
 
-LIBSWE_GLIB_LIBS='$(top_builddir)/src/libswe-glib-0.1.la'
+LIBSWE_GLIB_LIBS='$(top_builddir)/src/libswe-glib-$(SWE_GLIB_API_VERSION).la'
 AC_SUBST(LIBSWE_GLIB_LIBS)
 
 AC_CONFIG_FILES([
     Makefile
+    swe/Makefile
     swe/src/Makefile
+    swe/doc/Makefile
     src/Makefile
     data/Makefile
     po/Makefile.in
