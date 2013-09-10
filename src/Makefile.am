@@ -22,7 +22,7 @@ BUILT_SOURCES = gswe-enumtypes.c gswe-enumtypes.h
 
 CLEANFILES = $(BUILT_SOURCES)
 
-EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template
+EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template swe-glib-private.h
 
 gswe-enumtypes.h: $(gswe_headers) gswe-enumtypes.h.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \

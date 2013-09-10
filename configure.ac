@@ -41,7 +41,9 @@ AC_SUBST(LIBSWE_GLIB_LIBS)
 
 AC_CONFIG_FILES([
     Makefile
+    swe/Makefile
     swe/src/Makefile
+    swe/doc/Makefile
     src/Makefile
     data/Makefile
     po/Makefile.in
