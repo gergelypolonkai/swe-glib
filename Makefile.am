@@ -3,9 +3,6 @@ SUBDIRS = swe/src src docs/reference/swe-glib data
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = swe-glib.pc $(NULL)
-
 headerdir = $(includedir)/swe-glib
 header_DATA =            \
 	src/swe-glib.h       \
