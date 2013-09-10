@@ -90,9 +90,5 @@ The Swiss Ephemeris library requires the altitude value to be specified for seve
 
 ## API stability
 
-The project is currently marked as 1.0. However, without further notice, the API should not be seen as stable.
-
-This means that some function prototypes may be modified in the near future. Mostly error handling routines are missing, so some functions will get a `GError **` parameter.
-
-Otherwise, the API is final, in term of future compatibility. New functions may be added later, though.
+The project is currently marked as 1.0. This means that API and ABI changes are very unlikely to happen.
 
