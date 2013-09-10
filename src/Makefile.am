@@ -50,6 +50,16 @@ gir_DATA = SweGlib-$(SWE_GLIB_API_VERSION).gir
 typelibsdir = $(libdir)/girepository-1.0
 typelibs_DATA = SweGlib-$(SWE_GLIB_API_VERSION).typelib
 
+headerdir = $(includedir)/swe-glib
+header_DATA =            \
+	swe-glib.h       \
+	gswe-types.h     \
+	gswe-enumtypes.h \
+	gswe-moment.h    \
+	gswe-timestamp.h \
+	$(NULL)
+
+
 CLEANFILES += $(gir_DATA) $(typelibs_DATA)
 
 endif
