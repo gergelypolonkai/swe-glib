@@ -146,9 +146,6 @@ struct _GsweMomentClass {
     GObjectClass parent_class;
 
     /*< private >*/
-    /* Signals */
-    void (*changed)(GsweMoment *moment);
-
     /* Padding for future expansion */
     void (*_swe_glib_reserved1)(void);
     void (*_swe_glib_reserved2)(void);

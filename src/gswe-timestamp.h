@@ -50,9 +50,6 @@ struct _GsweTimestampClass {
     GObjectClass parent_class;
 
     /*< private >*/
-    /* Signals */
-    void (*changed)(GsweTimestamp *self);
-
     /* Padding for future expansion */
     void (*_swe_glib_reserved1)(void);
     void (*_swe_glib_reserved2)(void);

@@ -79,7 +79,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The ::changed signal is emitted each time the timestamp is changed
      */
-    gswe_timestamp_signals[SIGNAL_CHANGED] = g_signal_new("changed", G_OBJECT_CLASS_TYPE(gobject_class), G_SIGNAL_RUN_FIRST, G_STRUCT_OFFSET(GsweTimestampClass, changed), NULL, NULL, g_cclosure_marshal_generic, G_TYPE_NONE, 0);
+    gswe_timestamp_signals[SIGNAL_CHANGED] = g_signal_new("changed", G_OBJECT_CLASS_TYPE(gobject_class), G_SIGNAL_RUN_FIRST, 0, NULL, NULL, g_cclosure_marshal_generic, G_TYPE_NONE, 0);
 
     /**
      * GsweTimestamp:instant-recalc:

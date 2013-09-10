@@ -80,7 +80,7 @@ gswe_moment_class_init(GsweMomentClass *klass)
      *
      * The ::changed signal is emitted each time the time or coordinates are changed
      */
-    gswe_moment_signals[SIGNAL_CHANGED] = g_signal_new("changed", G_OBJECT_CLASS_TYPE(gobject_class), G_SIGNAL_RUN_FIRST, G_STRUCT_OFFSET(GsweMomentClass, changed), NULL, NULL, g_cclosure_marshal_generic, G_TYPE_NONE, 0);
+    gswe_moment_signals[SIGNAL_CHANGED] = g_signal_new("changed", G_OBJECT_CLASS_TYPE(gobject_class), G_SIGNAL_RUN_FIRST, 0, NULL, NULL, g_cclosure_marshal_generic, G_TYPE_NONE, 0);
 
     /**
      * GsweMoment:timestamp:
