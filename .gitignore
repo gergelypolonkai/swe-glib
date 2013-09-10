@@ -79,7 +79,7 @@ Makefile.in
 src/gswe-enumtypes.c
 src/gswe-enumtypes.h
 src/gswetest
-/swe-glib.pc
+/data/swe-glib.pc
 
 # Documentation related files
 /docs/reference/*/*.args
