@@ -907,7 +907,7 @@ gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet)
 }
 
 /**
- * gswe_moment_get_mirror_mirrorpoints:
+ * gswe_moment_get_mirror_all_mirrorpoints:
  * @moment: The GsweMoment object to operate on.
  * @mirror: The mirror on which you want to search for mirrored planets.
  *
@@ -919,7 +919,7 @@ gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet)
  *          no mirrored planets on the given mirror, returns NULL.
  */
 GList *
-gswe_moment_get_mirror_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
+gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
 {
     GList *ret = NULL,
           *mirror_l;

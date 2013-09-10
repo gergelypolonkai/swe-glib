@@ -166,7 +166,7 @@ GList *gswe_moment_get_all_aspects(GsweMoment *moment);
 GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet);
 GList *gswe_moment_get_all_mirrorpoints(GsweMoment *moment);
 GList *gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet);
-GList *gswe_moment_get_mirror_mirrorpoints(GsweMoment *moment, GsweMirror mirror);
+GList *gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror);
 GList *gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet);
 
 GType gswe_moon_phase_data_get_type(void);
