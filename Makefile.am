@@ -3,18 +3,6 @@ SUBDIRS = swe swe/src swe/doc src po docs/reference/swe-glib data
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = swe-glib.pc $(NULL)
-
-headerdir = $(includedir)/swe-glib
-header_DATA =            \
-	src/swe-glib.h       \
-	src/gswe-types.h     \
-	src/gswe-enumtypes.h \
-	src/gswe-moment.h    \
-	src/gswe-timestamp.h \
-	$(NULL)
-
 intltool_extra = intltool-extract.in intltool-merge.in intltool-update.in
 
 EXTRA_DIST = $(intltool_extra) $(header_DATA) autogen.sh

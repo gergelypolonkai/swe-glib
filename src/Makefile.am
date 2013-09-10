@@ -11,10 +11,14 @@ INST_H_SRC_FILES = \
 INST_H_BUILT_FILES = \
 	gswe-enumtypes.h
 
-libswe_glib_sources = swe-glib.c gswe-moment.c gswe-timestamp.c gswe-enumtypes.c
 gswe_headers = gswe-timestamp.h gswe-types.h
 
-libswe_glib_1_0_la_SOURCES = $(libswe_glib_sources)
+libswe_glib_1_0_la_SOURCES = \
+	swe-glib.c       \
+	gswe-moment.c    \
+	gswe-timestamp.c \
+	gswe-enumtypes.c \
+	$(NULL)
 libswe_glib_1_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
 libswe_glib_1_0_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
 
@@ -49,6 +53,16 @@ gir_DATA = SweGlib-$(SWE_GLIB_API_VERSION).gir
 
 typelibsdir = $(libdir)/girepository-1.0
 typelibs_DATA = SweGlib-$(SWE_GLIB_API_VERSION).typelib
+
+headerdir = $(includedir)/swe-glib
+header_DATA =            \
+	swe-glib.h       \
+	gswe-types.h     \
+	gswe-enumtypes.h \
+	gswe-moment.h    \
+	gswe-timestamp.h \
+	$(NULL)
+
 
 CLEANFILES += $(gir_DATA) $(typelibs_DATA)
 

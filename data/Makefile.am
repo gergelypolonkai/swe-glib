@@ -1,3 +1,6 @@
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = swe-glib.pc $(NULL)
+
 swephdir = $(pkgdatadir)
 sweph_DATA = \
 	sweph-data/seas_00.se1 \
