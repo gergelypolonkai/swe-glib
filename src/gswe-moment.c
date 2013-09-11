@@ -112,7 +112,7 @@ gswe_moment_emit_changed(GsweMoment *moment)
     g_signal_emit(moment, gswe_moment_signals[SIGNAL_CHANGED], 0);
 }
 
-void
+static void
 gswe_moment_init(GsweMoment *moment)
 {
     moment->priv = GSWE_MOMENT_GET_PRIVATE(moment);
