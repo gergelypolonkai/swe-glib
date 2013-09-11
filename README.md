@@ -86,9 +86,26 @@ The Swiss Ephemeris library requires the altitude value to be specified for seve
 
 > the altitude above sea must be in meters. Neglecting the altitude can result in an error of about 2 arc seconds with the moon and at an altitude 3000m.
 
-2 arc seconds is about 0.000555 degrees of error, which is, well, kind of small. Of course, if you need very precise horoscopes, precise horoscopes; otherwise, it is safe to pass any value (well, that seems logical. The average level of all dry lands is about 840 meters; the average level of the whole planet Earth (including oceans and seas) is around 280 meters).
+2 arc seconds is about 0.000555 degrees of error, which is, well, kind of small. Of course, if you need very precise horoscopes or need planetary positions for a totally different thing, you should really provide a (close to) exact value; otherwise, it is safe to pass any value (well, which seems logical: the average level of all dry lands is about 840 meters; the average level of the whole planet Earth (including oceans and seas) is around 280 meters. Providing a value of ~400 should be OK most of the time).
 
 ## API stability
 
 The project is currently marked as 1.0. This means that API and ABI changes are very unlikely to happen.
 
+## Limitations
+
+### Topocentric calculations only
+
+Although the original Swiss Ephemeris library supports it, SWE-GLib can't do Heliocentric, nor Geocentric (as seen from the center of Earth) calculations, only Topocentric (as seen from a given point on Earth"s surface) calculations yet.
+
+### Database size
+
+The size of all data files provided by Astrodienst is around 40MB. Although it should not be a problem with today's home hardware, it can be a hard requirement on embedded systems. For basic calculations, keeping the following files under $(datadir)/swe-glib is usually enough:
+
+* seas_18.se1
+* semo_18.se1
+* sepl_18.se1
+
+### Fixed stars are not known yet
+
+Although Swiss Ephemeris has the functionality to calculate the position of fixed stars, SWE-GLib doesn't provide such functionality. This, however, is a planned feature for the close future.
