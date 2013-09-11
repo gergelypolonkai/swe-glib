@@ -618,6 +618,15 @@ gswe_moment_get_planets(GsweMoment *moment)
     return moment->priv->planet_list;
 }
 
+/**
+ * gswe_moment_get_house:
+ * @moment: a GsweMoment object
+ * @position: an ecliptic position
+ *
+ * Returns the number of the house in which @position is.
+ *
+ * Returns: the number of the house in which @position is. This function always yields 0 if the associated house system is #GSWE_HOUSE_SYSTEM_NONE.
+ */
 gint
 gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
 {
