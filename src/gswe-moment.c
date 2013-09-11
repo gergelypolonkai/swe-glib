@@ -15,9 +15,24 @@
  *             the given position specified by @coordinates. Be warned though,
  *             that the time zone is NOT checked against the coordinates!
  * @coordinates: the coordinates of the observers position
+ * @house_system: the house system this object uses
  * @revision: an internal counter which is incremented whenever the timestamp
- *            or the coordinates change. Planetary positions are recalculated
- *            if this number changes
+ *            or the coordinates change. When this number changes, every data
+ *            that has a *_revision value here will be recalculated before the
+ *            data is served
+ * @house_list: (element-type GsweHouseData): the list of house data
+ * @house_revision: the revision of the calculated house data
+ * @planet_list: (element-type GswePlanetData): the list of planets
+ * @points_revision: the revision of the points
+ * @element_points: the table of the element points
+ * @quality_points: the table of the quality points
+ * @moon_phase_revision: the revision of the Moon phase data
+ * @moon_phase: the calculated Moon phase data
+ * @aspect_list: (element-type GsweAspectData): the list of calculated aspects
+ * @aspect_revision: the revision of the aspect data
+ * @mirrorpoint_list: (element-type GsweMirrorData): the list of calculated
+ *                    mirrorpoints (antiscia)
+ * @mirrorpoint_revision: the revision of the mirrorpoint data
  */
 struct _GsweMomentPrivate {
     GsweTimestamp *timestamp;
