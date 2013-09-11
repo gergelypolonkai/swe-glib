@@ -1095,3 +1095,28 @@ gswe_planet_data_get_type(void)
     return g_boxed_type_register_static("GswePlanetData", (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)g_free);
 }
 
+static GsweCoordinates *
+gswe_coordinates_copy(GsweCoordinates *coordinates)
+{
+    GsweCoordinates *ret = g_new0(GsweCoordinates, 1);
+
+    ret->longitude = coordinates->longitude;
+    ret->latitude = coordinates->latitude;
+    ret->altitude = coordinates->altitude;
+
+    return ret;
+}
+
+/**
+ * gswe_coordinates_get_type:
+ *
+ * Register the #Gswecoordinates struct as a #GBoxedType. It is required for GObject Introspection. You should never need to call this directly.
+ *
+ * Returns: the newly registered type ID
+ */
+GType
+gswe_coordinates_get_type(void)
+{
+    return g_boxed_type_register_static("GsweCoordinates", (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
+}
+
