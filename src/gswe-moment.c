@@ -297,12 +297,35 @@ gswe_moment_error_quark(void)
     return g_quark_from_static_string("swe-glib-gswe-moment-error");
 }
 
+/**
+ * gswe_moment_new:
+ *
+ * Creates a new, empty GsweMoment object. The object created this way can not
+ * be used for any calculations yet, you need to call various gswe_moment_set_*
+ * functions first. It is preferred to call gswe_moment_new_full() instead.
+ *
+ * Returns: a new GsweMoment object
+ */
 GsweMoment *
 gswe_moment_new(void)
 {
     return (GsweMoment *)g_object_new(GSWE_TYPE_MOMENT, NULL);
 }
 
+/**
+ * gswe_moment_new_full:
+ * @timestamp: a #GsweTimestamp, the exact time of your calculations
+ * @longitude: the longitude part of the observer's position, in degrees
+ * @latitude: the latitude part of the observer's position, in degrees
+ * @altitude: the altitude part of the coordinates, in meters. As also noted in
+ *            the README, it is safe to pass a value of around 400.0, unless
+ *            you want to create a *really* precise chart
+ * @house_system: the house system you want to use. WARNING! Using GSWE_HOUSE_SYSTEM_NONE is currently a bad idea, the results are unpredicted
+ *
+ * Creates a new GsweMoment object with the timestamp, coordinates and house system set. This is the preferred way to create a GsweMoment object.
+ *
+ * Returns: a new GsweMoment object, which is usable out of the box
+ */
 GsweMoment *
 gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitude, gdouble altitude, GsweHouseSystem house_system)
 {
@@ -444,12 +467,28 @@ gswe_moment_get_house_cusps(GsweMoment *moment, GError **err)
     return moment->priv->house_list;
 }
 
+/**
+ * gswe_moment_has_planet:
+ * @moment: a GsweMoment
+ * @planet: the planet whose existence is queried
+ *
+ * Checks if @planet is added to @moment, e.g. its position and related data is calculated.
+ *
+ * Returns: #TRUE if @planet is already added to @moment, #FALSE otherwise
+ */
 gboolean
 gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet)
 {
     return (g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id) != NULL);
 }
 
+/**
+ * gswe_moment_add_planet:
+ * @moment: a GsweMoment object
+ * @planet: the planet to add
+ *
+ * Adds @planet to the calculated planets of @moment.
+ */
 void
 gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
 {
@@ -485,6 +524,12 @@ planet_add(gpointer key, gpointer value, gpointer user_data)
     gswe_moment_add_planet(moment, planet);
 }
 
+/**
+ * gswe_moment_add_all_planets:
+ * @moment: a GsweMoment object
+ *
+ * Adds all known planets to @moment.
+ */
 void
 gswe_moment_add_all_planets(GsweMoment *moment)
 {
