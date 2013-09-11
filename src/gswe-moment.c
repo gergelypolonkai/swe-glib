@@ -218,6 +218,7 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
         g_clear_object(&moment->priv->timestamp);
     }
 
+    moment->priv->revision++;
     moment->priv->timestamp = timestamp;
     g_object_ref(timestamp);
     g_signal_connect(G_OBJECT(timestamp), "changed", G_CALLBACK(gswe_moment_timestamp_changed), moment);
