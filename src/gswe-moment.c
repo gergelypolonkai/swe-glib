@@ -284,6 +284,34 @@ gswe_moment_get_coordinates(GsweMoment *moment)
 }
 
 /**
+ * gswe_moment_set_house_system:
+ * @moment: a GsweMoment object
+ * @house_system: the new house system to associate with @moment
+ *
+ * Associates a new house system with @moment. Emits the ::changed signal.
+ * House cusp positions are recalculated upon next fetch.
+ */
+void
+gswe_moment_set_house_system(GsweMoment *moment, GsweHouseSystem house_system)
+{
+    moment->priv->house_system = house_system;
+    moment->priv->revision++;
+    gswe_moment_emit_changed(moment);
+}
+
+/**
+ * gswe_moment_get_house_system:
+ * @moment: a GsweMoment object
+ *
+ * Returns: The house system currently associated with @moment
+ */
+GsweHouseSystem
+gswe_moment_get_house_system(GsweMoment *moment)
+{
+    return moment->priv->house_system;
+}
+
+/**
  * gswe_moment_error_quark:
  *
  * Returns the #GQuark that will be used for #GError values returned by the
