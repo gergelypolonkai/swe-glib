@@ -1052,12 +1052,6 @@ gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data)
     return ret;
 }
 
-static void
-gswe_moon_phase_data_free(GsweMoonPhaseData *moon_phase_data)
-{
-    g_free(moon_phase_data);
-}
-
 /**
  * gswe_moon_phase_data_get_type: (skip)
  *
@@ -1069,10 +1063,10 @@ gswe_moon_phase_data_free(GsweMoonPhaseData *moon_phase_data)
 GType
 gswe_moon_phase_data_get_type(void)
 {
-    return g_boxed_type_register_static("GsweMoonPhaseData", (GBoxedCopyFunc)gswe_moon_phase_data_copy, (GBoxedFreeFunc)gswe_moon_phase_data_free);
+    return g_boxed_type_register_static("GsweMoonPhaseData", (GBoxedCopyFunc)gswe_moon_phase_data_copy, (GBoxedFreeFunc)g_free);
 }
 
-GswePlanetData *
+static GswePlanetData *
 gswe_planet_data_copy(GswePlanetData *planet_data)
 {
     GswePlanetData *ret = g_new0(GswePlanetData, 1);
@@ -1088,12 +1082,6 @@ gswe_planet_data_copy(GswePlanetData *planet_data)
     return ret;
 }
 
-void
-gswe_planet_data_free(GswePlanetData *planet_data)
-{
-    g_free(planet_data);
-}
-
 /**
  * gswe_planet_data_get_type: (skip)
  *
@@ -1104,6 +1092,6 @@ gswe_planet_data_free(GswePlanetData *planet_data)
 GType
 gswe_planet_data_get_type(void)
 {
-    return g_boxed_type_register_static("GswePlanetData", (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)gswe_planet_data_free);
+    return g_boxed_type_register_static("GswePlanetData", (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)g_free);
 }
 
