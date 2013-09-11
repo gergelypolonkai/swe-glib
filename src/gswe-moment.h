@@ -210,7 +210,7 @@ GType gswe_moon_phase_data_get_type(void);
 #define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())
 
 GType gswe_planet_data_get_type(void);
-#define GSWE_TYPE_PLANET_DATA (gswe_planet_data_get_type());
+#define GSWE_TYPE_PLANET_DATA (gswe_planet_data_get_type())
 
 #endif /* __GSWE_MOMENT_H__ */
 
