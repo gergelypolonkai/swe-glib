@@ -74,6 +74,7 @@ static void gswe_moment_dispose(GObject *gobject);
 static void gswe_moment_finalize(GObject *gobject);
 static void gswe_moment_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void gswe_moment_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
+static GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
 
 G_DEFINE_TYPE(GsweMoment, gswe_moment, G_TYPE_OBJECT);
 
@@ -241,6 +242,54 @@ gswe_moment_get_timestamp(GsweMoment *moment)
     return moment->priv->timestamp;
 }
 
+/**
+ * gswe_moment_set_coordinates:
+ * @moment: a GsweMoment
+ * @longitude: the longitude part of the coordinates, in degrees
+ * @latitude: the latitude part of the coordinates, in degrees
+ * @altitude: the altitude part of the coordinates, in meters. As also noted in
+ *            the README, it is safe to pass a value of around 400.0, unless
+ *            you want to create a *really* precise chart
+ *
+ * Sets the coordinates associated with @moment. Emits the ::changed signal on
+ * @moment. All values depending on the coordinates (planetary and house cusp
+ * positions, aspects, mirrorpoints, so basically everything) should be
+ * re-fetched after changing it.
+ */
+void
+gswe_moment_set_coordinates(GsweMoment *moment, gdouble longitude, gdouble latitude, gdouble altitude)
+{
+    moment->priv->coordinates.longitude = longitude;
+    moment->priv->coordinates.latitude = latitude;
+    moment->priv->coordinates.altitude = altitude;
+    moment->priv->revision++;
+    gswe_moment_emit_changed(moment);
+}
+
+/**
+ * gswe_moment_get_coordinates:
+ * @moment: a GsweMoment
+ *
+ * Gets the coordinates associated with @moment.
+ *
+ * Returns: (transfer full): a newly allocated GsweCoordinates structure with
+ *          the coordinates associated with @moment. The returned pointer
+ *          should be freed with g_free if you don't need it any more.
+ */
+GsweCoordinates *
+gswe_moment_get_coordinates(GsweMoment *moment)
+{
+    return gswe_coordinates_copy(&(moment->priv->coordinates));
+}
+
+/**
+ * gswe_moment_error_quark:
+ *
+ * Returns the #GQuark that will be used for #GError values returned by the
+ * SWE-GLib API.
+ *
+ * Returns: a GQuark used to identify errors coming from the SWE-GLib API
+ */
 GQuark
 gswe_moment_error_quark(void)
 {
