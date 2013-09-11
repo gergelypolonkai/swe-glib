@@ -650,6 +650,7 @@ gswe_moment_get_planets(GsweMoment *moment)
  * gswe_moment_get_house:
  * @moment: a GsweMoment object
  * @position: an ecliptic position
+ * @err: a #GError
  *
  * Returns the number of the house in which @position is.
  *
