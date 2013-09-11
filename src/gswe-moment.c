@@ -339,6 +339,10 @@ gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitu
     moment->priv->coordinates.altitude = altitude;
     moment->priv->house_system = house_system;
 
+    if (house_system == GSWE_HOUSE_SYSTEM_NONE) {
+        g_warning("Using GSWE_HOUSE_SYSTEM_NONE is unsafe. You have been warned!");
+    }
+
     return moment;
 }
 
@@ -618,6 +622,11 @@ gint
 gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
 {
     gint i;
+
+    if (moment->priv->house_system == GSWE_HOUSE_SYSTEM_NONE) {
+        return 0;
+    }
+
     gswe_moment_calculate_house_positions(moment, err);
 
     /* TODO: SWE house system 'G' (Gauquelin sector cusps) have 36 houses; we
