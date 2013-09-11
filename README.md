@@ -1,8 +1,8 @@
 # SWE-GLib
 
-SWE-GLib is a GLib style wrapper library around the [Swiss Ephemeris library](http://www.astro.com/swisseph/), created by Astrodienst.
+SWE-GLib is a GLib style wrapper library around Astrodienst's [Swiss Ephemeris library](http://www.astro.com/swisseph/).
 
-The source tree contains Astrodienst's (the writers/publishers of the Swiss Ephemeris library) ephemeride files, as requested by Alois Treindl of Astrodienst in a mail written to me on 24 July, 2013.
+The source tree contains Astrodienst's ephemeride files, as requested by Alois Treindl of Astrodienst in a mail written to me on 24 July, 2013.
 
 ## GTK-Doc
 
@@ -12,7 +12,7 @@ Still, the documentation generates well, and at least gives a clue about object 
 
 ## Usage
 
-Many functions return non-opaque C structs; their documentation can be found inline, and in the generated GTK-Doc. Unless otherwise stated, the returned values should never be freed!
+Many functions return non-opaque C structs; their documentation can be found inline, and in the generated GTK-Doc. Unless otherwise stated, the returned values should never be freed.
 
 ### Initialization
 
@@ -29,7 +29,7 @@ Then you need to create a `GsweTimestamp` object:
 GsweTimestamp *timestamp = gswe_timestamp_new_from_gregorian_full(1983, 3, 7, 11, 54, 45, 0, 1.0);
 ```
 
-The `GsweTimetamp` object is used to convert dates between the Gregorian calendar dates and Julian Day values (not to be confused with Julian calendar dates!).
+The `GsweTimetamp` object is used to convert dates between the Gregorian calendar dates and Julian Day values (not to be confused with Julian calendar dates).
 
 Next, you have to create a `GsweMoment` object:
 
