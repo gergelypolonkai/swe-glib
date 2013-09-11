@@ -615,6 +615,14 @@ gswe_timestamp_error_quark(void)
     return g_quark_from_static_string("swe-glib-gswe-timestamp-error");
 }
 
+/**
+ * gswe_timestamp_new:
+ *
+ * Creates a new GsweTimestamp object. The object is initialized with current
+ * date and time in the local timezone.
+ *
+ * Returns: a new GsweTimestamp object
+ */
 GsweTimestamp *
 gswe_timestamp_new(void)
 {
