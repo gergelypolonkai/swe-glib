@@ -212,13 +212,13 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
 
 /**
  * gswe_moment_get_timestamp:
- * @moment: The GsweMoment object of which you requent its timestamp object
+ * @moment: a GsweMoment object
  *
- * Get the timestamp object of the given GsweMoment. The moment object holds a
- * reference to this object, so if you need the timestamp object after moment
- * is disposed, call g_object_ref() on it!
+ * Gets the #GsweTimestamp object associated with @moment
  *
- * Returns: a #GsweTimestamp object assigned to the given moment
+ * Returns: (transfer none): the GsweTimestamp object associated with @moment.
+ * The returned object is used by @moment exclusively. If you need it even
+ * after @moment is destroyed, call g_object_ref() on it.
  */
 GsweTimestamp *
 gswe_moment_get_timestamp(GsweMoment *moment)

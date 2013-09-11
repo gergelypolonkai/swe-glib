@@ -188,6 +188,7 @@ GType gswe_moment_get_type(void);
 GsweMoment *gswe_moment_new(void);
 GsweMoment *gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitude, gdouble altitude, GsweHouseSystem house_system);
 void gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp);
+GsweTimestamp *gswe_moment_get_timestamp(GsweMoment *moment);
 GList *gswe_moment_get_house_cusps(GsweMoment *moment, GError **err);
 gint gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err);
 gboolean gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet);
