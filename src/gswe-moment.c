@@ -60,7 +60,9 @@ enum {
 
 enum {
     PROP_0,
-    PROP_TIMESTAMP
+    PROP_TIMESTAMP,
+    PROP_COORDINATES,
+    PROP_HOUSE_SYSTEM
 };
 
 struct GsweAspectFinder {
@@ -104,6 +106,20 @@ gswe_moment_class_init(GsweMomentClass *klass)
      * The timestamp associated with this moment
      */
     g_object_class_install_property(gobject_class, PROP_TIMESTAMP, g_param_spec_object("timestamp", "Timestamp", "Timestamp of this moment", GSWE_TYPE_TIMESTAMP, G_PARAM_READWRITE));
+
+    /**
+     * GsweMoment:coordinates:
+     *
+     * The geographical coordinates associated with this moment
+     */
+    g_object_class_install_property(gobject_class, PROP_COORDINATES, g_param_spec_boxed("coordinates", "Coordinates", "Geographical coordinates", GSWE_TYPE_COORDINATES, G_PARAM_READWRITE));
+
+    /**
+     * GsweMoment:house-system:
+     *
+     * The house system associated with this moment
+     */
+    g_object_class_install_property(gobject_class, PROP_HOUSE_SYSTEM, g_param_spec_enum("house-system", "House System", "Astrological house system", GSWE_TYPE_HOUSE_SYSTEM, GSWE_HOUSE_SYSTEM_PLACIDUS, G_PARAM_READWRITE));
 }
 
 static void
@@ -173,6 +189,21 @@ gswe_moment_set_property(GObject *object, guint prop_id, const GValue *value, GP
 
             break;
 
+        case PROP_COORDINATES:
+            {
+                GsweCoordinates *coords = g_value_get_boxed(value);
+
+                gswe_moment_set_coordinates(moment, coords->longitude, coords->latitude, coords->altitude);
+            }
+
+            break;
+
+
+        case PROP_HOUSE_SYSTEM:
+            gswe_moment_set_house_system(moment, g_value_get_enum(value));
+
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
 
@@ -189,6 +220,19 @@ gswe_moment_get_property(GObject *object, guint prop_id, GValue *value, GParamSp
     switch (prop_id) {
         case PROP_TIMESTAMP:
             g_value_set_object(value, priv->timestamp);
+
+            break;
+
+        case PROP_COORDINATES:
+            {
+                GsweCoordinates *coords = gswe_coordinates_copy(&(priv->coordinates));
+                g_value_set_boxed(value, coords);
+            }
+
+            break;
+
+        case PROP_HOUSE_SYSTEM:
+            g_value_set_enum(value, priv->house_system);
 
             break;
 
@@ -1239,18 +1283,7 @@ gswe_planet_data_copy(GswePlanetData *planet_data)
     return ret;
 }
 
-/**
- * gswe_planet_data_get_type: (skip)
- *
- * Register the #GswePlanetData struct as a #GBoxedType. It is required for GObject Introspection. You should never need to call this directly.
- *
- * Returns: the newly registered type ID
- */
-GType
-gswe_planet_data_get_type(void)
-{
-    return g_boxed_type_register_static("GswePlanetData", (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)g_free);
-}
+G_DEFINE_BOXED_TYPE(GswePlanetData, gswe_planet_data, (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)g_free);
 
 static GsweCoordinates *
 gswe_coordinates_copy(GsweCoordinates *coordinates)
@@ -1264,16 +1297,5 @@ gswe_coordinates_copy(GsweCoordinates *coordinates)
     return ret;
 }
 
-/**
- * gswe_coordinates_get_type:
- *
- * Register the #Gswecoordinates struct as a #GBoxedType. It is required for GObject Introspection. You should never need to call this directly.
- *
- * Returns: the newly registered type ID
- */
-GType
-gswe_coordinates_get_type(void)
-{
-    return g_boxed_type_register_static("GsweCoordinates", (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
-}
+G_DEFINE_BOXED_TYPE(GsweCoordinates, gswe_coordinates, (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
 
