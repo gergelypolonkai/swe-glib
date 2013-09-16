@@ -382,6 +382,9 @@ typedef struct {
     GsweSignInfo *sign;
 } GsweHouseData;
 
+GType gswe_house_data_get_type(void);
+#define GSWE_TYPE_HOUSE_DATA (gswe_house_data_get_type())
+
 /**
  * GsweAspectData:
  * @planet1: the first planet in the aspect

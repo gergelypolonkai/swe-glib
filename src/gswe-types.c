@@ -45,3 +45,17 @@ gswe_coordinates_copy(GsweCoordinates *coordinates)
 
 G_DEFINE_BOXED_TYPE(GsweCoordinates, gswe_coordinates, (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
 
+static GsweHouseData *
+gswe_house_data_copy(GsweHouseData *house_data)
+{
+    GsweHouseData *ret = g_new0(GsweHouseData, 1);
+
+    ret->house = house_data->house;
+    ret->cusp_position = house_data->cusp_position;
+    ret->sign = house_data->sign;
+
+    return ret;
+}
+
+G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_copy, (GBoxedFreeFunc)g_free);
+
