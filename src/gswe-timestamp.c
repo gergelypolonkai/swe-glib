@@ -370,6 +370,14 @@ gswe_timestamp_calculate_all(GsweTimestamp *timestamp, GError **err)
 static void
 gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err)
 {
+    gint utc_year,
+         utc_month,
+         utc_day,
+         utc_hour,
+         utc_minute;
+    gdouble utc_second,
+            local_second;
+
     if ((timestamp->priv->valid_dates & VALID_GREGORIAN) == VALID_GREGORIAN) {
         return;
     }
@@ -379,7 +387,10 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err)
         return;
     }
 
-    g_warning("This method is not implemented yet.");
+    swe_jdet_to_utc(timestamp->priv->julian_day, SE_GREG_CAL, &utc_year, &utc_month, &utc_day, &utc_hour, &utc_minute, &utc_second);
+    swe_utc_time_zone(utc_year, utc_month, utc_day, utc_hour, utc_minute, utc_second, 0 - timestamp->priv->gregorian_timezone_offset, &timestamp->priv->gregorian_year, &timestamp->priv->gregorian_month, &timestamp->priv->gregorian_day, &timestamp->priv->gregorian_hour, &timestamp->priv->gregorian_minute, &local_second);
+    timestamp->priv->gregorian_second = floor(local_second);
+    timestamp->priv->gregorian_microsecond = (local_second - floor(local_second)) * 1000;
 }
 
 /**
