@@ -59,3 +59,20 @@ gswe_house_data_copy(GsweHouseData *house_data)
 
 G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_copy, (GBoxedFreeFunc)g_free);
 
+static GsweAspectData *
+gswe_aspect_data_copy(GsweAspectData *aspect_data)
+{
+    GsweAspectData *ret = g_new0(GsweAspectData, 1);
+
+    ret->planet1 = aspect_data->planet1;
+    ret->planet2 = aspect_data->planet2;
+    ret->distance = aspect_data->distance;
+    ret->aspect = aspect_data->aspect;
+    ret->aspect_info = aspect_data->aspect_info;
+    ret->difference = aspect_data->difference;
+
+    return ret;
+}
+
+G_DEFINE_BOXED_TYPE(GsweAspectData, gswe_aspect_data, (GBoxedCopyFunc)gswe_aspect_data_copy, (GBoxedFreeFunc)g_free);
+

@@ -404,6 +404,9 @@ typedef struct {
     gdouble difference;
 } GsweAspectData;
 
+GType gswe_aspect_data_get_type(void);
+#define GSWE_TYPE_ASPECT_DATA (gswe_aspect_data_get_type())
+
 /**
  * GsweAntiscionData:
  * @planet1: the first planet in the antiscion
