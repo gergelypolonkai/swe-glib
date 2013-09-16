@@ -719,6 +719,64 @@ gswe_moment_get_all_planets(GsweMoment *moment)
 }
 
 /**
+ * gswe_moment_get_sign_planets:
+ * @moment: a GsweMoment
+ * @sign: the sign of whose planets are requested
+ *
+ * Gets the list of planets in @sign.
+ *
+ * Returns: (transfer container) (element-type GswePlanetData): a #GList of
+ * #GswePlanetData.
+ */
+GList *
+gswe_moment_get_sign_planets(GsweMoment *moment, GsweZodiac sign)
+{
+    GList *ret = NULL,
+          *planet;
+
+    gswe_moment_calculate_all_planets(moment);
+
+    for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
+        GswePlanetData *pd = planet->data;
+
+        if (pd->sign->sign_id == sign) {
+            ret = g_list_prepend(ret, pd);
+        }
+    }
+
+    return ret;
+}
+
+/**
+ * gswe_moment_get_house_planets:
+ * @moment: a GsweMoment
+ * @house: a house number
+ *
+ * Gets the list of planets in house @house.
+ *
+ * Returns: (transfer container) (element-type GswePlanetData): a #GList of
+ * #GswePlanetData
+ */
+GList *
+gswe_moment_get_house_planets(GsweMoment *moment, guint house)
+{
+    GList *ret = NULL,
+          *planet;
+
+    gswe_moment_calculate_all_planets(moment);
+
+    for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
+        GswePlanetData *pd = planet->data;
+
+        if (pd->house == house) {
+            ret = g_list_prepend(ret, pd);
+        }
+    }
+
+    return ret;
+}
+
+/**
  * gswe_moment_get_house:
  * @moment: a GsweMoment object
  * @position: an ecliptic position
