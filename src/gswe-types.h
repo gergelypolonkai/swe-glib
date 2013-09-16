@@ -23,6 +23,16 @@
 #include <glib-object.h>
 
 /**
+ * SECTION:gswe-types
+ * @short_description: Base types of SWE-GLib
+ * @title: Base types
+ * @stability: Stable
+ * @include: swe-glib/swe-glib.h
+ *
+ * These are the base types used throughout SWE-GLib.
+ */
+
+/**
  * GswePlanet:
  * @GSWE_PLANET_NONE: no planet
  * @GSWE_PLANET_SUN: the Sun

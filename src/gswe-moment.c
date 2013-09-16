@@ -23,6 +23,18 @@
 
 #include "../swe/src/swephexp.h"
 
+/**
+ * SECTION:gswe-moment
+ * @short_description: an exact moment of the sky, as seen from a given point
+ *                     of Earth at a given time
+ * @title: GsweMoment
+ * @stability: Stable
+ * @include: swe-glib/swe-glib.h
+ *
+ * This class represents an exact moment of the sky, as it can be seen from
+ * one given point on Earth at a given time.
+ */
+
 #define SYNODIC 29.53058867
 
 #define GSWE_MOMENT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSWE_TYPE_MOMENT, GsweMomentPrivate))

@@ -24,6 +24,16 @@
 #include "swe-glib-private.h"
 #include "gswe-timestamp.h"
 
+/**
+ * SECTION:gswe-timestamp
+ * @short_description: conversion between Gregorian dates and Julian day values
+ * @title: GsweTimestamp
+ * @stability: Stable
+ * @include: swe-glib/swe-glib.h
+ *
+ * This object converts Gregorian dates to Julian days and vice versa.
+ */
+
 #define GSWE_TIMESTAMP_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSWE_TYPE_TIMESTAMP, GsweTimestampPrivate))
 
 typedef enum {

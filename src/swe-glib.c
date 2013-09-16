@@ -23,6 +23,17 @@
 #include "../swe/src/swephexp.h"
 #include "swe-glib.h"
 
+/**
+ * SECTION:swe-glib
+ * @short_description: Utility and initialization functions
+ * @title: Utility functions
+ * @stability: Stable
+ * @include: swe-glib/swe-glib.h
+ *
+ * Basic utility and initialization functions. They don't operate on SWE-GLib's
+ * objects, but on the library as a whole, including global tables.
+ */
+
 gboolean gswe_initialized = FALSE;
 gchar *gswe_ephe_path = NULL;
 GHashTable *gswe_planet_info_table;
