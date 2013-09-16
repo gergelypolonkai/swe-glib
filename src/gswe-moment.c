@@ -779,7 +779,7 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
  *
  * Returns: (transfer none): @planet's data
  */
-GswePlanetData *
+const GswePlanetData *
 gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
@@ -877,7 +877,7 @@ gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality)
  *
  * Returns: (transfer none): a #GsweMoonPhaseData representing the phase of the Moon
  */
-GsweMoonPhaseData *
+const GsweMoonPhaseData *
 gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 {
     gdouble difference,
