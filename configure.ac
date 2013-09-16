@@ -47,6 +47,7 @@ AC_CONFIG_FILES([
     src/Makefile
     data/Makefile
     po/Makefile.in
+    docs/reference/swe-glib/version.xml
     docs/reference/swe-glib/Makefile
     data/swe-glib.pc
 ])

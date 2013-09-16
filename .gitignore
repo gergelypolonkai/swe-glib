@@ -93,7 +93,7 @@ src/gswetest
 /docs/reference/*/*-decl.txt
 /docs/reference/*/*-overrides.txt
 /docs/reference/*/*-undeclared.txt
-/docs/reference/*/*-docs.xml
+/docs/reference/*/version.xml
 /docs/reference/*/*-sections.txt
 /docs/reference/*/*-undocumented.txt
 /docs/reference/*/*-unused.txt
