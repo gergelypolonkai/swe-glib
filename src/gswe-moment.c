@@ -94,7 +94,6 @@ static void gswe_moment_dispose(GObject *gobject);
 static void gswe_moment_finalize(GObject *gobject);
 static void gswe_moment_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void gswe_moment_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
-static GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
 
 G_DEFINE_TYPE(GsweMoment, gswe_moment, G_TYPE_OBJECT);
 
@@ -1258,61 +1257,4 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
 
     return ret;
 }
-
-static GsweMoonPhaseData *
-gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data)
-{
-    GsweMoonPhaseData *ret = g_new0(GsweMoonPhaseData, 1);
-
-    ret->phase = moon_phase_data->phase;
-    ret->illumination = moon_phase_data->illumination;
-
-    return ret;
-}
-
-/**
- * gswe_moon_phase_data_get_type: (skip)
- *
- * Register the #GsweMoonPhaseData struct as a #GBoxedType. It is required for
- * GObject Introspection. You should never need to call this directly.
- *
- * Returns: the newly registered type ID
- */
-GType
-gswe_moon_phase_data_get_type(void)
-{
-    return g_boxed_type_register_static("GsweMoonPhaseData", (GBoxedCopyFunc)gswe_moon_phase_data_copy, (GBoxedFreeFunc)g_free);
-}
-
-static GswePlanetData *
-gswe_planet_data_copy(GswePlanetData *planet_data)
-{
-    GswePlanetData *ret = g_new0(GswePlanetData, 1);
-
-    ret->planet_id = planet_data->planet_id;
-    ret->planet_info = planet_data->planet_info;
-    ret->position = planet_data->position;
-    ret->retrograde = planet_data->retrograde;
-    ret->house = planet_data->house;
-    ret->sign = planet_data->sign;
-    ret->revision = planet_data->revision;
-
-    return ret;
-}
-
-G_DEFINE_BOXED_TYPE(GswePlanetData, gswe_planet_data, (GBoxedCopyFunc)gswe_planet_data_copy, (GBoxedFreeFunc)g_free);
-
-static GsweCoordinates *
-gswe_coordinates_copy(GsweCoordinates *coordinates)
-{
-    GsweCoordinates *ret = g_new0(GsweCoordinates, 1);
-
-    ret->longitude = coordinates->longitude;
-    ret->latitude = coordinates->latitude;
-    ret->altitude = coordinates->altitude;
-
-    return ret;
-}
-
-G_DEFINE_BOXED_TYPE(GsweCoordinates, gswe_coordinates, (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
 

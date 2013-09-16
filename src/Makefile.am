@@ -16,6 +16,7 @@ gswe_headers = gswe-timestamp.h gswe-types.h
 
 libswe_glib_1_0_la_SOURCES = \
 	swe-glib.c       \
+	gswe-types.c     \
 	gswe-moment.c    \
 	gswe-timestamp.c \
 	gswe-enumtypes.c \

@@ -20,6 +20,7 @@
 #define __SWE_GLIB_GSWE_PLANETS_H__
 
 #include <glib.h>
+#include <glib-object.h>
 
 /**
  * GswePlanet:
@@ -313,6 +314,110 @@ typedef struct {
     gchar *name;
     gboolean middle_axis;
 } GsweAntiscionInfo;
+
+/**
+ * GsweMoonPhaseData:
+ * @phase: the current phase of the Moon
+ * @illumination: the portion of the Moon that is currently illuminated
+ */
+typedef struct {
+    GsweMoonPhase phase;
+    gdouble illumination;
+} GsweMoonPhaseData;
+
+GType gswe_moon_phase_data_get_type(void);
+#define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())
+
+/**
+ * GswePlanetData:
+ * @planet_id: A GswePlanet, the identifier of the planet
+ * @planet_info: A GswePlanetInfo structure, holding every information about the planet
+ * @position: The longitude position of the planet
+ * @retrograde: TRUE if the planet is in retrograde motion
+ * @house: Number of the house in which the planet is in
+ * @sign: A GsweSignInfo structure, holding every information about the sign the planet is in
+ * @revision: An internal version number of the calculation
+ */
+typedef struct {
+    GswePlanet planet_id;
+    GswePlanetInfo *planet_info;
+    gdouble position;
+    gboolean retrograde;
+    gint house;
+    GsweSignInfo *sign;
+    guint revision;
+} GswePlanetData;
+
+GType gswe_planet_data_get_type(void);
+#define GSWE_TYPE_PLANET_DATA (gswe_planet_data_get_type())
+
+/**
+ * GsweCoordinates:
+ * @longitude: longitude part of the coordinates
+ * @latitude: latitude part of the coordinates
+ * @altitude: altitude relative to sea level
+ *
+ * GsweCoordinates specifies an exact point on Earth's surface
+ */
+typedef struct _GsweCoordinates {
+    gdouble longitude;
+    gdouble latitude;
+    gdouble altitude;
+} GsweCoordinates;
+
+GType gswe_coordinates_get_type(void);
+#define GSWE_TYPE_COORDINATES (gswe_coordinates_get_type())
+
+/**
+ * GsweHouseData:
+ * @house: the number of the house (usually in the range [1;12]. Sometimes may
+ *         be [1;36].
+ * @cusp_position: the position of the house's cusp on the sky
+ * @sign: the #GsweSignInfo structure associated with the sign in which the
+ *        house cusp is in
+ */
+typedef struct {
+    guint house;
+    gdouble cusp_position;
+    GsweSignInfo *sign;
+} GsweHouseData;
+
+/**
+ * GsweAspectData:
+ * @planet1: the first planet in the aspect
+ * @planet2: the second planet in the aspect
+ * @distance: the distance between the two planets, in degrees
+ * @aspect: the aspect between the two planets
+ * @aspect_info: the #GsweAspectInfo structure associated with the aspect
+ * @difference: the difference in percent between an exact aspect and this
+ *              given aspect
+ */
+typedef struct {
+    GswePlanetData *planet1;
+    GswePlanetData *planet2;
+    gdouble distance;
+    GsweAspect aspect;
+    GsweAspectInfo *aspect_info;
+    gdouble difference;
+} GsweAspectData;
+
+/**
+ * GsweAntiscionData:
+ * @planet1: the first planet in the antiscion
+ * @planet2: the second planet in the antiscion
+ * @axis: the axis on which this antiscion is
+ * @antiscion_info: the #GsweAntiscionInfo structure associated with this
+ *                  antiscion
+ * @difference: the difference in degrees between an exact antiscion and this
+ *              given antiscion
+ */
+typedef struct {
+    GswePlanetData *planet1;
+    GswePlanetData *planet2;
+    GsweAntiscionAxis axis;
+    GsweAntiscionInfo *antiscion_info;
+    gdouble difference;
+} GsweAntiscionData;
 
 #endif /* __SWE_GLIB_GSWE_PLANETS_H__ */
 

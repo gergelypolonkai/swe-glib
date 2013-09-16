@@ -19,9 +19,12 @@
 #ifndef __SWE_GLIB_PRIVATE_H__
 
 #include "gswe-timestamp.h"
+#include "gswe-types.h"
 
 extern gchar *gswe_ephe_path;
 extern GsweTimestamp *gswe_full_moon_base_date;
+
+GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
 
 #endif /* __SWE_GLIB_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */
