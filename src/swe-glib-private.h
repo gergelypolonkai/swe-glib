@@ -23,6 +23,11 @@
 
 extern gchar *gswe_ephe_path;
 extern GsweTimestamp *gswe_full_moon_base_date;
+extern GHashTable *gswe_planet_info_table;
+extern GHashTable *gswe_sign_info_table;
+extern GHashTable *gswe_house_system_info_table;
+extern GHashTable *gswe_aspect_info_table;
+extern GHashTable *gswe_antiscion_info_table;
 
 GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
 

@@ -25,12 +25,6 @@
 #include "gswe-moment.h"
 #include "gswe-enumtypes.h"
 
-extern GHashTable *gswe_planet_info_table;
-extern GHashTable *gswe_sign_info_table;
-extern GHashTable *gswe_house_system_info_table;
-extern GHashTable *gswe_aspect_info_table;
-extern GHashTable *gswe_antiscion_info_table;
-
 void gswe_init();
 
 GType gswe_planet_info_get_type(void);
