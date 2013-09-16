@@ -48,9 +48,9 @@
  * @moon_phase: the calculated Moon phase data
  * @aspect_list: (element-type GsweAspectData): the list of calculated aspects
  * @aspect_revision: the revision of the aspect data
- * @mirrorpoint_list: (element-type GsweMirrorData): the list of calculated
- *                    mirrorpoints (antiscia)
- * @mirrorpoint_revision: the revision of the mirrorpoint data
+ * @antiscia_list: (element-type GsweAntisciaData): the list of calculated
+ *                    antiscia (mirror points)
+ * @antiscia_revision: the revision of the antiscia data
  */
 struct _GsweMomentPrivate {
     GsweTimestamp *timestamp;
@@ -67,8 +67,8 @@ struct _GsweMomentPrivate {
     GsweMoonPhaseData moon_phase;
     GList *aspect_list;
     guint aspect_revision;
-    GList *mirrorpoint_list;
-    guint mirrorpoint_revision;
+    GList *antiscia_list;
+    guint antiscia_revision;
 };
 
 enum {
@@ -155,14 +155,14 @@ gswe_moment_init(GsweMoment *moment)
     moment->priv->house_list = NULL;
     moment->priv->planet_list = NULL;
     moment->priv->aspect_list = NULL;
-    moment->priv->mirrorpoint_list = NULL;
+    moment->priv->antiscia_list = NULL;
     moment->priv->element_points = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
     moment->priv->quality_points = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
     moment->priv->house_revision = 0;
     moment->priv->points_revision = 0;
     moment->priv->moon_phase_revision = 0;
     moment->priv->aspect_revision = 0;
-    moment->priv->mirrorpoint_revision = 0;
+    moment->priv->antiscia_revision = 0;
     moment->priv->revision = 1;
 }
 
@@ -316,7 +316,7 @@ gswe_moment_get_timestamp(GsweMoment *moment)
  *
  * Sets the coordinates associated with @moment. Emits the ::changed signal on
  * @moment. All values depending on the coordinates (planetary and house cusp
- * positions, aspects, mirrorpoints, so basically everything) should be
+ * positions, aspects, antiscion, so basically everything) should be
  * re-fetched after changing it.
  */
 void
@@ -1038,46 +1038,45 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
 }
 
 static gboolean
-find_mirror(gpointer mirror_p, GsweMirrorInfo *mirror_info, GsweMirrorData *mirror_data)
+find_antiscion(GsweAntiscionAxis *axis, GsweAntiscionInfo *antiscion_info, GsweAntiscionData *antiscion_data)
 {
-    GsweMirror mirror = GPOINTER_TO_INT(mirror_p);
     gdouble start_point,
-            mirror_position,
+            axis_position,
             planet_orb;
 
-    if (mirror == GSWE_MIRROR_NONE) {
+    if (*axis == GSWE_ANTISCION_AXIS_NONE) {
         return FALSE;
     }
 
-    planet_orb = fmin(mirror_data->planet1->planet_info->orb, mirror_data->planet2->planet_info->orb);
-    start_point = (mirror_info->start_sign->sign_id - 1) * 30.0;
+    planet_orb = fmin(antiscion_data->planet1->planet_info->orb, antiscion_data->planet2->planet_info->orb);
+    start_point = (antiscion_info->start_sign->sign_id - 1) * 30.0;
 
-    if (mirror_info->middle_axis == TRUE) {
+    if (antiscion_info->middle_axis == TRUE) {
         start_point += 15.0;
     }
 
-    mirror_position = 2 * start_point - mirror_data->planet1->position;
+    axis_position = 2 * start_point - antiscion_data->planet1->position;
 
-    if (mirror_position < 0) {
-        mirror_position += 360.0;
+    if (axis_position < 0) {
+        axis_position += 360.0;
     }
 
-    if ((mirror_data->difference = fabs(mirror_data->planet2->position - mirror_position)) <= planet_orb) {
-        mirror_data->mirror_info = mirror_info;
-        mirror_data->mirror = mirror;
+    if ((antiscion_data->difference = fabs(antiscion_data->planet2->position - axis_position)) <= planet_orb) {
+        antiscion_data->antiscion_info = antiscion_info;
+        antiscion_data->axis = *axis;
 
         return TRUE;
     } else {
-        mirror_data->difference = 0.0;
+        antiscion_data->difference = 0.0;
     }
 
     return FALSE;
 }
 
 static gint
-find_mirror_by_both_planets(GsweMirrorData *mirror, struct GsweAspectFinder *mirror_finder)
+find_antiscion_by_both_planets(GsweAntiscionData *antiscion, struct GsweAspectFinder *antiscion_finder)
 {
-    if (((mirror->planet1->planet_id == mirror_finder->planet1) && (mirror->planet2->planet_id == mirror_finder->planet2)) || ((mirror->planet1->planet_id == mirror_finder->planet2) && (mirror->planet2->planet_id == mirror_finder->planet1))) {
+    if (((antiscion->planet1->planet_id == antiscion_finder->planet1) && (antiscion->planet2->planet_id == antiscion_finder->planet2)) || ((antiscion->planet1->planet_id == antiscion_finder->planet2) && (antiscion->planet2->planet_id == antiscion_finder->planet1))) {
         return 0;
     }
 
@@ -1085,90 +1084,90 @@ find_mirror_by_both_planets(GsweMirrorData *mirror, struct GsweAspectFinder *mir
 }
 
 static void
-gswe_moment_calculate_mirrorpoints(GsweMoment *moment)
+gswe_moment_calculate_antiscia(GsweMoment *moment)
 {
     GList *oplanet,
           *iplanet;
 
-    if (moment->priv->mirrorpoint_revision == moment->priv->revision) {
+    if (moment->priv->antiscia_revision == moment->priv->revision) {
         return;
     }
 
     gswe_moment_calculate_all_planets(moment);
-    g_list_free_full(moment->priv->mirrorpoint_list, g_free);
+    g_list_free_full(moment->priv->antiscia_list, g_free);
 
     for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
         for (iplanet = moment->priv->planet_list; iplanet; iplanet = iplanet->next) {
             GswePlanetData *outer_planet = oplanet->data,
                            *inner_planet = iplanet->data;
-            GsweMirrorData *mirror_data;
-            struct GsweAspectFinder mirror_finder;
+            GsweAntiscionData *antiscion_data;
+            struct GsweAspectFinder antiscion_finder;
 
             if (outer_planet->planet_id == inner_planet->planet_id) {
                 continue;
             }
 
-            mirror_finder.planet1 = outer_planet->planet_id;
-            mirror_finder.planet2 = inner_planet->planet_id;
+            antiscion_finder.planet1 = outer_planet->planet_id;
+            antiscion_finder.planet2 = inner_planet->planet_id;
 
-            if (g_list_find_custom(moment->priv->mirrorpoint_list, &mirror_finder, (GCompareFunc)find_mirror_by_both_planets) != NULL) {
+            if (g_list_find_custom(moment->priv->antiscia_list, &antiscion_finder, (GCompareFunc)find_antiscion_by_both_planets) != NULL) {
                 continue;
             }
 
-            mirror_data = g_new0(GsweMirrorData, 1);
-            mirror_data->planet1 = outer_planet;
-            mirror_data->planet2 = inner_planet;
-            mirror_data->mirror = GSWE_MIRROR_NONE;
+            antiscion_data = g_new0(GsweAntiscionData, 1);
+            antiscion_data->planet1 = outer_planet;
+            antiscion_data->planet2 = inner_planet;
+            antiscion_data->axis = GSWE_ANTISCION_AXIS_NONE;
 
-            (void)g_hash_table_find(gswe_mirror_info_table, (GHRFunc)find_mirror, mirror_data);
+            (void)g_hash_table_find(gswe_antiscion_info_table, (GHRFunc)find_antiscion, antiscion_data);
 
-            if (mirror_data->mirror == GSWE_MIRROR_NONE) {
-                mirror_data->mirror_info = g_hash_table_lookup(gswe_mirror_info_table, GINT_TO_POINTER(GSWE_MIRROR_NONE));
+            if (antiscion_data->axis == GSWE_ANTISCION_AXIS_NONE) {
+                antiscion_data->antiscion_info = g_hash_table_lookup(gswe_antiscion_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
             }
 
-            moment->priv->mirrorpoint_list = g_list_prepend(moment->priv->mirrorpoint_list, mirror_data);
+            moment->priv->antiscia_list = g_list_prepend(moment->priv->antiscia_list, antiscion_data);
         }
     }
 
-    moment->priv->mirrorpoint_revision = moment->priv->revision;
+    moment->priv->antiscia_revision = moment->priv->revision;
 }
 
 /**
- * gswe_moment_get_all_mirrorpoints:
+ * gswe_moment_get_all_antiscia:
  * @moment: The GsweMoment object to operate on.
  *
- * Get all found mirrorpoints between planets in @moment.
+ * Get all found antiscia between planets in @moment.
  *
- * Returns: (element-type GsweMirrorData) (transfer none): A #GList of
- *          #GsweMirrorData.
+ * Returns: (element-type GsweAntiscionData) (transfer none): A #GList of
+ *          #GsweAntiscionData.
  */
 GList *
-gswe_moment_get_all_mirrorpoints(GsweMoment *moment)
+gswe_moment_get_all_antiscia(GsweMoment *moment)
 {
-    gswe_moment_calculate_mirrorpoints(moment);
+    gswe_moment_calculate_antiscia(moment);
 
-    return moment->priv->mirrorpoint_list;
+    return moment->priv->antiscia_list;
 }
 
 /**
- * gswe_moment_get_all_planet_mirrorpoints:
+ * gswe_moment_get_all_planet_antiscia:
  * @moment: The GsweMoment object to operate on.
- * @planet: The planet whose mirrorpoint planets are requested.
+ * @planet: The planet whose antiscion planets are requested.
  * @err: a #GError
  *
- * Get all the mirrorpoint planets on all registered mirrors for @planet.
+ * Get all the antiscion planets on all registered axes for @planet.
  *
- * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
- *          #GsweMirrorData. The GsweMirrorData structures belong to @moment,
- *          but the GList should be freed using g_list_free(). If no planet
- *          has any mirrorpoints, or the planet has not been added to @moment,
- *          returns NULL.
+ * Returns: (element-type GsweAntiscionData) (transfer container): a #GList of
+ *          #GsweAntiscionData. The GsweAntiscionData structures belong to
+ *          @moment, but the GList should be freed using g_list_free(). If no
+ *          planet has any antiscia, or the planet has not been added to
+ *          @moment, returns NULL.
  */
 GList *
-gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, GError **err)
+gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
-          *mirror;
+          *antiscion;
 
     if (!gswe_moment_has_planet(moment, planet)) {
         g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
@@ -1176,13 +1175,13 @@ gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, G
         return NULL;
     }
 
-    gswe_moment_calculate_mirrorpoints(moment);
+    gswe_moment_calculate_antiscia(moment);
 
-    for (mirror = moment->priv->mirrorpoint_list; mirror; mirror = mirror->next) {
-        GsweMirrorData *mirror_data = mirror->data;
+    for (antiscion = moment->priv->antiscia_list; antiscion; antiscion = g_list_next(antiscion)) {
+        GsweAntiscionData *antiscion_data = antiscion->data;
 
-        if ((mirror_data->planet1->planet_id == planet) || (mirror_data->planet2->planet_id == planet)) {
-            ret = g_list_prepend(ret, mirror_data);
+        if ((antiscion_data->planet1->planet_id == planet) || (antiscion_data->planet2->planet_id == planet)) {
+            ret = g_list_prepend(ret, antiscion_data);
         }
     }
 
@@ -1190,30 +1189,30 @@ gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, G
 }
 
 /**
- * gswe_moment_get_mirror_all_mirrorpoints:
+ * gswe_moment_get_axis_all_antiscia:
  * @moment: The GsweMoment object to operate on.
- * @mirror: The mirror on which you want to search for mirrored planets.
+ * @axis: The axis on which you want to search for antiscion planets.
  *
- * Get all the mirrorpoint planets on the specified mirror @mirror.
+ * Get all the antiscion planets on the specified axis @axis.
  *
- * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
- *          #GsweMirrorData. The GsweMirrorData structures belong to @moment,
+ * Returns: (element-type GsweAntiscionData) (transfer container): a #GList of
+ *          #GsweAntiscionData. The GsweAntiscionData structures belong to @moment,
  *          but the GList should be freed using g_list_free(). If there are
- *          no mirrored planets on the given mirror, returns NULL.
+ *          no antiscion planets on the given axis, returns NULL.
  */
 GList *
-gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
+gswe_moment_get_axis_all_antiscia(GsweMoment *moment, GsweAntiscionAxis axis)
 {
     GList *ret = NULL,
-          *mirror_l;
+          *antiscion_l;
 
-    gswe_moment_calculate_mirrorpoints(moment);
+    gswe_moment_calculate_antiscia(moment);
 
-    for (mirror_l = moment->priv->mirrorpoint_list; mirror_l; mirror_l = mirror_l->next) {
-        GsweMirrorData *mirror_data = mirror_l->data;
+    for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
+        GsweAntiscionData *antiscion_data = antiscion_l->data;
 
-        if (mirror_data->mirror == mirror) {
-            ret = g_list_prepend(ret, mirror_data);
+        if (antiscion_data->axis == axis) {
+            ret = g_list_prepend(ret, antiscion_data);
         }
     }
 
@@ -1221,25 +1220,25 @@ gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror)
 }
 
 /**
- * gswe_moment_get_mirror_planet_mirrorpoints:
+ * gswe_moment_get_axis_planet_antiscia:
  * @moment: the GsweMoment object to operate on
- * @mirror: the mirror on which you want to search for mirrored planets
- * @planet: the planet whose mirrorpoint planets are requested
+ * @axis: the axis on which you want to search for antiscion planets
+ * @planet: the planet whose antiscion planets are requested
  * @err: a #GError
  *
- * Get the mirrorpoint planets of @planet as seen in @mirror.
+ * Get the antiscion planets of @planet as seen in @axis.
  *
- * Returns: (element-type GsweMirrorData) (transfer container): a #GList of
- *          #GsweMirrorData. The GsweMirrorData structires belong to @moment,
+ * Returns: (element-type GsweAntiscionData) (transfer container): a #GList of
+ *          #GsweAntiscionData. The GsweAntiscionData structires belong to @moment,
  *          but the GList should be freed using g_list_free(). If the planet
- *          has no mirrorpoints, or the planet has not been added to @moment,
+ *          has no antiscia, or the planet has not been added to @moment,
  *          returns NULL.
  */
 GList *
-gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet, GError **err)
+gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
-          *mirror_l;
+          *antiscion_l;
 
     if (!gswe_moment_has_planet(moment, planet)) {
         g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
@@ -1247,13 +1246,13 @@ gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror
         return NULL;
     }
 
-    gswe_moment_calculate_mirrorpoints(moment);
+    gswe_moment_calculate_antiscia(moment);
 
-    for (mirror_l = moment->priv->mirrorpoint_list; mirror_l; mirror_l = mirror_l->next) {
-        GsweMirrorData *mirror_data = mirror_l->data;
+    for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
+        GsweAntiscionData *antiscion_data = antiscion_l->data;
 
-        if (((mirror_data->planet1->planet_id == planet) || (mirror_data->planet2->planet_id == planet))  && (mirror_data->mirror == mirror)) {
-            ret = g_list_prepend(ret, mirror_data);
+        if (((antiscion_data->planet1->planet_id == planet) || (antiscion_data->planet2->planet_id == planet))  && (antiscion_data->axis == axis)) {
+            ret = g_list_prepend(ret, antiscion_data);
         }
     }
 

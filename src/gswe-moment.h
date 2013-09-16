@@ -141,21 +141,22 @@ typedef struct {
 } GsweAspectData;
 
 /**
- * GsweMirrorData:
- * @planet1: the first planet in the mirror
- * @planet2: the second planet in the mirror
- * @mirror: the mirror on which this mirrorpoint is
- * @mirror_info: the #GsweMirrorInfo structure associated with this mirror
- * @difference: the difference in degrees between an exact mirror and this
- *              given mirrorpoint
+ * GsweAntiscionData:
+ * @planet1: the first planet in the antiscion
+ * @planet2: the second planet in the antiscion
+ * @axis: the axis on which this antiscion is
+ * @antiscion_info: the #GsweAntiscionInfo structure associated with this
+ *                  antiscion
+ * @difference: the difference in degrees between an exact antiscion and this
+ *              given antiscion
  */
 typedef struct {
     GswePlanetData *planet1;
     GswePlanetData *planet2;
-    GsweMirror mirror;
-    GsweMirrorInfo *mirror_info;
+    GsweAntiscionAxis axis;
+    GsweAntiscionInfo *antiscion_info;
     gdouble difference;
-} GsweMirrorData;
+} GsweAntiscionData;
 
 struct _GsweMoment {
     /* Parent instance structure */
@@ -223,10 +224,10 @@ guint gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality);
 GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment, GError **err);
 GList *gswe_moment_get_all_aspects(GsweMoment *moment);
 GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **err);
-GList *gswe_moment_get_all_mirrorpoints(GsweMoment *moment);
-GList *gswe_moment_get_all_planet_mirrorpoints(GsweMoment *moment, GswePlanet planet, GError **err);
-GList *gswe_moment_get_mirror_all_mirrorpoints(GsweMoment *moment, GsweMirror mirror);
-GList *gswe_moment_get_mirror_planet_mirrorpoints(GsweMoment *moment, GsweMirror mirror, GswePlanet planet, GError **err);
+GList *gswe_moment_get_all_antiscia(GsweMoment *moment);
+GList *gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GError **err);
+GList *gswe_moment_get_axis_all_antiscia(GsweMoment *moment, GsweAntiscionAxis axis);
+GList *gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis, GswePlanet planet, GError **err);
 
 GType gswe_moon_phase_data_get_type(void);
 #define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())

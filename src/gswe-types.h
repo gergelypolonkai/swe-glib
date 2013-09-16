@@ -136,20 +136,22 @@ typedef enum {
 } GsweAspect;
 
 /**
- * GsweMirror:
- * @GSWE_MIRROR_NONE: no mirror
- * @GSWE_MIRROR_ARIES: mirror on the Aries/Libra (0°-180°) axis
- * @GSWE_MIRROR_MID_TAURUS: mirror on the middle of Taurus/Scorpio (45°-225°) axis
- * @GSWE_MIRROR_CANCER: mirror on the Cancer/Capricorn (90°-270°) axis
- * @GSWE_MIRROR_MID_LEO: mirror on the middle of Leo/Aquarius (135°-315°) axis
+ * GsweAntiscionAxis:
+ * @GSWE_ANTISCION_AXIS_NONE: no mirror
+ * @GSWE_ANTISCION_AXIS_ARIES: mirror on the Aries/Libra (0°-180°) axis
+ * @GSWE_ANTISCION_AXIS_MID_TAURUS: mirror on the middle of Taurus/Scorpio
+ *                                  (45°-225°) axis
+ * @GSWE_ANTISCION_AXIS_CANCER: mirror on the Cancer/Capricorn (90°-270°) axis
+ * @GSWE_ANTISCION_AXIS_MID_LEO: mirror on the middle of Leo/Aquarius
+ *                               (135°-315°) axis
  */
 typedef enum {
-    GSWE_MIRROR_NONE,
-    GSWE_MIRROR_ARIES,
-    GSWE_MIRROR_MID_TAURUS,
-    GSWE_MIRROR_CANCER,
-    GSWE_MIRROR_MID_LEO
-} GsweMirror;
+    GSWE_ANTISCION_AXIS_NONE,
+    GSWE_ANTISCION_AXIS_ARIES,
+    GSWE_ANTISCION_AXIS_MID_TAURUS,
+    GSWE_ANTISCION_AXIS_CANCER,
+    GSWE_ANTISCION_AXIS_MID_LEO
+} GsweAntiscionAxis;
 
 /**
  * GsweElement:
@@ -299,18 +301,18 @@ typedef struct {
 } GsweAspectInfo;
 
 /**
- * GsweMirrorInfo:
- * @mirror_id: the identifier of this mirror axis
+ * GsweAntiscionInfo:
+ * @axis_id: the identifier of this mirror's axis
  * @start_sign: represents the sign in whict the mirror axis starts
  * @name: the name of the mirror
  * @middle_axis: if TRUE, the axis runs through the middle of its starting sign
  */
 typedef struct {
-    GsweMirror mirror_id;
+    GsweAntiscionAxis axis_id;
     GsweSignInfo *start_sign;
     gchar *name;
     gboolean middle_axis;
-} GsweMirrorInfo;
+} GsweAntiscionInfo;
 
 #endif /* __SWE_GLIB_GSWE_PLANETS_H__ */
 

@@ -29,7 +29,7 @@ GHashTable *gswe_planet_info_table;
 GHashTable *gswe_sign_info_table;
 GHashTable *gswe_house_system_info_table;
 GHashTable *gswe_aspect_info_table;
-GHashTable *gswe_mirror_info_table;
+GHashTable *gswe_antiscion_info_table;
 GsweTimestamp *gswe_full_moon_base_date;
 
 #define ADD_PLANET(ht, v, i, s, r, n, o, h, dom1, dom2, exi1, exi2, exa, fal) (v) = g_new0(GswePlanetInfo, 1); \
@@ -69,9 +69,9 @@ GsweTimestamp *gswe_full_moon_base_date;
                                             (v)->major = (m); \
                                             g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
-#define ADD_MIRROR(ht, v, hts, vs, i, n, s, m) (v) = g_new0(GsweMirrorInfo, 1); \
+#define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) (v) = g_new0(GsweAntiscionInfo, 1); \
                                                (vs) = g_hash_table_lookup((hts), GINT_TO_POINTER(i)); \
-                                               (v)->mirror_id = (i); \
+                                               (v)->axis_id = (i); \
                                                (v)->start_sign = (vs); \
                                                (v)->name = g_strdup(n); \
                                                (v)->middle_axis = m; \
@@ -105,10 +105,10 @@ gswe_free_aspect_info(gpointer aspect_info)
 }
 
 void
-gswe_free_mirror_info(gpointer mirror_info)
+gswe_free_antiscion_info(GsweAntiscionInfo *antiscion_info)
 {
-    g_free(((GsweMirrorInfo *)mirror_info)->name);
-    g_free(mirror_info);
+    g_free(antiscion_info->name);
+    g_free(antiscion_info);
 }
 
 /**
@@ -124,7 +124,7 @@ gswe_init(void)
     GsweSignInfo *sign_info;
     GsweHouseSystemInfo *house_system_info;
     GsweAspectInfo *aspect_info;
-    GsweMirrorInfo *mirror_info;
+    GsweAntiscionInfo *antiscion_info;
 
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -191,13 +191,13 @@ gswe_init(void)
     ADD_ASPECT(gswe_aspect_info_table, aspect_info, GSWE_ASPECT_QUINTILE,     _("Quintile"),      72,  3, TRUE,  FALSE);
     ADD_ASPECT(gswe_aspect_info_table, aspect_info, GSWE_ASPECT_BIQUINTILE,   _("Bi-quintile"),   144, 3, TRUE,  FALSE);
 
-    gswe_mirror_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_mirror_info);
+    gswe_antiscion_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_free_antiscion_info);
 
-    ADD_MIRROR(gswe_mirror_info_table, mirror_info, gswe_sign_info_table, sign_info, GSWE_MIRROR_NONE,       _("None"),               GSWE_SIGN_NONE,   FALSE);
-    ADD_MIRROR(gswe_mirror_info_table, mirror_info, gswe_sign_info_table, sign_info, GSWE_MIRROR_ARIES,      _("Aries/Libra"),        GSWE_SIGN_ARIES,  FALSE);
-    ADD_MIRROR(gswe_mirror_info_table, mirror_info, gswe_sign_info_table, sign_info, GSWE_MIRROR_MID_TAURUS, _("mid Taurus/Scorpio"), GSWE_SIGN_TAURUS, TRUE);
-    ADD_MIRROR(gswe_mirror_info_table, mirror_info, gswe_sign_info_table, sign_info, GSWE_MIRROR_CANCER,     _("Cancer/Capricorn"),   GSWE_SIGN_CANCER, FALSE);
-    ADD_MIRROR(gswe_mirror_info_table, mirror_info, gswe_sign_info_table, sign_info, GSWE_MIRROR_MID_LEO,    _("mid Leo/Aquarius"),   GSWE_SIGN_LEO,    TRUE);
+    ADD_ANTISCION(gswe_antiscion_info_table, antiscion_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_NONE,       _("None"),               GSWE_SIGN_NONE,   FALSE);
+    ADD_ANTISCION(gswe_antiscion_info_table, antiscion_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_ARIES,      _("Aries/Libra"),        GSWE_SIGN_ARIES,  FALSE);
+    ADD_ANTISCION(gswe_antiscion_info_table, antiscion_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_TAURUS, _("mid Taurus/Scorpio"), GSWE_SIGN_TAURUS, TRUE);
+    ADD_ANTISCION(gswe_antiscion_info_table, antiscion_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_CANCER,     _("Cancer/Capricorn"),   GSWE_SIGN_CANCER, FALSE);
+    ADD_ANTISCION(gswe_antiscion_info_table, antiscion_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_LEO,    _("mid Leo/Aquarius"),   GSWE_SIGN_LEO,    TRUE);
 
     gswe_full_moon_base_date = gswe_timestamp_new_from_gregorian_full(2005, 5, 8, 3, 48, 0, 0, 0.0);
 

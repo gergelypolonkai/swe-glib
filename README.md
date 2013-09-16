@@ -61,16 +61,16 @@ Then, you can get the planet data with
 GswePlanetData *sun_data = gswe_moment_get_planet(moment, GSWE_PLANET_SUN);
 ```
 
-### Getting aspects and mirrorpoints
+### Getting aspects and antiscia
 
-SWE-GLib is also able to calculate aspects and mirrorpoints. This functionality does not exist in the Swiss Ephemeris library, though. For this, of course, you have to add multiple planets (at least two) to your `GsweMoment`. After that, you can call `gswe_moment_get_planet_aspects()` and `gswe_moment_get_planet_mirrorpoints()`.
+SWE-GLib is also able to calculate aspects and antiscia. This functionality does not exist in the Swiss Ephemeris library, though. For this, of course, you have to add multiple planets (at least two) to your `GsweMoment`. After that, you can call `gswe_moment_get_planet_aspects()` and `gswe_moment_get_planet_antiscia()`.
 
 ```c
 GList *sun_aspects = gswe_moment_get_planet_aspects(moment, GSWE_PLANET_SUN);
-GList *sun_mirrorpoints = gswe_moment_get_planet_mirrorpoints(moment, GSWE_PLANET_SUN);
+GList *sun_antiscia = gswe_moment_get_planet_antiscia(moment, GSWE_PLANET_SUN);
 ```
 
-The returned GList objects hold zero or more `GsweAspectData` or `GsweMirrorData` objects, respectively.
+The returned GList objects hold zero or more `GsweAspectData` or `GsweAntiscionData` objects, respectively.
 
 ### Getting the Moon phase
 
