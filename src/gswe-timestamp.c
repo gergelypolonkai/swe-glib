@@ -375,7 +375,8 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp)
     }
 
     if (timestamp->priv->valid_dates == 0) {
-        g_error("This timestamp object holds no valid values. This can't be good.");
+        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_NO_VALID, "This timestamp object holds no valid values");
+        return;
     }
 
     g_warning("This method is not implemented yet.");
