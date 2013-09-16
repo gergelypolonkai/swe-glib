@@ -705,7 +705,7 @@ gswe_moment_calculate_all_planets(GsweMoment *moment)
 }
 
 /**
- * gswe_moment_get_planets:
+ * gswe_moment_get_all_planets:
  * @moment: The GsweMoment to operate on
  *
  * Get all the planets added to @moment.
@@ -713,7 +713,7 @@ gswe_moment_calculate_all_planets(GsweMoment *moment)
  * Returns: (element-type GswePlanetData) (transfer none): A #GList of #GswePlanetData.
  */
 GList *
-gswe_moment_get_planets(GsweMoment *moment)
+gswe_moment_get_all_planets(GsweMoment *moment)
 {
     return moment->priv->planet_list;
 }

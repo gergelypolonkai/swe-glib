@@ -136,7 +136,7 @@ gint gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err);
 gboolean gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet);
 void gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet);
 void gswe_moment_add_all_planets(GsweMoment *moment);
-GList *gswe_moment_get_planets(GsweMoment *moment);
+GList *gswe_moment_get_all_planets(GsweMoment *moment);
 const GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err);
 guint gswe_moment_get_element_points(GsweMoment *moment, GsweElement element);
 guint gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality);
