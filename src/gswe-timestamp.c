@@ -84,7 +84,7 @@ static void gswe_timestamp_finalize(GObject *gobject);
 static void gswe_timestamp_set_property(GObject *gobject, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void gswe_timestamp_get_property(GObject *gobject, guint prop_id, GValue *value, GParamSpec *pspec);
 static void gswe_timestamp_calculate_all(GsweTimestamp *timestamp, GError **err);
-static void gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp);
+static void gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err);
 static void gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err);
 
 G_DEFINE_TYPE(GsweTimestamp, gswe_timestamp, G_TYPE_OBJECT);
@@ -297,43 +297,43 @@ gswe_timestamp_get_property(GObject *object, guint prop_id, GValue *value, GPara
             break;
 
         case PROP_GREGORIAN_YEAR:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_year);
 
             break;
 
         case PROP_GREGORIAN_MONTH:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_month);
 
             break;
 
         case PROP_GREGORIAN_DAY:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_day);
 
             break;
 
         case PROP_GREGORIAN_HOUR:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_hour);
 
             break;
 
         case PROP_GREGORIAN_MINUTE:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_minute);
 
             break;
 
         case PROP_GREGORIAN_SECOND:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_second);
 
             break;
 
         case PROP_GREGORIAN_MICROSECOND:
-            gswe_timestamp_calculate_gregorian(timestamp);
+            gswe_timestamp_calculate_gregorian(timestamp, NULL);
             g_value_set_int(value, timestamp->priv->gregorian_microsecond);
 
             break;
@@ -363,12 +363,12 @@ gswe_timestamp_calculate_all(GsweTimestamp *timestamp, GError **err)
     }
 
     if ((timestamp->priv->valid_dates & VALID_GREGORIAN) != VALID_GREGORIAN) {
-        gswe_timestamp_calculate_gregorian(timestamp);
+        gswe_timestamp_calculate_gregorian(timestamp, err);
     }
 }
 
 static void
-gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp)
+gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err)
 {
     if ((timestamp->priv->valid_dates & VALID_GREGORIAN) == VALID_GREGORIAN) {
         return;
@@ -479,15 +479,16 @@ gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year,
 /**
  * gswe_timestamp_get_gregorian_year:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the Gregorian year of @timestamp.
  *
  * Returns: the year part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_year;
 }
@@ -519,15 +520,16 @@ gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp, gint gregorian_mont
 /**
  * gswe_timestamp_get_gregorian_month:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the Gregorian month of @timestamp.
  *
  * Returns: the month part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_month;
 }
@@ -559,15 +561,16 @@ gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp, gint gregorian_day, G
 /**
  * gswe_timestamp_get_gregorian_day:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the Gregorian day of @timestamp.
  *
  * Returns: the day part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_day;
 }
@@ -599,15 +602,16 @@ gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp, gint gregorian_hour,
 /**
  * gswe_timestamp_get_gregorian_hour:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the hour of @timestamp.
  *
  * Returns: the hour part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_hour;
 }
@@ -639,15 +643,16 @@ gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp, gint gregorian_min
 /**
  * gswe_timestamp_get_gregorian_minute:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the minute of @timestamp.
  *
  * Returns: the minute part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_minute;
 }
@@ -679,15 +684,16 @@ gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp, gint gregorian_sec
 /**
  * gswe_timestamp_get_gregorian_second:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the second of @timestamp.
  *
  * Returns: the second part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_second;
 }
@@ -719,15 +725,16 @@ gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gregoria
 /**
  * gswe_timestamp_get_gregorian_microsecond:
  * @timestamp: a GsweTimestamp
+ * @err: a #GError
  *
  * Returns the microsecond of @timestamp.
  *
  * Returns: the microsecond part of @timestamp's Gregorian Date value.
  */
 gint
-gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp)
+gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp, GError **err)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
+    gswe_timestamp_calculate_gregorian(timestamp, err);
 
     return timestamp->priv->gregorian_microsecond;
 }
