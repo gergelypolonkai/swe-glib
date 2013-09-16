@@ -1045,7 +1045,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
 }
 
 static gboolean
-find_antiscion(GsweAntiscionAxis *axis, GsweAntiscionInfo *antiscion_info, GsweAntiscionData *antiscion_data)
+find_antiscion(GsweAntiscionAxis *axis, GsweAntiscionAxisInfo *antiscion_info, GsweAntiscionData *antiscion_data)
 {
     gdouble start_point,
             axis_position,

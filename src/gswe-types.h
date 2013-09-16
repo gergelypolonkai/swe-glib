@@ -312,7 +312,7 @@ typedef struct {
 } GsweAspectInfo;
 
 /**
- * GsweAntiscionInfo:
+ * GsweAntiscionAxisInfo:
  * @axis_id: the identifier of this mirror's axis
  * @start_sign: represents the sign in whict the mirror axis starts
  * @name: the name of the mirror
@@ -323,7 +323,7 @@ typedef struct {
     GsweSignInfo *start_sign;
     gchar *name;
     gboolean middle_axis;
-} GsweAntiscionInfo;
+} GsweAntiscionAxisInfo;
 
 /**
  * GsweMoonPhaseData:
@@ -422,7 +422,7 @@ GType gswe_aspect_data_get_type(void);
  * @planet1: the first planet in the antiscion
  * @planet2: the second planet in the antiscion
  * @axis: the axis on which this antiscion is
- * @antiscion_info: the #GsweAntiscionInfo structure associated with this
+ * @antiscion_info: the #GsweAntiscionAxisInfo structure associated with this
  *                  antiscion
  * @difference: the difference in degrees between an exact antiscion and this
  *              given antiscion
@@ -431,7 +431,7 @@ typedef struct {
     GswePlanetData *planet1;
     GswePlanetData *planet2;
     GsweAntiscionAxis axis;
-    GsweAntiscionInfo *antiscion_info;
+    GsweAntiscionAxisInfo *antiscion_info;
     gdouble difference;
 } GsweAntiscionData;
 

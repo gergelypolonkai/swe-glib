@@ -80,7 +80,7 @@ GsweTimestamp *gswe_full_moon_base_date;
                                             (v)->major = (m); \
                                             g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
-#define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) (v) = g_new0(GsweAntiscionInfo, 1); \
+#define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) (v) = g_new0(GsweAntiscionAxisInfo, 1); \
                                                (vs) = g_hash_table_lookup((hts), GINT_TO_POINTER(i)); \
                                                (v)->axis_id = (i); \
                                                (v)->start_sign = (vs); \
@@ -116,7 +116,7 @@ gswe_free_aspect_info(gpointer aspect_info)
 }
 
 void
-gswe_free_antiscion_info(GsweAntiscionInfo *antiscion_info)
+gswe_free_antiscion_info(GsweAntiscionAxisInfo *antiscion_info)
 {
     g_free(antiscion_info->name);
     g_free(antiscion_info);
@@ -135,7 +135,7 @@ gswe_init(void)
     GsweSignInfo *sign_info;
     GsweHouseSystemInfo *house_system_info;
     GsweAspectInfo *aspect_info;
-    GsweAntiscionInfo *antiscion_info;
+    GsweAntiscionAxisInfo *antiscion_info;
 
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
