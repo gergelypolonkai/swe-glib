@@ -771,8 +771,6 @@ gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregoria
 gdouble
 gswe_timestamp_get_gregorian_timezone(GsweTimestamp *timestamp)
 {
-    gswe_timestamp_calculate_gregorian(timestamp);
-
     return timestamp->priv->gregorian_timezone_offset;
 }
 
