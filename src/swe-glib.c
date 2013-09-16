@@ -235,3 +235,25 @@ gswe_planet_info_free(GswePlanetInfo *planet_info)
 }
 
 G_DEFINE_BOXED_TYPE(GswePlanetInfo, gswe_planet_info, (GBoxedCopyFunc)gswe_planet_info_copy, (GBoxedFreeFunc)gswe_planet_info_free);
+
+static GsweSignInfo *
+gswe_sign_info_copy(GsweSignInfo *sign_info)
+{
+    GsweSignInfo *ret = g_new0(GsweSignInfo, 1);
+
+    ret->sign_id = sign_info->sign_id;
+    ret->name = g_strdup(sign_info->name);
+    ret->element = sign_info->element;
+    ret->quality = sign_info->quality;
+
+    return ret;
+}
+
+static void
+gswe_sign_info_free(GsweSignInfo *sign_info)
+{
+    g_free(sign_info->name);
+    g_free(sign_info);
+}
+
+G_DEFINE_BOXED_TYPE(GsweSignInfo, gswe_sign_info, (GBoxedCopyFunc)gswe_sign_info_copy, (GBoxedFreeFunc)gswe_sign_info_free);
