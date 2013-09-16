@@ -33,5 +33,8 @@ extern GHashTable *gswe_mirror_info_table;
 
 void gswe_init();
 
+GType gswe_planet_info_get_type(void);
+#define GSWE_TYPE_PLANET_INFO (gswe_planet_info_get_type())
+
 #endif /* __SWE_GLIB_H__ */
 

@@ -206,3 +206,32 @@ gswe_init(void)
     gswe_initialized = TRUE;
 }
 
+static GswePlanetInfo *
+gswe_planet_info_copy(GswePlanetInfo *planet_info)
+{
+    GswePlanetInfo *ret = g_new0(GswePlanetInfo, 1);
+
+    ret->planet = planet_info->planet;
+    ret->sweph_id = planet_info->sweph_id;
+    ret->real_body = planet_info->real_body;
+    ret->orb = planet_info->orb;
+    ret->name = g_strdup(planet_info->name);
+    ret->points = planet_info->points;
+    ret->domicile_sign_1 = planet_info->domicile_sign_1;
+    ret->domicile_sign_2 = planet_info->domicile_sign_2;
+    ret->exile_sign_1 = planet_info->exile_sign_1;
+    ret->exile_sign_2 = planet_info->exile_sign_2;
+    ret->exalted_sign = planet_info->exalted_sign;
+    ret->fall_sign = planet_info->fall_sign;
+
+    return ret;
+}
+
+static void
+gswe_planet_info_free(GswePlanetInfo *planet_info)
+{
+    g_free(planet_info->name);
+    g_free(planet_info);
+}
+
+G_DEFINE_BOXED_TYPE(GswePlanetInfo, gswe_planet_info, (GBoxedCopyFunc)gswe_planet_info_copy, (GBoxedFreeFunc)gswe_planet_info_free);
