@@ -638,11 +638,7 @@ gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
     return timestamp->priv->julian_day;
 }
 
-GQuark
-gswe_timestamp_error_quark(void)
-{
-    return g_quark_from_static_string("swe-glib-gswe-timestamp-error");
-}
+G_DEFINE_QUARK(gswe-timestamp-error-quark, gswe_timestamp_error);
 
 /**
  * gswe_timestamp_new:

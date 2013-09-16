@@ -392,11 +392,7 @@ gswe_moment_get_house_system(GsweMoment *moment)
  *
  * Returns: a GQuark used to identify errors coming from the SWE-GLib API
  */
-GQuark
-gswe_moment_error_quark(void)
-{
-    return g_quark_from_static_string("swe-glib-gswe-moment-error");
-}
+G_DEFINE_QUARK(gswe-moment-error-quark, gswe_moment_error);
 
 /**
  * gswe_moment_new:
