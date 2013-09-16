@@ -1,8 +1,12 @@
-m4_define([swe_glib_api_version], [1.0])
+m4_define([swe_glib_major_version], [1])
+m4_define([swe_glib_minor_version], [0])
+m4_define([swe_glib_micro_version], [1])
+m4_define([swe_glib_version], [swe_glib_major_version.swe_glib_minor_version.swe_glib_micro_version])
+m4_define([swe_glib_api_version], [swe_glib_major_version.0])
 
-AC_INIT([swe-glib], [swe_glib_api_version], [gergely@polonkai.eu])
-AC_CONFIG_HEADERS([config.h])
+AC_INIT([SWE-GLib], [swe_glib_version], [gergely@polonkai.eu], [swe-glib])
 AM_INIT_AUTOMAKE([-Wall foreign])
+AC_CONFIG_HEADERS([config.h])
 AM_SILENT_RULES([yes])
 AC_ARG_ENABLE(debug, [AC_HELP_STRING([--enable-debug], [compile with debugging support])], , enable_debug=no)
 
@@ -10,6 +14,9 @@ if test "x$enable_debug" = "xyes" ; then
     AC_DEFINE([DEBUG], [1], [Define if debugging is enabled])
 fi
 
+AC_SUBST([SWE_GLIB_MAJOR_VERSION], [swe_glib_major_version])
+AC_SUBST([SWE_GLIB_MINOR_VERSION], [swe_glib_minor_version])
+AC_SUBST([SWE_GLIB_MICRO_VERSION], [swe_glib_micro_version])
 AC_SUBST([SWE_GLIB_API_VERSION], [swe_glib_api_version])
 AC_SUBST([SWE_GLIB_API_VERSION_U], [AS_TR_SH([swe_glib_api_version])])
 
