@@ -59,7 +59,7 @@ GQuark gswe_moment_error_quark(void);
  * @GSWE_MOMENT_ERROR_SWE_ERROR_FATAL: a fatal error reported by the Swiss
  *                                     Ephemeris library
  *
- * Error values for GsweTimestamp initialization
+ * Error codes returned by GsweMoment functions.
  */
 typedef enum {
     GSWE_MOMENT_ERROR_SUCCESS,
@@ -70,6 +70,11 @@ typedef enum {
     GSWE_MOMENT_ERROR_SWE_ERROR_FATAL
 } GsweMomentError;
 
+/**
+ * GsweMoment:
+ *
+ * The GsweMoment object's instance definition.
+ */
 struct _GsweMoment {
     /* Parent instance structure */
     GObject parent_instance;
@@ -83,6 +88,8 @@ struct _GsweMoment {
 /**
  * GsweMomentClass:
  * @parent_class: the parent class (#GObjectClass)
+ *
+ * The GsweMoment object's class definition.
  */
 struct _GsweMomentClass {
     /* Parent class structure */

@@ -63,6 +63,8 @@
  * @antiscia_list: (element-type GsweAntisciaData): the list of calculated
  *                    antiscia (mirror points)
  * @antiscia_revision: the revision of the antiscia data
+ *
+ * The private parts of #GsweMoment
  */
 struct _GsweMomentPrivate {
     GsweTimestamp *timestamp;
@@ -376,6 +378,8 @@ gswe_moment_set_house_system(GsweMoment *moment, GsweHouseSystem house_system)
  * gswe_moment_get_house_system:
  * @moment: a GsweMoment object
  *
+ * Gets the house system associated with @moment.
+ *
  * Returns: The house system currently associated with @moment
  */
 GsweHouseSystem
@@ -400,7 +404,7 @@ G_DEFINE_QUARK(gswe-moment-error-quark, gswe_moment_error);
  * be used for any calculations yet, you need to call various gswe_moment_set_*
  * functions first. It is preferred to call gswe_moment_new_full() instead.
  *
- * Returns: a new GsweMoment object
+ * Returns: (transfer full): a new GsweMoment object
  */
 GsweMoment *
 gswe_moment_new(void)
@@ -420,7 +424,7 @@ gswe_moment_new(void)
  *
  * Creates a new GsweMoment object with the timestamp, coordinates and house system set. This is the preferred way to create a GsweMoment object.
  *
- * Returns: a new GsweMoment object, which is usable out of the box
+ * Returns: (transfer full): a new GsweMoment object, which is usable out of the box
  */
 GsweMoment *
 gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitude, gdouble altitude, GsweHouseSystem house_system)
@@ -758,6 +762,23 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
     return 0;
 }
 
+/**
+ * gswe_moment_get_planet:
+ * @moment: a GsweMoment
+ * @planet: the planet whose data is requested
+ * @err: a #GError
+ *
+ * Gets @planet's data, like its position, house number, sign, etc. @err is
+ * populated if the planetary information can not be calculated.
+ *
+ * WARNING! @err may be populated if the Swiss Ephemeris data files are not
+ * found. For some planets, position data still can be calculated (the results
+ * will not be that exact, though). @err is populatet only to carry this
+ * warning. Thus, you should always provide a non-NULL value for @err, and
+ * always check it after calling this function.
+ *
+ * Returns: (transfer none): @planet's data
+ */
 GswePlanetData *
 gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
@@ -805,6 +826,15 @@ gswe_moment_calculate_points(GsweMoment *moment)
     moment->priv->points_revision = moment->priv->revision;
 }
 
+/**
+ * gswe_moment_get_element_points:
+ * @moment: a GsweMoment
+ * @element: the element whose point value is requested
+ *
+ * Gets the point value of the @element element.
+ *
+ * Returns: the point value
+ */
 guint
 gswe_moment_get_element_points(GsweMoment *moment, GsweElement element)
 {
@@ -817,6 +847,15 @@ gswe_moment_get_element_points(GsweMoment *moment, GsweElement element)
     return point;
 }
 
+/**
+ * gswe_moment_get_quality_points:
+ * @moment: a GsweMoment
+ * @quality: the quality whose point value is requested
+ *
+ * Gets the point value of the @quality quality.
+ *
+ * Returns: the point value
+ */
 guint
 gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality)
 {
@@ -829,6 +868,15 @@ gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality)
     return point;
 }
 
+/**
+ * gswe_moment_get_moon_phase:
+ * @moment: a GsweMoment
+ * @err: a #GError
+ *
+ * Gets the phase of the Moon.
+ *
+ * Returns: (transfer none): a #GsweMoonPhaseData representing the phase of the Moon
+ */
 GsweMoonPhaseData *
 gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 {
