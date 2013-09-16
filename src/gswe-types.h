@@ -425,5 +425,8 @@ typedef struct {
     gdouble difference;
 } GsweAntiscionData;
 
+GType gswe_antiscion_data_get_type(void);
+#define GSWE_TYPE_ANTISCION_DATA (gswe_antiscion_data_get_type())
+
 #endif /* __SWE_GLIB_GSWE_PLANETS_H__ */
 
