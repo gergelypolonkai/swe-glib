@@ -401,6 +401,14 @@ gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp, gboolean instant_rec
     }
 }
 
+/**
+ * gswe_timestamp_get_instant_recalc:
+ * @timestamp: a GsweTimestamp
+ *
+ * Gets the value of the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property. For
+ * details, see the property's description.
+ */
 gboolean
 gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp)
 {
@@ -408,7 +416,7 @@ gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp)
 }
 
 /**
- * gswe_timestamp_set_gregorian_year:
+ * gswe_timestamp_set_gregorian_full:
  * @timestamp: a GsweTimestamp
  * @year: the new Gregorian year
  * @month: the new Gregorian month
@@ -507,6 +515,14 @@ gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp, gint gregorian_mont
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_month:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the Gregorian month of @timestamp.
+ *
+ * Returns: the month part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp)
 {
@@ -539,6 +555,14 @@ gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp, gint gregorian_day, G
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_day:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the Gregorian day of @timestamp.
+ *
+ * Returns: the day part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp)
 {
@@ -571,6 +595,14 @@ gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp, gint gregorian_hour,
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_hour:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the hour of @timestamp.
+ *
+ * Returns: the hour part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp)
 {
@@ -603,6 +635,14 @@ gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp, gint gregorian_min
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_minute:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the minute of @timestamp.
+ *
+ * Returns: the minute part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp)
 {
@@ -635,6 +675,14 @@ gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp, gint gregorian_sec
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_second:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the second of @timestamp.
+ *
+ * Returns: the second part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp)
 {
@@ -667,6 +715,14 @@ gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gregoria
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_microsecond:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the microsecond of @timestamp.
+ *
+ * Returns: the microsecond part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp)
 {
@@ -698,6 +754,12 @@ gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregoria
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_timezone:
+ * @timestamp: a GsweTimestamp
+ *
+ * Gets the time zone used in Gregorian date calculations.
+ */
 gdouble
 gswe_timestamp_get_gregorian_timezone(GsweTimestamp *timestamp)
 {
@@ -759,6 +821,14 @@ gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day)
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_julian_day:
+ * @timestamp: a GsweTimestamp
+ * @err: a #GError
+ *
+ * Gets the Julian day value of @timestamp. @err is populated if a calculations
+ * error arises.
+ */
 gdouble
 gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
 {
@@ -790,6 +860,21 @@ gswe_timestamp_new(void)
     return GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP, NULL));
 }
 
+/**
+ * gswe_timestamp_new_from_gregorian_full:
+ * @year: the year
+ * @month: the month
+ * @day: the day
+ * @hour: the hour
+ * @minute: the minute
+ * @second: the second
+ * @microsecond: the microsecond
+ * @time_zone_offset: the time zone offset in hours
+ *
+ * Creates a new GsweTimestamp object, initialized with the Gregorian date specified by the function parameters.
+ *
+ * Returns: a new GsweTimestamp object.
+ */
 GsweTimestamp *
 gswe_timestamp_new_from_gregorian_full(gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset)
 {
@@ -809,6 +894,18 @@ gswe_timestamp_new_from_gregorian_full(gint year, gint month, gint day, gint hou
     return timestamp;
 }
 
+/**
+ * gswe_timestamp_new_from_julian_day:
+ * @julian_day: a Julian day value, with time included as fractions.
+ *
+ * Creates a new GsweTimestamp object with @julian_day as its initial date
+ * value. The object can be used for astronomical calculations, e.g. with
+ * #GsweMoment, but unless a time zone is provided with
+ * gswe_timestamp_set_gregorian_timezone(), exact Gregorian dates can not be
+ * calculated.
+ *
+ * Returns: a new GsweTimestamp object.
+ */
 GsweTimestamp *
 gswe_timestamp_new_from_julian_day(gdouble julian_day)
 {
