@@ -387,10 +387,9 @@ gswe_moment_get_house_system(GsweMoment *moment)
 /**
  * gswe_moment_error_quark:
  *
- * Returns the #GQuark that will be used for #GError values returned by the
- * SWE-GLib API.
+ * Gets the GsweMoment Error Quark.
  *
- * Returns: a GQuark used to identify errors coming from the SWE-GLib API
+ * Return value: a #GQuark
  */
 G_DEFINE_QUARK(gswe-moment-error-quark, gswe_moment_error);
 

@@ -58,6 +58,8 @@
  * @GSWE_PLANET_MC: midheaven (Medium Coeli)
  * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
  *                      primal vertical)
+ *
+ * This enum holds the planet identifiers known by SWE-GLib.
  */
 typedef enum {
     GSWE_PLANET_NONE,
@@ -99,6 +101,8 @@ typedef enum {
  * @GSWE_SIGN_CAPRICORN: the Capricorn sign (Goat)
  * @GSWE_SIGN_AQUARIUS: the Aquarius sign (Water Bearer)
  * @GSWE_SIGN_PISCES: the Pisces sign (Fish)
+ *
+ * The zodiac signs known by SWE-GLib by default.
  */
 typedef enum {
     GSWE_SIGN_NONE,
@@ -130,6 +134,8 @@ typedef enum {
  * @GSWE_ASPECT_SESQUISQUARE: sesqui-square (135°)
  * @GSWE_ASPECT_BIQUINTILE: bi-quintile (144°)
  * @GSWE_ASPECT_QUINCUNX: quincunx (150°)
+ *
+ * The aspects known by SWE-GLib by default.
  */
 typedef enum {
     GSWE_ASPECT_NONE,
@@ -155,6 +161,8 @@ typedef enum {
  * @GSWE_ANTISCION_AXIS_CANCER: mirror on the Cancer/Capricorn (90°-270°) axis
  * @GSWE_ANTISCION_AXIS_MID_LEO: mirror on the middle of Leo/Aquarius
  *                               (135°-315°) axis
+ *
+ * The antiscion axes known by SWE-GLib by default.
  */
 typedef enum {
     GSWE_ANTISCION_AXIS_NONE,
@@ -171,6 +179,8 @@ typedef enum {
  * @GSWE_ELEMENT_EARTH: the Earth element
  * @GSWE_ELEMENT_AIR: the Air element
  * @GSWE_ELEMENT_WATER: the Water element
+ *
+ * The elements as known by the SWE-GLib library.
  */
 typedef enum {
     GSWE_ELEMENT_NONE,
@@ -186,6 +196,8 @@ typedef enum {
  * @GSWE_QUALITY_CARDINAL: Cardinal quality
  * @GSWE_QUALITY_FIX: Fix quality
  * @GSWE_QUALITY_MUTABLE: Mutable quality
+ *
+ * The qualities as known by the SWE-GLib library.
  */
 typedef enum {
     GSWE_QUALITY_NONE,
@@ -200,6 +212,8 @@ typedef enum {
  * @GSWE_HOUSE_SYSTEM_PLACIDUS: Placidus house system
  * @GSWE_HOUSE_SYSTEM_KOCH: Koch house system
  * @GSWE_HOUSE_SISTEM_EQUAL: Equal house system
+ *
+ * The house systems currently known by SWE-GLib.
  */
 typedef enum {
     GSWE_HOUSE_SYSTEM_NONE,
@@ -219,6 +233,8 @@ typedef enum {
  * @GSWE_MOON_PHASE_WANING_HALF: Second Half
  * @GSWE_MOON_PHASE_WANING_CRESCENT: Waning crescent Moon
  * @GSWE_MOON_PHASE_DARK: Dark Moon
+ *
+ * The phases of the Moon.
  */
 typedef enum {
     GSWE_MOON_PHASE_NEW,
@@ -251,6 +267,9 @@ typedef enum {
  * @exile_sign_2:    the second sign in which the planet is in exile
  * @exalted_sign:    the sign in which the planet is exalted
  * @fall_sign:       the sign in which the planet is in fall
+ *
+ * This struct holds different informations of planets. You should never modify
+ * such a structure unless you really know what you are doing.
  */
 typedef struct {
     GswePlanet planet;
@@ -273,6 +292,8 @@ typedef struct {
  * @name: the name of this sign
  * @element: the element of the sign
  * @quality: the quality of the sign
+ *
+ * Holds information about zodiac signs known by SWE-GLib.
  */
 typedef struct {
     GsweZodiac sign_id;
@@ -286,6 +307,8 @@ typedef struct {
  * @system: the house system's ID
  * @sweph_id: the character value that represents this house system in the Swiss Ephemeris library
  * @name: the name of this house system
+ *
+ * Holds information about house systems known by SWE-GLib.
  */
 typedef struct {
     GsweHouseSystem system;
@@ -301,6 +324,8 @@ typedef struct {
  * @orb_modifier: the modifier of the orb (the maximum allowable difference from an exact orb)
  * @harmonic: shows whether this aspect is harmonic or not
  * @major: shows whether this aspect is major (Ptolemaic) or not
+ *
+ * Holds informations about the aspects known by SWE-GLib.
  */
 typedef struct {
     GsweAspect aspect;
@@ -317,6 +342,8 @@ typedef struct {
  * @start_sign: represents the sign in whict the mirror axis starts
  * @name: the name of the mirror
  * @middle_axis: if TRUE, the axis runs through the middle of its starting sign
+ *
+ * Holds information of antiscion axes.
  */
 typedef struct {
     GsweAntiscionAxis axis_id;
@@ -329,6 +356,8 @@ typedef struct {
  * GsweMoonPhaseData:
  * @phase: the current phase of the Moon
  * @illumination: the portion of the Moon that is currently illuminated
+ *
+ * Holds information of a Moon phase.
  */
 typedef struct {
     GsweMoonPhase phase;
@@ -347,6 +376,8 @@ GType gswe_moon_phase_data_get_type(void);
  * @house: Number of the house in which the planet is in
  * @sign: A GsweSignInfo structure, holding every information about the sign the planet is in
  * @revision: An internal version number of the calculation
+ *
+ * Holds information of a given planet.
  */
 typedef struct {
     GswePlanet planet_id;
@@ -385,6 +416,8 @@ GType gswe_coordinates_get_type(void);
  * @cusp_position: the position of the house's cusp on the sky
  * @sign: the #GsweSignInfo structure associated with the sign in which the
  *        house cusp is in
+ *
+ * Holds information of a given house.
  */
 typedef struct {
     guint house;
@@ -404,6 +437,8 @@ GType gswe_house_data_get_type(void);
  * @aspect_info: the #GsweAspectInfo structure associated with the aspect
  * @difference: the difference in percent between an exact aspect and this
  *              given aspect
+ *
+ * Holds information about a given aspect.
  */
 typedef struct {
     GswePlanetData *planet1;
@@ -426,6 +461,8 @@ GType gswe_aspect_data_get_type(void);
  *                  antiscion
  * @difference: the difference in degrees between an exact antiscion and this
  *              given antiscion
+ *
+ * Holds information about a given antiscion.
  */
 typedef struct {
     GswePlanetData *planet1;

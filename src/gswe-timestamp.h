@@ -33,6 +33,13 @@ typedef struct _GsweTimestamp GsweTimestamp;
 typedef struct _GsweTimestampClass GsweTimestampClass;
 typedef struct _GsweTimestampPrivate GsweTimestampPrivate;
 
+/**
+ * GSWE_TIMESTAMP_ERROR:
+ *
+ * Error domain for GsweTimestamp. Errors in this domain will be from
+ * #GsweTimestampError enumeration. See #GError for more information on error
+ * domains.
+ */
 #define GSWE_TIMESTAMP_ERROR (gswe_timestamp_error_quark())
 GQuark gswe_timestamp_error_quark(void);
 
@@ -48,6 +55,8 @@ GQuark gswe_timestamp_error_quark(void);
  * @GSWE_TIMESTAMP_ERROR_SWE_ERROR: denotes an error detected by the Swiss
  *                                  Ephemeris library, converted from their
  *                                  static char array to a #GError
+ *
+ * Error codes returned by GsweTimestamp functions.
  */
 typedef enum {
     GSWE_TIMESTAMP_ERROR_SUCCESS,
@@ -57,6 +66,11 @@ typedef enum {
     GSWE_TIMESTAMP_ERROR_SWE_ERROR
 } GsweTimestampError;
 
+/**
+ * GsweTimestamp:
+ *
+ * The GsweTimestamp object's instance definition.
+ */
 struct _GsweTimestamp {
     /* Parent instance structure */
     GObject parent_instance;
@@ -70,6 +84,8 @@ struct _GsweTimestamp {
 /**
  * GsweTimestampClass:
  * @parent_class: the parent class structure (#GObjectClass)
+ *
+ * The GsweTimestamp object's class definition.
  */
 struct _GsweTimestampClass {
     /* Parent class */

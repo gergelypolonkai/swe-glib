@@ -381,6 +381,16 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp)
     g_warning("This method is not implemented yet.");
 }
 
+/**
+ * gswe_timestamp_set_instant_recalc:
+ * @timestamp: a GsweTimestamp
+ * @instant_recalc: the new value
+ * @err: a #GError
+ *
+ * Sets the value of the <link linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property. For details, see the
+ * property's description. @err is populated with calculation errors if
+ * @instant_recalc is TRUE and a calculation error happens.
+ */
 void
 gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp, gboolean instant_recalc, GError **err)
 {
@@ -397,6 +407,24 @@ gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp)
     return timestamp->priv->instant_recalc;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_year:
+ * @timestamp: a GsweTimestamp
+ * @year: the new Gregorian year
+ * @month: the new Gregorian month
+ * @day: the new Gregorian day
+ * @hour: the new hour value
+ * @minute: the new minute value
+ * @second: the new second value
+ * @microsecond: the new microsecond value
+ * @time_zone_offset: the time zone offset, in hours
+ * @err: a #GError
+ *
+ * Sets the Gregorian date of @timestamp. @err is populated with calculation
+ * errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset, GError **err)
 {
@@ -417,6 +445,15 @@ gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp, gint year, gint mont
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_set_gregorian_year:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_year: the new Gregorian year
+ * @err: a #GError
+ *
+ * Sets the Gregorian year of @timestamp. @err is populated with calculation
+ * errors if the <link linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is TRUE
+ */
 void
 gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year, GError **err)
 {
@@ -430,6 +467,14 @@ gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp, gint gregorian_year,
     gswe_timestamp_emit_changed(timestamp);
 }
 
+/**
+ * gswe_timestamp_get_gregorian_year:
+ * @timestamp: a GsweTimestamp
+ *
+ * Returns the Gregorian year of @timestamp.
+ *
+ * Returns: the year part of @timestamp's Gregorian Date value.
+ */
 gint
 gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp)
 {
@@ -438,6 +483,17 @@ gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_year;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_month:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_month: the new Gregorian month
+ * @err: a #GError
+ *
+ * Sets the Gregorian month of @timestamp. @err is populated with calculation
+ * errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp, gint gregorian_month, GError **err)
 {
@@ -459,6 +515,17 @@ gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_month;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_day:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_day: the new Gregorian day
+ * @err: a #GError
+ *
+ * Sets the Gregorian day of @timestamp. @err is populated with calculation
+ * errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp, gint gregorian_day, GError **err)
 {
@@ -480,6 +547,17 @@ gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_day;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_hour:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_hour: the new hour value
+ * @err: a #GError
+ *
+ * Sets the hour value of @timestamp, which may be modified by the time zone.
+ * @err is populated with calculation errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp, gint gregorian_hour, GError **err)
 {
@@ -501,6 +579,17 @@ gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_hour;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_minute:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_minute: the new minute value
+ * @err: a #GError
+ *
+ * Sets the minute value of @timestamp, which may be modified by the timezone.
+ * @err is populated with calculation errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp, gint gregorian_minute, GError **err)
 {
@@ -522,6 +611,17 @@ gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_minute;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_second:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_second: the new second value
+ * @err: a #GError
+ *
+ * Sets the second value of @timestamp, which may be modified by the timezone.
+ * @err is populated with calculation errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE.
+ */
 void
 gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp, gint gregorian_second, GError **err)
 {
@@ -543,6 +643,17 @@ gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_second;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_microsecond:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_microsecond: the new microsecond value
+ * @err: a #GError
+ *
+ * Sets the microsecond value of @timestamp. @err is populated with calculation
+ * errors if the <link
+ * linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property is
+ * TRUE
+ */
 void
 gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gregorian_microsecond, GError **err)
 {
@@ -564,6 +675,16 @@ gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp)
     return timestamp->priv->gregorian_microsecond;
 }
 
+/**
+ * gswe_timestamp_set_gregorian_timezone:
+ * @timestamp: a GsweTimestamp
+ * @gregorian_timezone_offset: the offset of the desired time zone, in hours
+ * @err: a #GError
+ *
+ * Sets the time zone used in Gregorian date calculations. @err is populated
+ * with calculation errors if the <link linkend="GsweTimestamp--instant-recalc">instant-recalc</link> property's value is TRUE and a
+ * calculation error happens.
+ */
 void
 gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregorian_timezone_offset, GError **err)
 {
@@ -617,6 +738,14 @@ gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err)
     }
 }
 
+/**
+ * gswe_timestamp_set_julian_day:
+ * @timestamp: A GsweTimestamp
+ * @julian_day: The Julian day number, with hours included as fractions
+ *
+ * Sets the Julian day value of the timestamp. The Gregorian date will be
+ * calculated as requested.
+ */
 void
 gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day)
 {
@@ -638,6 +767,13 @@ gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
     return timestamp->priv->julian_day;
 }
 
+/**
+ * gswe_timestamp_error_quark:
+ *
+ * Gets the GsweTimestamp Error Quark.
+ *
+ * Return value: a #GQuark
+ */
 G_DEFINE_QUARK(gswe-timestamp-error-quark, gswe_timestamp_error);
 
 /**

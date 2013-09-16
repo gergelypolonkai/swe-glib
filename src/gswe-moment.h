@@ -34,6 +34,13 @@ typedef struct _GsweMoment GsweMoment;
 typedef struct _GsweMomentClass GsweMomentClass;
 typedef struct _GsweMomentPrivate GsweMomentPrivate;
 
+/**
+ * GSWE_MOMENT_ERROR:
+ *
+ * Error domain for GsweMoment. Errors in this domain will be from
+ * #GsweMomentError enumeration. See #GError for more information on error
+ * domains.
+ */
 #define GSWE_MOMENT_ERROR gswe_moment_error_quark()
 GQuark gswe_moment_error_quark(void);
 
