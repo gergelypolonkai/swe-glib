@@ -6,7 +6,7 @@ Summary: A GLib style wrapper library around the Swiss Ephemeris library, create
 Group: Development/Libraries
 License: LGPLv3+
 URL: http://gergely.polonkai.eu/swe-glib/
-Source0: %{name}-%{version}.tar.gz
+Source: https://github.com/gergelypolonkai/%{name}/archive/v%{version}.tar.gz
 
 BuildRequires: pkgconfig
 BuildRequires: glib2-devel

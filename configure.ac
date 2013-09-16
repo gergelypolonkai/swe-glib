@@ -17,6 +17,7 @@ fi
 AC_SUBST([SWE_GLIB_MAJOR_VERSION], [swe_glib_major_version])
 AC_SUBST([SWE_GLIB_MINOR_VERSION], [swe_glib_minor_version])
 AC_SUBST([SWE_GLIB_MICRO_VERSION], [swe_glib_micro_version])
+AC_SUBST([SWE_GLIB_VERSION], [swe_glib_version])
 AC_SUBST([SWE_GLIB_API_VERSION], [swe_glib_api_version])
 AC_SUBST([SWE_GLIB_API_VERSION_U], [AS_TR_SH([swe_glib_api_version])])
 

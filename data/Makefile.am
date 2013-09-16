@@ -59,5 +59,7 @@ sweph_DATA = \
 	sweph-data/seplm54.se1 \
 	$(NULL)
 
-EXTRA_DIST = $(sweph_DATA)
+EXTRA_DIST = \
+			  $(sweph_DATA) \
+			  swe-glib-$(SWE_GLIB_VERSION).spec
 
