@@ -1,5 +1,5 @@
 Name: swe-glib
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 Summary: A GLib style wrapper library around the Swiss Ephemeris library, created by Astrodienst.
 
