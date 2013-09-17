@@ -1,6 +1,6 @@
 m4_define([swe_glib_major_version], [1])
 m4_define([swe_glib_minor_version], [0])
-m4_define([swe_glib_micro_version], [1])
+m4_define([swe_glib_micro_version], [2])
 m4_define([swe_glib_version], [swe_glib_major_version.swe_glib_minor_version.swe_glib_micro_version])
 m4_define([swe_glib_api_version], [swe_glib_major_version.0])
 
