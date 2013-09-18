@@ -721,6 +721,8 @@ gswe_moment_calculate_all_planets(GsweMoment *moment)
 GList *
 gswe_moment_get_all_planets(GsweMoment *moment)
 {
+    gswe_moment_calculate_all_planets(moment);
+
     return moment->priv->planet_list;
 }
 
