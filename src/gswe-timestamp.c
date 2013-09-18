@@ -765,7 +765,6 @@ void
 gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregorian_timezone_offset, GError **err)
 {
     timestamp->priv->gregorian_timezone_offset = gregorian_timezone_offset;
-    timestamp->priv->valid_dates = VALID_GREGORIAN;
 
     if (timestamp->priv->instant_recalc == TRUE) {
         gswe_timestamp_calculate_all(timestamp, err);
