@@ -535,6 +535,8 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 
         if ((house_data->sign = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER((gint)ceilf(cusps[i] / 30.0)))) == NULL) {
             g_list_free_full(moment->priv->house_list, g_free);
+            moment->priv->house_list = NULL;
+            moment->priv->house_revision = 0;
             g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_SIGN, "Calculation brought an unknown sign");
 
             return;
@@ -1061,6 +1063,7 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
 
     gswe_moment_calculate_all_planets(moment);
     g_list_free_full(moment->priv->aspect_list, g_free);
+    moment->priv->aspect_list = NULL;
 
     for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
         for (iplanet = moment->priv->planet_list; iplanet; iplanet = iplanet->next) {
@@ -1215,6 +1218,7 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
 
     gswe_moment_calculate_all_planets(moment);
     g_list_free_full(moment->priv->antiscia_list, g_free);
+    moment->priv->antiscia_list = NULL;
 
     for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
         for (iplanet = moment->priv->planet_list; iplanet; iplanet = iplanet->next) {
