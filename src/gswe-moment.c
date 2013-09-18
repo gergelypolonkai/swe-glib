@@ -1161,13 +1161,14 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
 }
 
 static gboolean
-find_antiscion(GsweAntiscionAxis *axis, GsweAntiscionAxisInfo *antiscion_info, GsweAntiscionData *antiscion_data)
+find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_info, GsweAntiscionData *antiscion_data)
 {
+    GsweAntiscionAxis axis;
     gdouble start_point,
             axis_position,
             planet_orb;
 
-    if (*axis == GSWE_ANTISCION_AXIS_NONE) {
+    if ((axis = GPOINTER_TO_INT(axis_p)) == GSWE_ANTISCION_AXIS_NONE) {
         return FALSE;
     }
 
@@ -1186,7 +1187,7 @@ find_antiscion(GsweAntiscionAxis *axis, GsweAntiscionAxisInfo *antiscion_info, G
 
     if ((antiscion_data->difference = fabs(antiscion_data->planet2->position - axis_position)) <= planet_orb) {
         antiscion_data->antiscion_info = antiscion_info;
-        antiscion_data->axis = *axis;
+        antiscion_data->axis = axis;
 
         return TRUE;
     } else {
