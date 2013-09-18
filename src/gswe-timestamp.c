@@ -94,6 +94,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GDateTime *local_time = g_date_time_new_now_local();
+    GTimeZone *local_timezone = g_time_zone_new_local();
 
     g_type_class_add_private(klass, sizeof(GsweTimestampPrivate));
 
@@ -118,7 +119,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * Otherwise, the values are recalculated only upon request (e.g. on
      * calling gswe_timestamp_get_julian_day()).
      */
-    g_object_class_install_property(gobject_class, PROP_INSTANT_RECALC, g_param_spec_boolean("instant-recalc", "Instant recalculation", "Instantly recalculate values upon parameter change", FALSE, G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_INSTANT_RECALC, g_param_spec_boolean("instant-recalc", "Instant recalculation", "Instantly recalculate values upon parameter change", FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-valid:
@@ -135,56 +136,56 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian year of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_YEAR, g_param_spec_int("gregorian-year", "Gregorian year", "The year according to the Gregorian calendar", G_MININT, G_MAXINT, g_date_time_get_year(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_YEAR, g_param_spec_int("gregorian-year", "Gregorian year", "The year according to the Gregorian calendar", G_MININT, G_MAXINT, g_date_time_get_year(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-month:
      *
      * The Gregorian month of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MONTH, g_param_spec_int("gregorian-month", "Gregorian month", "The month according to the Gregorian calendar", 1, 12, g_date_time_get_month(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MONTH, g_param_spec_int("gregorian-month", "Gregorian month", "The month according to the Gregorian calendar", 1, 12, g_date_time_get_month(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-day:
      *
      * The Gregorian day of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_DAY, g_param_spec_int("gregorian-day", "Gregorian day", "The day according to the Gregorian calendar", 1, 31, g_date_time_get_day_of_month(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_DAY, g_param_spec_int("gregorian-day", "Gregorian day", "The day according to the Gregorian calendar", 1, 31, g_date_time_get_day_of_month(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-hour:
      *
      * The Gregorian hour of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_HOUR, g_param_spec_int("gregorian-hour", "Gregorian hour", "The hour according to the Gregorian calendar", 0, 23, g_date_time_get_hour(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_HOUR, g_param_spec_int("gregorian-hour", "Gregorian hour", "The hour according to the Gregorian calendar", 0, 23, g_date_time_get_hour(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-minute:
      *
      * The Gregorian minute of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MINUTE, g_param_spec_int("gregorian-minute", "Gregorian minute", "The minute according to the Gregorian calendar", 0, 59, g_date_time_get_minute(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MINUTE, g_param_spec_int("gregorian-minute", "Gregorian minute", "The minute according to the Gregorian calendar", 0, 59, g_date_time_get_minute(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-second:
      *
      * The Gregorian second of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_SECOND, g_param_spec_int("gregorian-second", "Gregorian second", "The second according to the Gregorian calendar", 0, 61, g_date_time_get_second(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_SECOND, g_param_spec_int("gregorian-second", "Gregorian second", "The second according to the Gregorian calendar", 0, 61, g_date_time_get_second(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-microsecond:
      *
      * The Gregorian microsecond of the timestamp
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MICROSECOND, g_param_spec_int("gregorian-microsecond", "Gregorian microsecond", "The microsecond according to the Gregorian calendar", 0, G_MAXINT, g_date_time_get_microsecond(local_time), G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_MICROSECOND, g_param_spec_int("gregorian-microsecond", "Gregorian microsecond", "The microsecond according to the Gregorian calendar", 0, G_MAXINT, g_date_time_get_microsecond(local_time), G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:gregorian-timezone-offset:
      *
      * The time zone offset in hours, relative to UTC
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_TIMEZONE_OFFSET, g_param_spec_double("gregorian-timezone-offset", "Gregorian timezone offset", "The offset relative to UTC in the Gregorian calendar", -24.0, 24.0, 0.0, G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_GREGORIAN_TIMEZONE_OFFSET, g_param_spec_double("gregorian-timezone-offset", "Gregorian timezone offset", "The offset relative to UTC in the Gregorian calendar", -24.0, 24.0, g_time_zone_get_offset(local_timezone, 1) / 3600.0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
 
     /**
      * GsweTimestamp:julian-day-valid:
