@@ -58,5 +58,6 @@ AC_CONFIG_FILES([
     docs/reference/swe-glib/version.xml
     docs/reference/swe-glib/Makefile
     data/swe-glib.pc
+    data/swe-glib.spec
 ])
 AC_OUTPUT

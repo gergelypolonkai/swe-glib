@@ -80,6 +80,7 @@ src/gswe-enumtypes.c
 src/gswe-enumtypes.h
 src/gswetest
 /data/swe-glib.pc
+/data/swe-glib.spec
 
 # Documentation related files
 /docs/reference/*/*.args
