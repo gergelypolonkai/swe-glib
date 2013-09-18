@@ -61,5 +61,5 @@ sweph_DATA = \
 
 EXTRA_DIST = \
 			  $(sweph_DATA) \
-			  swe-glib-$(SWE_GLIB_VERSION).spec
+			  swe-glib.spec
 
