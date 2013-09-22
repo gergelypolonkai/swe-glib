@@ -106,17 +106,20 @@ GsweCoordinates
 GsweHouseData
 GsweAspectData
 GsweAntiscionData
+GsweMoonPhaseData
 <SUBSECTION Standard>
 GSWE_TYPE_ANTISCION_DATA
 GSWE_TYPE_ASPECT_DATA
 GSWE_TYPE_COORDINATES
 GSWE_TYPE_HOUSE_DATA
 GSWE_TYPE_PLANET_DATA
+GSWE_TYPE_MOON_PHASE_DATA
 gswe_antiscion_data_get_type
 gswe_aspect_data_get_type
 gswe_coordinates_get_type
 gswe_house_data_get_type
 gswe_planet_data_get_type
+gswe_moon_phase_data_get_type
 </SECTION>
 
 <SECTION>
