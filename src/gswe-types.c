@@ -17,18 +17,6 @@
  */
 #include "gswe-types.h"
 
-static GsweMoonPhaseData *
-gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data)
-{
-    GsweMoonPhaseData *ret = g_new0(GsweMoonPhaseData, 1);
-
-    ret->phase = moon_phase_data->phase;
-    ret->illumination = moon_phase_data->illumination;
-
-    return ret;
-}
-
-G_DEFINE_BOXED_TYPE(GsweMoonPhaseData, gswe_moon_phase_data, (GBoxedCopyFunc)gswe_moon_phase_data_copy, (GBoxedFreeFunc)g_free);
 
 static GswePlanetData *
 gswe_planet_data_copy(GswePlanetData *planet_data)

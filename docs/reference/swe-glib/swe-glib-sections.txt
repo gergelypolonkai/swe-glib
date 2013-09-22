@@ -44,6 +44,18 @@ gswe_moment_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-moon-phase-data</FILE>
+gswe_moon_phase_data_set_phase
+gswe_moon_phase_data_get_phase
+gswe_moon_phase_data_set_illumination
+gswe_moon_phase_data_get_illumination
+GsweMoonPhaseData
+<SUBSECTION Standard>
+GSWE_TYPE_MOON_PHASE_DATA
+gswe_moon_phase_data_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
 GSWE_TIMESTAMP_ERROR

@@ -4,9 +4,10 @@ AM_CPPFLAGS = -DG_LOG_DOMAIN=\"SWE-GLib\" -DLOCALEDIR=\"$(localedir)\" -D__SWE_G
 lib_LTLIBRARIES = libswe-glib-1.0.la
 
 INST_H_SRC_FILES = \
-	swe-glib.h     \
-	gswe-types.h   \
-	gswe-moment.h  \
+	swe-glib.h             \
+	gswe-types.h           \
+	gswe-moon-phase-data.h \
+	gswe-moment.h          \
 	gswe-timestamp.h
 
 INST_H_BUILT_FILES = \
@@ -15,11 +16,12 @@ INST_H_BUILT_FILES = \
 gswe_enum_headers = gswe-timestamp.h gswe-types.h
 
 libswe_glib_1_0_la_SOURCES = \
-	swe-glib.c       \
-	gswe-types.c     \
-	gswe-moment.c    \
-	gswe-timestamp.c \
-	gswe-enumtypes.c \
+	swe-glib.c             \
+	gswe-types.c           \
+	gswe-moon-phase-data.c \
+	gswe-moment.c          \
+	gswe-timestamp.c       \
+	gswe-enumtypes.c       \
 	$(NULL)
 libswe_glib_1_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
 libswe_glib_1_0_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
