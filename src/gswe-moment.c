@@ -419,7 +419,7 @@ gswe_moment_new(void)
  * @altitude: the altitude part of the coordinates, in meters. As also noted in
  *            the README, it is safe to pass a value of around 400.0, unless
  *            you want to create a *really* precise chart
- * @house_system: the house system you want to use. WARNING! Using GSWE_HOUSE_SYSTEM_NONE is currently a bad idea, the results are unpredicted
+ * @house_system: the house system you want to use
  *
  * Creates a new GsweMoment object with the timestamp, coordinates and house system set. This is the preferred way to create a GsweMoment object.
  *
@@ -437,10 +437,6 @@ gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitu
     moment->priv->coordinates.latitude = latitude;
     moment->priv->coordinates.altitude = altitude;
     moment->priv->house_system = house_system;
-
-    if (house_system == GSWE_HOUSE_SYSTEM_NONE) {
-        g_warning("Using GSWE_HOUSE_SYSTEM_NONE is unsafe. You have been warned!");
-    }
 
     return moment;
 }
@@ -505,6 +501,17 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
         return;
     }
 
+    g_list_free_full(moment->priv->house_list, g_free);
+    moment->priv->house_list = NULL;
+
+    // If no house system is set, we need no calculations at all. Just leave
+    // the list empty and return
+    if (moment->priv->house_system = GSWE_HOUSE_SYSTEM_NONE) {
+        moment->priv->house_revision = moment->priv->revision;
+
+        return;
+    }
+
     if ((house_system_data = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(moment->priv->house_system))) == NULL) {
         g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_HSYS, "Unknown house system");
 
@@ -518,9 +525,6 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
     }
 
     swe_houses(jd, moment->priv->coordinates.latitude, moment->priv->coordinates.longitude, house_system_data->sweph_id, cusps, ascmc);
-
-    g_list_free_full(moment->priv->house_list, g_free);
-    moment->priv->house_list = NULL;
 
     /* TODO: SWE house system 'G' (Gauquelin sector cusps) have 36 houses; we
      * should detect that somehow (house system 'G' is not implemented yet in
@@ -619,7 +623,7 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
     planet_data->planet_id = planet;
     planet_data->planet_info = planet_info;
     planet_data->position = 0.0;
-    planet_data->house = 1;
+    planet_data->house = 0;
     planet_data->sign = NULL;
     planet_data->revision = 0;
 
@@ -771,6 +775,11 @@ gswe_moment_get_house_planets(GsweMoment *moment, guint house)
 {
     GList *ret = NULL,
           *planet;
+
+    // If the house system is none, we always return NULL
+    if (moment->priv->house_system == GSWE_HOUSE_SYSTEM_NONE) {
+        return NULL;
+    }
 
     gswe_moment_calculate_all_planets(moment);
 
