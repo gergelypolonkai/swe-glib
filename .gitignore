@@ -95,7 +95,6 @@ src/gswetest
 /docs/reference/*/*-overrides.txt
 /docs/reference/*/*-undeclared.txt
 /docs/reference/*/version.xml
-/docs/reference/*/*-sections.txt
 /docs/reference/*/*-undocumented.txt
 /docs/reference/*/*-unused.txt
 /docs/reference/*/xml/
