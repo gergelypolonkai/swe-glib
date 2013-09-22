@@ -1,4 +1,5 @@
-/*
+/* gswe-moon-phase-data-private.h: Private parts of GsweMoonPhaseData
+ *
  * Copyright © 2013  Gergely Polonkai
  *
  * SWE-GLib is free software: you can redistribute it and/or modify
@@ -15,23 +16,23 @@
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 #ifdef __SWE_GLIB_BUILDING__
-#ifndef __SWE_GLIB_PRIVATE_H__
+#ifndef __SWE_GLIB_GSWE_MOON_PHASE_DATA_PRIVATE_H__
+#define __SWE_GLIB_GSWE_MOON_PHASE_DATA_PRIVATE_H__
 
-#include "gswe-timestamp.h"
+#include "gswe-moon-phase-data.h"
 #include "gswe-types.h"
-#include "gswe-moon-phase-data-private.h"
 
-extern gchar *gswe_ephe_path;
-extern GsweTimestamp *gswe_full_moon_base_date;
-extern GHashTable *gswe_planet_info_table;
-extern GHashTable *gswe_sign_info_table;
-extern GHashTable *gswe_house_system_info_table;
-extern GHashTable *gswe_aspect_info_table;
-extern GHashTable *gswe_antiscion_info_table;
+struct _GsweMoonPhaseData {
+    /* the actual phase of the Moon */
+    GsweMoonPhase phase;
 
-GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
+    /* the illumination percentage of the Moon */
+    gdouble illumination;
+};
 
-#endif /* __SWE_GLIB_PRIVATE_H__ */
+GsweMoonPhaseData *gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data);
+
+#endif /* __SWE_GLIB_GSWE_MOON_PHASE_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */
 #error __FILE__ "Can not be included, unless building SWE-GLib"
 #endif /* __SWE_GLIB_BUILDING__ */

@@ -354,21 +354,6 @@ typedef struct {
 } GsweAntiscionAxisInfo;
 
 /**
- * GsweMoonPhaseData:
- * @phase: the current phase of the Moon
- * @illumination: the portion of the Moon that is currently illuminated
- *
- * Holds information of a Moon phase.
- */
-typedef struct {
-    GsweMoonPhase phase;
-    gdouble illumination;
-} GsweMoonPhaseData;
-
-GType gswe_moon_phase_data_get_type(void);
-#define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())
-
-/**
  * GswePlanetData:
  * @planet_id: A GswePlanet, the identifier of the planet
  * @planet_info: A GswePlanetInfo structure, holding every information about the planet
