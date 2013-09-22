@@ -506,7 +506,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 
     // If no house system is set, we need no calculations at all. Just leave
     // the list empty and return
-    if (moment->priv->house_system = GSWE_HOUSE_SYSTEM_NONE) {
+    if (moment->priv->house_system == GSWE_HOUSE_SYSTEM_NONE) {
         moment->priv->house_revision = moment->priv->revision;
 
         return;
