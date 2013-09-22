@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef __SWE_GLIB_GSWE_PLANETS_H__
-#define __SWE_GLIB_GSWE_PLANETS_H__
+#ifndef __SWE_GLIB_GSWE_TYPES_H__
+#define __SWE_GLIB_GSWE_TYPES_H__
 
 #include <glib.h>
 #include <glib-object.h>
@@ -474,5 +474,5 @@ typedef struct {
 GType gswe_antiscion_data_get_type(void);
 #define GSWE_TYPE_ANTISCION_DATA (gswe_antiscion_data_get_type())
 
-#endif /* __SWE_GLIB_GSWE_PLANETS_H__ */
+#endif /* __SWE_GLIB_GSWE_TYPES_H__ */
 
