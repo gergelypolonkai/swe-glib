@@ -12,7 +12,7 @@ INST_H_SRC_FILES = \
 INST_H_BUILT_FILES = \
 	gswe-enumtypes.h
 
-gswe_headers = gswe-timestamp.h gswe-types.h
+gswe_enum_headers = gswe-timestamp.h gswe-types.h
 
 libswe_glib_1_0_la_SOURCES = \
 	swe-glib.c       \
@@ -30,11 +30,11 @@ CLEANFILES = $(BUILT_SOURCES)
 
 EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template swe-glib-private.h $(INST_H_SRC_FILES)
 
-gswe-enumtypes.h: $(gswe_headers) gswe-enumtypes.h.template
+gswe-enumtypes.h: $(gswe_enum_headers) gswe-enumtypes.h.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \
 	gswe-enumtypes.h.tmp && mv gswe-enumtypes.h.tmp gswe-enumtypes.h
 
-gswe-enumtypes.c: $(gswe_headers) gswe-enumtypes.h gswe-enumtypes.c.template
+gswe-enumtypes.c: $(gswe_enum_headers) gswe-enumtypes.h gswe-enumtypes.c.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \
 	gswe-enumtypes.c.tmp && mv gswe-enumtypes.c.tmp gswe-enumtypes.c
 
