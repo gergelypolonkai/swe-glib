@@ -109,3 +109,7 @@ The size of all data files provided by Astrodienst is around 40MB. Although it s
 ### Fixed stars are not known yet
 
 Although Swiss Ephemeris has the functionality to calculate the position of fixed stars, SWE-GLib doesn't provide such functionality. This, however, is a planned feature for the close future.
+
+## Licencing
+
+As the underlying Swiss Ephemeris is published under GPL (or a commercial license I can not afford), SWE-GLib is also uses that. This means that you can currently use SWE-GLib in software published under the GNU GPL v3.
