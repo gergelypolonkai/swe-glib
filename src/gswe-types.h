@@ -223,6 +223,7 @@ typedef enum {
 
 /**
  * GsweMoonPhase:
+ * @GSWE_MOON_PHASE_NONE: Moon phase is not defined
  * @GSWE_MOON_PHASE_NEW: New Moon
  * @GSWE_MOON_PHASE_WAXING_CRESCENT: Waxing crescent Moon
  * @GSWE_MOON_PHASE_WAXING_HALF: First half
@@ -236,6 +237,7 @@ typedef enum {
  * The phases of the Moon.
  */
 typedef enum {
+    GSWE_MOON_PHASE_NONE,
     GSWE_MOON_PHASE_NEW,
     GSWE_MOON_PHASE_WAXING_CRESCENT,
     GSWE_MOON_PHASE_WAXING_HALF,
