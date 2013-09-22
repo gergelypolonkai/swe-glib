@@ -477,8 +477,8 @@ gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble p
 
     // If position happens to be exactly 0, this calculation yields
     // GSWE_SIGN_NONE, but should be GSWE_SIGN_ARIES
-    if (sign == 0) {
-        sign = 1;
+    if (sign == GSWE_SIGN_NONE) {
+        sign = GSWE_SIGN_ARIES;
     }
 
     if ((sign_info = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER(sign))) == NULL) {
