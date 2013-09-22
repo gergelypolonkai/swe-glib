@@ -520,6 +520,8 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 
     jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
 
+    // If Julian Day calculation yields error, we don't do anything. err is
+    // already filled with the error message, so let's just return
     if ((err) && (*err)) {
         return;
     }
@@ -550,6 +552,8 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 
     moment->priv->house_revision = moment->priv->revision;
 
+    // The Ascendent, MC and Vertex points are also calculated by swe_houses(),
+    // so let's update them.
     if (gswe_moment_has_planet(moment, GSWE_PLANET_ASCENDENT)) {
         gswe_calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0], err);
     }
@@ -615,6 +619,10 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
     }
 
     if ((planet_info = g_hash_table_lookup(gswe_planet_info_table, GINT_TO_POINTER(planet))) == NULL) {
+        // TODO: Some real error checking should be done here, like checking if
+        // @planet is really from GswePlanet. If so, that is a fatal error.
+        // Otherwise, the developer erred, and a warning may be still issued.
+        // Also, a GError ** should be added to the parameters.
         g_warning("Unknown planet ID: %d", planet);
 
         return;
@@ -669,6 +677,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
         return;
     }
 
+    // TODO: This function should know about Ascendant, MC and Vertex, so it could calculate their positions, too
     if (planet_data->planet_info->real_body == FALSE) {
         g_warning("The position data of planet %d can not be calculated by this function", planet);
 
