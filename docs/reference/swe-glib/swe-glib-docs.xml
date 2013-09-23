@@ -19,6 +19,7 @@
   <chapter>
     <title>SWE-GLib</title>
     <xi:include href="xml/gswe-types.xml"/>
+    <xi:include href="xml/gswe-planet-info.xml" />
     <xi:include href="xml/gswe-planet-data.xml" />
     <xi:include href="xml/gswe-moon-phase-data.xml"/>
     <xi:include href="xml/gswe-aspect-data.xml" />

@@ -250,44 +250,6 @@ typedef enum {
 } GsweMoonPhase;
 
 /**
- * GswePlanetInfo:
- * @planet:          the planet ID
- * @sweph_id:        the planet ID according to the Swiss Ephemeris libarary
- *                   (or -1, if the planet has no such ID)
- * @real_body:       TRUE if the planet is a "real" celestial body on the sky.
- *                   Please note that this will be true for Dark Moon (Lilith).
- *                   Everything that has a planet ID in Swiss Ephemeris is
- *                   treated as a real celestial body.
- * @orb:             the planet's “personal” orb
- * @name:            the planet's name
- * @points:          the value this planet counts in the element/quality points
- *                   table
- * @domicile_sign_1: the first sign in which the planet is domicile
- * @domicile_sign_2: the second sign in which the planet is domicile
- * @exile_sign_1:    the first sign in which the planet is in exile
- * @exile_sign_2:    the second sign in which the planet is in exile
- * @exalted_sign:    the sign in which the planet is exalted
- * @fall_sign:       the sign in which the planet is in fall
- *
- * This struct holds different informations of planets. You should never modify
- * such a structure unless you really know what you are doing.
- */
-typedef struct {
-    GswePlanet planet;
-    gint sweph_id;
-    gboolean real_body;
-    gdouble orb;
-    gchar *name;
-    gint points;
-    GsweZodiac domicile_sign_1;
-    GsweZodiac domicile_sign_2;
-    GsweZodiac exile_sign_1;
-    GsweZodiac exile_sign_2;
-    GsweZodiac exalted_sign;
-    GsweZodiac fall_sign;
-} GswePlanetInfo;
-
-/**
  * GsweSignInfo:
  * @sign_id: the identifier for this sign
  * @name: the name of this sign

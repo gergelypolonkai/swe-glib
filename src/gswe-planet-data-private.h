@@ -20,6 +20,7 @@
 #define __SWE_GLIB_GSWE_PLANET_DATA_PRIVATE_H__
 
 #include "gswe-planet-data.h"
+#include "gswe-planet-info.h"
 
 struct _GswePlanetData {
     /* A GswePlanet, the identifier of the planet */
