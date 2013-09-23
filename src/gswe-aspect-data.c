@@ -22,7 +22,7 @@
 
 /**
  * SECTION:gswe-aspect-data
- * @short_description: Aspect related data
+ * @short_description: a structure representing an aspect between two planets
  * @title: GsweAspectData
  * @stability: Stable
  * @include: swe-glib.h
