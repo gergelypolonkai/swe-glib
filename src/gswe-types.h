@@ -318,26 +318,6 @@ typedef struct {
 } GsweHouseSystemInfo;
 
 /**
- * GsweAspectInfo:
- * @aspect: the identifier of this aspect
- * @name: the name of the aspect
- * @size: the size of the aspect, in degrees
- * @orb_modifier: the modifier of the orb (the maximum allowable difference from an exact orb)
- * @harmonic: shows whether this aspect is harmonic or not
- * @major: shows whether this aspect is major (Ptolemaic) or not
- *
- * Holds informations about the aspects known by SWE-GLib.
- */
-typedef struct {
-    GsweAspect aspect;
-    gchar *name;
-    guint size;
-    guint orb_modifier;
-    gboolean harmonic;
-    gboolean major;
-} GsweAspectInfo;
-
-/**
  * GsweAntiscionAxisInfo:
  * @axis_id: the identifier of this mirror's axis
  * @start_sign: represents the sign in whict the mirror axis starts

@@ -70,6 +70,20 @@ gswe_planet_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-aspect-info</FILE>
+GsweAspectInfo
+gswe_aspect_info_get_aspect
+gswe_aspect_info_get_harmonic
+gswe_aspect_info_get_major
+gswe_aspect_info_get_name
+gswe_aspect_info_get_orb_modifier
+gswe_aspect_info_get_size
+<SUBSECTION Standard>
+GSWE_TYPE_ASPECT_INFO
+gswe_aspect_info_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-aspect-data</FILE>
 GsweAspectData
 gswe_aspect_data_get_planet1
@@ -139,7 +153,6 @@ GsweMoonPhase
 GswePlanetInfo
 GsweSignInfo
 GsweHouseSystemInfo
-GsweAspectInfo
 GsweAntiscionAxisInfo
 GsweCoordinates
 GsweHouseData

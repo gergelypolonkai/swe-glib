@@ -1,4 +1,5 @@
-/*
+/* gswe-aspect-info-private.h: Private parts of GsweAspectInfo
+ *
  * Copyright © 2013  Gergely Polonkai
  *
  * SWE-GLib is free software: you can redistribute it and/or modify
@@ -15,26 +16,36 @@
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 #ifdef __SWE_GLIB_BUILDING__
-#ifndef __SWE_GLIB_PRIVATE_H__
+#ifndef __SWE_GLIB_GSWE_ASPECT_INFO_PRIVATE_H__
+#define __SWE_GLIB_GSWE_ASPECT_INFO_PRIVATE_H__
 
-#include "gswe-timestamp.h"
 #include "gswe-types.h"
-#include "gswe-moon-phase-data-private.h"
-#include "gswe-planet-data-private.h"
-#include "gswe-aspect-info-private.h"
-#include "gswe-aspect-data-private.h"
+#include "gswe-aspect-info.h"
 
-extern gchar *gswe_ephe_path;
-extern GsweTimestamp *gswe_full_moon_base_date;
-extern GHashTable *gswe_planet_info_table;
-extern GHashTable *gswe_sign_info_table;
-extern GHashTable *gswe_house_system_info_table;
-extern GHashTable *gswe_aspect_info_table;
-extern GHashTable *gswe_antiscion_info_table;
+struct _GsweAspectInfo {
+    /* the identifier of this aspect */
+    GsweAspect aspect;
 
-GsweCoordinates *gswe_coordinates_copy(GsweCoordinates *coordinates);
+    /* the name of the aspect */
+    gchar *name;
 
-#endif /* __SWE_GLIB_PRIVATE_H__ */
+    /* the size of the aspect, in degrees */
+    guint size;
+
+    /* the modifier of the orb (the maximum allowable difference from an exact orb) */
+    gdouble orb_modifier;
+
+    /* shows whether this aspect is harmonic or not */
+    gboolean harmonic;
+
+    /* shows whether this aspect is major (Ptolemaic) or not */
+    gboolean major;
+};
+
+void gswe_aspect_info_free(GsweAspectInfo *aspect_info);
+GsweAspectInfo *gswe_aspect_info_copy(GsweAspectInfo *aspect_info);
+
+#endif /* __SWE_GLIB_GSWE_ASPECT_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */
 #error __FILE__ "Can not be included, unless building SWE-GLib"
 #endif /* __SWE_GLIB_BUILDING__ */
