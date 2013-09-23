@@ -28,6 +28,7 @@
 #include "gswe-aspect-data.h"
 #include "gswe-antiscion-axis-info.h"
 #include "gswe-antiscion-data.h"
+#include "gswe-house-system-info.h"
 #include "gswe-timestamp.h"
 #include "gswe-moment.h"
 #include "gswe-enumtypes.h"

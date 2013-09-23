@@ -14,6 +14,7 @@ INST_H_SRC_FILES = \
 	gswe-aspect-data.h         \
 	gswe-antiscion-axis-info.h \
 	gswe-antiscion-data.h      \
+	gswe-house-system-info.h   \
 	gswe-moment.h              \
 	gswe-timestamp.h           \
 	$(NULL)
@@ -34,6 +35,7 @@ libswe_glib_1_0_la_SOURCES = \
 	gswe-aspect-data.c         \
 	gswe-antiscion-axis-info.c \
 	gswe-antiscion-data.c      \
+	gswe-house-system-info.c   \
 	gswe-moment.c              \
 	gswe-timestamp.c           \
 	gswe-enumtypes.c           \

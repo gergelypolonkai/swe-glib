@@ -149,6 +149,17 @@ gswe_antiscion_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-house-system-info</FILE>
+GsweHouseSystemInfo
+gswe_house_system_info_get_house_system
+gswe_house_system_info_get_name
+gswe_house_system_info_get_sweph_id
+<SUBSECTION Standard>
+GSWE_TYPE_HOUSE_SYSTEM_INFO
+gswe_house_system_info_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
 GSWE_TIMESTAMP_ERROR
@@ -201,7 +212,6 @@ GsweElement
 GsweQuality
 GsweHouseSystem
 GsweMoonPhase
-GsweHouseSystemInfo
 GsweCoordinates
 GsweHouseData
 <SUBSECTION Standard>

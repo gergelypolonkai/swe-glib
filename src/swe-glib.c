@@ -63,7 +63,7 @@ GsweTimestamp *gswe_full_moon_base_date;
 
 #define ADD_HOUSE_SYSTEM(ht, v, i, s, n) \
     (v) = g_new0(GsweHouseSystemInfo, 1); \
-    (v)->system = i; \
+    (v)->house_system = i; \
     (v)->sweph_id = s; \
     (v)->name = g_strdup(n); \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));

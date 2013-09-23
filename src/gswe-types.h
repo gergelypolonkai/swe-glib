@@ -250,20 +250,6 @@ typedef enum {
 } GsweMoonPhase;
 
 /**
- * GsweHouseSystemInfo:
- * @system: the house system's ID
- * @sweph_id: the character value that represents this house system in the Swiss Ephemeris library
- * @name: the name of this house system
- *
- * Holds information about house systems known by SWE-GLib.
- */
-typedef struct {
-    GsweHouseSystem system;
-    gchar sweph_id;
-    gchar *name;
-} GsweHouseSystemInfo;
-
-/**
  * GsweCoordinates:
  * @longitude: longitude part of the coordinates
  * @latitude: latitude part of the coordinates
