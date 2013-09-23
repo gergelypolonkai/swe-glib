@@ -25,7 +25,7 @@
  * @short_description: a structure representing the phase of the Moon
  * @title: GsweMoonPhaseData
  * @stability: Stable
- * @include: swe-glib/swe-glib.h
+ * @include: swe-glib.h
  * @see_also: #GsweMoonPhase
  *
  * #GsweMoonPhaseData is a structure that represents the actual phase of the
