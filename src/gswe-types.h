@@ -415,30 +415,6 @@ GType gswe_house_data_get_type(void);
 #define GSWE_TYPE_HOUSE_DATA (gswe_house_data_get_type())
 
 /**
- * GsweAspectData:
- * @planet1: the first planet in the aspect
- * @planet2: the second planet in the aspect
- * @distance: the distance between the two planets, in degrees
- * @aspect: the aspect between the two planets
- * @aspect_info: the #GsweAspectInfo structure associated with the aspect
- * @difference: the difference in percent between an exact aspect and this
- *              given aspect
- *
- * Holds information about a given aspect.
- */
-typedef struct {
-    GswePlanetData *planet1;
-    GswePlanetData *planet2;
-    gdouble distance;
-    GsweAspect aspect;
-    GsweAspectInfo *aspect_info;
-    gdouble difference;
-} GsweAspectData;
-
-GType gswe_aspect_data_get_type(void);
-#define GSWE_TYPE_ASPECT_DATA (gswe_aspect_data_get_type())
-
-/**
  * GsweAntiscionData:
  * @planet1: the first planet in the antiscion
  * @planet2: the second planet in the antiscion

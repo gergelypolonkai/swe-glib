@@ -20,6 +20,7 @@
     <title>SWE-GLib</title>
     <xi:include href="xml/gswe-types.xml"/>
     <xi:include href="xml/gswe-moon-phase-data.xml"/>
+    <xi:include href="xml/gswe-aspect-data.xml" />
     <xi:include href="xml/swe-glib.xml"/>
     <xi:include href="xml/gswe-moment.xml"/>
     <xi:include href="xml/gswe-timestamp.xml"/>

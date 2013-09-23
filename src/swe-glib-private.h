@@ -20,6 +20,7 @@
 #include "gswe-timestamp.h"
 #include "gswe-types.h"
 #include "gswe-moon-phase-data-private.h"
+#include "gswe-aspect-data-private.h"
 
 extern gchar *gswe_ephe_path;
 extern GsweTimestamp *gswe_full_moon_base_date;

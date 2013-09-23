@@ -56,6 +56,20 @@ gswe_moon_phase_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-aspect-data</FILE>
+GsweAspectData
+gswe_aspect_data_get_planet1
+gswe_aspect_data_get_planet2
+gswe_aspect_data_get_distance
+gswe_aspect_data_get_aspect
+gswe_aspect_data_get_aspect_info
+gswe_aspect_data_get_difference
+<SUBSECTION Standard>
+GSWE_TYPE_ASPECT_DATA
+gswe_aspect_data_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
 GSWE_TIMESTAMP_ERROR
@@ -116,16 +130,13 @@ GsweAntiscionAxisInfo
 GswePlanetData
 GsweCoordinates
 GsweHouseData
-GsweAspectData
 GsweAntiscionData
 <SUBSECTION Standard>
 GSWE_TYPE_ANTISCION_DATA
-GSWE_TYPE_ASPECT_DATA
 GSWE_TYPE_COORDINATES
 GSWE_TYPE_HOUSE_DATA
 GSWE_TYPE_PLANET_DATA
 gswe_antiscion_data_get_type
-gswe_aspect_data_get_type
 gswe_coordinates_get_type
 gswe_house_data_get_type
 gswe_planet_data_get_type

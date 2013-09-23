@@ -21,6 +21,7 @@
 
 #include "../swe/src/swephexp.h"
 #include "swe-glib.h"
+#include "swe-glib-private.h"
 
 /**
  * SECTION:swe-glib
