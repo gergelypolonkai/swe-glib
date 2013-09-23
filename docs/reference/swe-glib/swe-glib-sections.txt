@@ -160,6 +160,17 @@ gswe_house_system_info_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-house-data</FILE>
+GsweHouseData
+gswe_house_data_get_cusp_position
+gswe_house_data_get_house
+gswe_house_data_get_sign
+<SUBSECTION Standard>
+GSWE_TYPE_HOUSE_DATA
+gswe_house_data_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
 GSWE_TIMESTAMP_ERROR
@@ -213,12 +224,9 @@ GsweQuality
 GsweHouseSystem
 GsweMoonPhase
 GsweCoordinates
-GsweHouseData
 <SUBSECTION Standard>
 GSWE_TYPE_COORDINATES
-GSWE_TYPE_HOUSE_DATA
 gswe_coordinates_get_type
-gswe_house_data_get_type
 </SECTION>
 
 <SECTION>

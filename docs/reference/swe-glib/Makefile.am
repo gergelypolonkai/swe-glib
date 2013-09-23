@@ -70,6 +70,7 @@ IGNORE_HFILES = \
 				gswe-antiscion-axis-info-private.h \
 				gswe-antiscion-data-private.h      \
 				gswe-house-system-info-private.h   \
+				gswe-house-data-private.h          \
 				$(NULL)
 
 # Images to copy into HTML directory.

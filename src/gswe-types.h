@@ -266,24 +266,5 @@ typedef struct _GsweCoordinates {
 GType gswe_coordinates_get_type(void);
 #define GSWE_TYPE_COORDINATES (gswe_coordinates_get_type())
 
-/**
- * GsweHouseData:
- * @house: the number of the house (usually in the range [1;12]. Sometimes may
- *         be [1;36].
- * @cusp_position: the position of the house's cusp on the sky
- * @sign: the #GsweSignInfo structure associated with the sign in which the
- *        house cusp is in
- *
- * Holds information of a given house.
- */
-typedef struct {
-    guint house;
-    gdouble cusp_position;
-    GsweSignInfo *sign;
-} GsweHouseData;
-
-GType gswe_house_data_get_type(void);
-#define GSWE_TYPE_HOUSE_DATA (gswe_house_data_get_type())
-
 #endif /* __SWE_GLIB_GSWE_TYPES_H__ */
 

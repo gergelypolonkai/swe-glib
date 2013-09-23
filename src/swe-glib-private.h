@@ -28,6 +28,7 @@
 #include "gswe-antiscion-axis-info-private.h"
 #include "gswe-antiscion-data-private.h"
 #include "gswe-house-system-info-private.h"
+#include "gswe-house-data-private.h"
 
 extern gchar *gswe_ephe_path;
 extern GsweTimestamp *gswe_full_moon_base_date;
