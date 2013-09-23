@@ -23,6 +23,7 @@
     <xi:include href="xml/gswe-moon-phase-data.xml"/>
     <xi:include href="xml/gswe-aspect-data.xml" />
     <xi:include href="xml/gswe-aspect-info.xml" />
+    <xi:include href="xml/gswe-antiscion-data.xml" />
     <xi:include href="xml/swe-glib.xml"/>
     <xi:include href="xml/gswe-moment.xml"/>
     <xi:include href="xml/gswe-timestamp.xml"/>

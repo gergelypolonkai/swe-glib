@@ -9,6 +9,7 @@ INST_H_SRC_FILES = \
 	gswe-moon-phase-data.h \
 	gswe-aspect-info.h     \
 	gswe-aspect-data.h     \
+	gswe-antiscion-data.h  \
 	gswe-planet-data.h     \
 	gswe-moment.h          \
 	gswe-timestamp.h
@@ -25,6 +26,7 @@ libswe_glib_1_0_la_SOURCES = \
 	gswe-planet-data.c     \
 	gswe-aspect-info.c     \
 	gswe-aspect-data.c     \
+	gswe-antiscion-data.c  \
 	gswe-moment.c          \
 	gswe-timestamp.c       \
 	gswe-enumtypes.c       \

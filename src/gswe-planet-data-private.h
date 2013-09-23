@@ -50,3 +50,4 @@ GswePlanetData *gswe_planet_data_copy(GswePlanetData *planet_data);
 #else /* not defined __SWE_GLIB_BUILDING__ */
 #error __FILE__ "Can not be included, unless building SWE-GLib"
 #endif /* __SWE_GLIB_BUILDING__ */
+

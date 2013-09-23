@@ -1176,7 +1176,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
 }
 
 static gboolean
-find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_info, GsweAntiscionData *antiscion_data)
+find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionData *antiscion_data)
 {
     GsweAntiscionAxis axis;
     gdouble start_point,
@@ -1188,9 +1188,9 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_info, GsweAntis
     }
 
     planet_orb = fmin(antiscion_data->planet1->planet_info->orb, antiscion_data->planet2->planet_info->orb);
-    start_point = (antiscion_info->start_sign->sign_id - 1) * 30.0;
+    start_point = (antiscion_axis_info->start_sign->sign_id - 1) * 30.0;
 
-    if (antiscion_info->middle_axis == TRUE) {
+    if (antiscion_axis_info->middle_axis == TRUE) {
         start_point += 15.0;
     }
 
@@ -1201,7 +1201,7 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_info, GsweAntis
     }
 
     if ((antiscion_data->difference = fabs(antiscion_data->planet2->position - axis_position)) <= planet_orb) {
-        antiscion_data->antiscion_info = antiscion_info;
+        antiscion_data->antiscion_axis_info = antiscion_axis_info;
         antiscion_data->axis = axis;
 
         return TRUE;
@@ -1259,10 +1259,10 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
             antiscion_data->planet2 = inner_planet;
             antiscion_data->axis = GSWE_ANTISCION_AXIS_NONE;
 
-            (void)g_hash_table_find(gswe_antiscion_info_table, (GHRFunc)find_antiscion, antiscion_data);
+            (void)g_hash_table_find(gswe_antiscion_axis_info_table, (GHRFunc)find_antiscion, antiscion_data);
 
             if (antiscion_data->axis == GSWE_ANTISCION_AXIS_NONE) {
-                antiscion_data->antiscion_info = g_hash_table_lookup(gswe_antiscion_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
+                antiscion_data->antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
             }
 
             moment->priv->antiscia_list = g_list_prepend(moment->priv->antiscia_list, antiscion_data);

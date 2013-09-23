@@ -98,6 +98,19 @@ gswe_aspect_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-antiscion-data</FILE>
+GsweAntiscionData
+gswe_antiscion_data_get_antiscion_axis_info
+gswe_antiscion_data_get_axis
+gswe_antiscion_data_get_difference
+gswe_antiscion_data_get_planet1
+gswe_antiscion_data_get_planet2
+<SUBSECTION Standard>
+GSWE_TYPE_ANTISCION_DATA
+gswe_antiscion_data_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
 GSWE_TIMESTAMP_ERROR
@@ -156,12 +169,9 @@ GsweHouseSystemInfo
 GsweAntiscionAxisInfo
 GsweCoordinates
 GsweHouseData
-GsweAntiscionData
 <SUBSECTION Standard>
-GSWE_TYPE_ANTISCION_DATA
 GSWE_TYPE_COORDINATES
 GSWE_TYPE_HOUSE_DATA
-gswe_antiscion_data_get_type
 gswe_coordinates_get_type
 gswe_house_data_get_type
 </SECTION>

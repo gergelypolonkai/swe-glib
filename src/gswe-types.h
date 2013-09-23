@@ -369,28 +369,5 @@ typedef struct {
 GType gswe_house_data_get_type(void);
 #define GSWE_TYPE_HOUSE_DATA (gswe_house_data_get_type())
 
-/**
- * GsweAntiscionData:
- * @planet1: the first planet in the antiscion
- * @planet2: the second planet in the antiscion
- * @axis: the axis on which this antiscion is
- * @antiscion_info: the #GsweAntiscionAxisInfo structure associated with this
- *                  antiscion
- * @difference: the difference in degrees between an exact antiscion and this
- *              given antiscion
- *
- * Holds information about a given antiscion.
- */
-typedef struct {
-    GswePlanetData *planet1;
-    GswePlanetData *planet2;
-    GsweAntiscionAxis axis;
-    GsweAntiscionAxisInfo *antiscion_info;
-    gdouble difference;
-} GsweAntiscionData;
-
-GType gswe_antiscion_data_get_type(void);
-#define GSWE_TYPE_ANTISCION_DATA (gswe_antiscion_data_get_type())
-
 #endif /* __SWE_GLIB_GSWE_TYPES_H__ */
 

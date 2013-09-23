@@ -46,18 +46,3 @@ gswe_house_data_copy(GsweHouseData *house_data)
 
 G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_copy, (GBoxedFreeFunc)g_free);
 
-static GsweAntiscionData *
-gswe_antiscion_data_copy(GsweAntiscionData *antiscion_data)
-{
-    GsweAntiscionData *ret = g_new0(GsweAntiscionData, 1);
-
-    ret->planet1 = antiscion_data->planet1;
-    ret->planet2 = antiscion_data->planet2;
-    ret->axis = antiscion_data->axis;
-    ret->antiscion_info = antiscion_data->antiscion_info;
-    ret->difference = antiscion_data->difference;
-
-    return ret;
-}
-
-G_DEFINE_BOXED_TYPE(GsweAntiscionData, gswe_antiscion_data, (GBoxedCopyFunc)gswe_antiscion_data_copy, (GBoxedFreeFunc)g_free);

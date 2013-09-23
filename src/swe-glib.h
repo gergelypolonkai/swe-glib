@@ -24,6 +24,7 @@
 #include "gswe-planet-data.h"
 #include "gswe-aspect-info.h"
 #include "gswe-aspect-data.h"
+#include "gswe-antiscion-data.h"
 #include "gswe-timestamp.h"
 #include "gswe-moment.h"
 #include "gswe-enumtypes.h"
