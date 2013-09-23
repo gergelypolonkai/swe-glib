@@ -16,10 +16,6 @@
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 #include "swe-glib.h"
-#include "gswe-types.h"
-#include "gswe-aspect-data.h"
-#include "gswe-aspect-data-private.h"
-#include "gswe-moment.h"
 #include "swe-glib-private.h"
 
 #include "../swe/src/swephexp.h"
