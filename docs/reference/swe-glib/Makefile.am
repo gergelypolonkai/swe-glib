@@ -65,6 +65,7 @@ IGNORE_HFILES = \
 				gswe-planet-data-private.h         \
 				gswe-aspect-info-private.h         \
 				gswe-aspect-data-private.h         \
+				gswe-antiscion-axis-info-private.h \
 				gswe-antiscion-data-private.h      \
 				$(NULL)
 

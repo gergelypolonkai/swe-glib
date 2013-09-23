@@ -318,22 +318,6 @@ typedef struct {
 } GsweHouseSystemInfo;
 
 /**
- * GsweAntiscionAxisInfo:
- * @axis_id: the identifier of this mirror's axis
- * @start_sign: represents the sign in whict the mirror axis starts
- * @name: the name of the mirror
- * @middle_axis: if TRUE, the axis runs through the middle of its starting sign
- *
- * Holds information of antiscion axes.
- */
-typedef struct {
-    GsweAntiscionAxis axis_id;
-    GsweSignInfo *start_sign;
-    gchar *name;
-    gboolean middle_axis;
-} GsweAntiscionAxisInfo;
-
-/**
  * GsweCoordinates:
  * @longitude: longitude part of the coordinates
  * @latitude: latitude part of the coordinates

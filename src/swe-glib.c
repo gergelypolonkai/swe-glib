@@ -82,10 +82,10 @@ GsweTimestamp *gswe_full_moon_base_date;
 
 #define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) (v) = g_new0(GsweAntiscionAxisInfo, 1); \
                                                (vs) = g_hash_table_lookup((hts), GINT_TO_POINTER(i)); \
-                                               (v)->axis_id = (i); \
+                                               (v)->axis = (i); \
                                                (v)->start_sign = (vs); \
                                                (v)->name = g_strdup(n); \
-                                               (v)->middle_axis = m; \
+                                               (v)->sign_offset = m; \
                                                g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 void
 gswe_free_planet_info(gpointer planet_info)
@@ -204,11 +204,11 @@ gswe_init(void)
 
     gswe_antiscion_axis_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_free_antiscion_axis_info);
 
-    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_NONE,       _("None"),               GSWE_SIGN_NONE,   FALSE);
-    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_ARIES,      _("Aries/Libra"),        GSWE_SIGN_ARIES,  FALSE);
-    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_TAURUS, _("mid Taurus/Scorpio"), GSWE_SIGN_TAURUS, TRUE);
-    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_CANCER,     _("Cancer/Capricorn"),   GSWE_SIGN_CANCER, FALSE);
-    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_LEO,    _("mid Leo/Aquarius"),   GSWE_SIGN_LEO,    TRUE);
+    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_NONE,       _("None"),               GSWE_SIGN_NONE,   0.0);
+    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_ARIES,      _("Aries/Libra"),        GSWE_SIGN_ARIES,  0.0);
+    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_TAURUS, _("mid Taurus/Scorpio"), GSWE_SIGN_TAURUS, 15.0);
+    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_CANCER,     _("Cancer/Capricorn"),   GSWE_SIGN_CANCER, 0.0);
+    ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_MID_LEO,    _("mid Leo/Aquarius"),   GSWE_SIGN_LEO,    15.0);
 
     gswe_full_moon_base_date = gswe_timestamp_new_from_gregorian_full(2005, 5, 8, 3, 48, 0, 0, 0.0);
 

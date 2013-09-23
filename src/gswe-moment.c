@@ -1190,9 +1190,7 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, Gswe
     planet_orb = fmin(antiscion_data->planet1->planet_info->orb, antiscion_data->planet2->planet_info->orb);
     start_point = (antiscion_axis_info->start_sign->sign_id - 1) * 30.0;
 
-    if (antiscion_axis_info->middle_axis == TRUE) {
-        start_point += 15.0;
-    }
+    start_point += antiscion_axis_info->sign_offset;
 
     axis_position = 2 * start_point - antiscion_data->planet1->position;
 

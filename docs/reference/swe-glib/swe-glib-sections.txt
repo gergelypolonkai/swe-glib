@@ -98,6 +98,18 @@ gswe_aspect_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-antiscion-axis-info</FILE>
+GsweAntiscionAxisInfo
+gswe_antiscion_axis_info_get_axis
+gswe_antiscion_axis_info_get_name
+gswe_antiscion_axis_info_get_sign_offset
+gswe_antiscion_axis_info_get_start_sign
+<SUBSECTION Standard>
+GSWE_TYPE_ANTISCION_AXIS_INFO
+gswe_antiscion_axis_info_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-antiscion-data</FILE>
 GsweAntiscionData
 gswe_antiscion_data_get_antiscion_axis_info
@@ -166,7 +178,6 @@ GsweMoonPhase
 GswePlanetInfo
 GsweSignInfo
 GsweHouseSystemInfo
-GsweAntiscionAxisInfo
 GsweCoordinates
 GsweHouseData
 <SUBSECTION Standard>
