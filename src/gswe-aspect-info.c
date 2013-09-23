@@ -23,7 +23,7 @@
 
 /**
  * SECTION:gswe-aspect-info
- * @short_description: a structure storing information about aspects
+ * @short_description: a structure storing information about an aspect
  * @title: GsweAspectInfo
  * @stability: Stable
  * @include: swe-glib.h
