@@ -21,6 +21,7 @@
 #include <glib.h>
 #include "gswe-types.h"
 #include "gswe-moon-phase-data.h"
+#include "gswe-sign-info.h"
 #include "gswe-planet-info.h"
 #include "gswe-planet-data.h"
 #include "gswe-aspect-info.h"
@@ -32,9 +33,6 @@
 #include "gswe-enumtypes.h"
 
 void gswe_init();
-
-GType gswe_sign_info_get_type(void);
-#define GSWE_TYPE_SIGN_INFO (gswe_sign_info_get_type())
 
 #endif /* __SWE_GLIB_H__ */
 

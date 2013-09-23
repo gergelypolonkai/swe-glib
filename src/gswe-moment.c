@@ -759,7 +759,7 @@ gswe_moment_get_sign_planets(GsweMoment *moment, GsweZodiac sign)
     for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
         GswePlanetData *pd = planet->data;
 
-        if (pd->sign->sign_id == sign) {
+        if (pd->sign->sign == sign) {
             ret = g_list_prepend(ret, pd);
         }
     }
@@ -1188,7 +1188,7 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, Gswe
     }
 
     planet_orb = fmin(antiscion_data->planet1->planet_info->orb, antiscion_data->planet2->planet_info->orb);
-    start_point = (antiscion_axis_info->start_sign->sign_id - 1) * 30.0;
+    start_point = (antiscion_axis_info->start_sign->sign - 1) * 30.0;
 
     start_point += antiscion_axis_info->sign_offset;
 

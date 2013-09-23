@@ -56,6 +56,18 @@ gswe_moon_phase_data_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gswe-sign-info</FILE>
+GsweSignInfo
+gswe_sign_info_get_element
+gswe_sign_info_get_name
+gswe_sign_info_get_quality
+gswe_sign_info_get_sign
+<SUBSECTION Standard>
+GSWE_TYPE_SIGN_INFO
+gswe_sign_info_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gswe-planet-info</FILE>
 GswePlanetInfo
 gswe_planet_info_get_name
@@ -189,7 +201,6 @@ GsweElement
 GsweQuality
 GsweHouseSystem
 GsweMoonPhase
-GsweSignInfo
 GsweHouseSystemInfo
 GsweCoordinates
 GsweHouseData
@@ -203,8 +214,5 @@ gswe_house_data_get_type
 <SECTION>
 <FILE>swe-glib</FILE>
 gswe_init
-<SUBSECTION Standard>
-GSWE_TYPE_SIGN_INFO
-gswe_sign_info_get_type
 </SECTION>
 

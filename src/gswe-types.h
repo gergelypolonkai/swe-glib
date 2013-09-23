@@ -250,22 +250,6 @@ typedef enum {
 } GsweMoonPhase;
 
 /**
- * GsweSignInfo:
- * @sign_id: the identifier for this sign
- * @name: the name of this sign
- * @element: the element of the sign
- * @quality: the quality of the sign
- *
- * Holds information about zodiac signs known by SWE-GLib.
- */
-typedef struct {
-    GsweZodiac sign_id;
-    gchar *name;
-    GsweElement element;
-    GsweQuality quality;
-} GsweSignInfo;
-
-/**
  * GsweHouseSystemInfo:
  * @system: the house system's ID
  * @sweph_id: the character value that represents this house system in the Swiss Ephemeris library

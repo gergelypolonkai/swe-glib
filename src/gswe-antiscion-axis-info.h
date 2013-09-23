@@ -21,6 +21,7 @@
 #include <glib-object.h>
 
 #include "gswe-types.h"
+#include "gswe-sign-info.h"
 
 G_BEGIN_DECLS
 

@@ -55,7 +55,7 @@ GsweTimestamp *gswe_full_moon_base_date;
 
 #define ADD_SIGN(ht, v, s, n, e, q) \
     (v) = g_new0(GsweSignInfo, 1); \
-    (v)->sign_id = (s); \
+    (v)->sign = (s); \
     (v)->name = g_strdup(n); \
     (v)->element = (e); \
     (v)->quality = (q); \
@@ -217,24 +217,3 @@ gswe_init(void)
     gswe_initialized = TRUE;
 }
 
-static GsweSignInfo *
-gswe_sign_info_copy(GsweSignInfo *sign_info)
-{
-    GsweSignInfo *ret = g_new0(GsweSignInfo, 1);
-
-    ret->sign_id = sign_info->sign_id;
-    ret->name = g_strdup(sign_info->name);
-    ret->element = sign_info->element;
-    ret->quality = sign_info->quality;
-
-    return ret;
-}
-
-static void
-gswe_sign_info_free(GsweSignInfo *sign_info)
-{
-    g_free(sign_info->name);
-    g_free(sign_info);
-}
-
-G_DEFINE_BOXED_TYPE(GsweSignInfo, gswe_sign_info, (GBoxedCopyFunc)gswe_sign_info_copy, (GBoxedFreeFunc)gswe_sign_info_free);

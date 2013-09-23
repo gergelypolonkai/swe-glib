@@ -62,6 +62,7 @@ IGNORE_HFILES = \
 				swe-glib-private.h                 \
 				gswe-enumtypes.h                   \
 				gswe-moon-phase-data-private.h     \
+				gswe-sign-info-private.h           \
 				gswe-planet-info-private.h         \
 				gswe-planet-data-private.h         \
 				gswe-aspect-info-private.h         \

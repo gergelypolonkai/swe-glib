@@ -22,6 +22,7 @@
 
 #include "gswe-types.h"
 #include "gswe-planet-info.h"
+#include "gswe-sign-info.h"
 
 G_BEGIN_DECLS
 
