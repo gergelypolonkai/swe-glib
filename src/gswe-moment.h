@@ -22,6 +22,7 @@
 
 #include "gswe-timestamp.h"
 #include "gswe-moon-phase-data.h"
+#include "gswe-planet-data.h"
 #include "gswe-types.h"
 
 #define GSWE_TYPE_MOMENT            (gswe_moment_get_type())

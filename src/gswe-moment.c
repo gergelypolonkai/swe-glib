@@ -445,7 +445,7 @@ find_by_planet_id(gconstpointer a, gconstpointer b)
     const GswePlanetData *planet_data = a;
     const GswePlanet *planet = b;
 
-    if (planet_data->planet_id == *planet) {
+    if (planet_data->planet == *planet) {
         return 0;
     }
 
@@ -626,7 +626,7 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
         return;
     }
 
-    planet_data->planet_id = planet;
+    planet_data->planet = planet;
     planet_data->planet_info = planet_info;
     planet_data->position = 0.0;
     planet_data->house = 0;
@@ -713,7 +713,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
 static void
 calculate_planet(GswePlanetData *planet_data, GsweMoment *moment)
 {
-    gswe_moment_calculate_planet(moment, planet_data->planet_id, NULL);
+    gswe_moment_calculate_planet(moment, planet_data->planet, NULL);
 }
 
 static void
@@ -883,7 +883,7 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
 {
     guint point;
 
-    gswe_moment_calculate_planet(moment, planet_data->planet_id, NULL);
+    gswe_moment_calculate_planet(moment, planet_data->planet, NULL);
 
     point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element))) + planet_data->planet_info->points;
     g_hash_table_replace(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element), GINT_TO_POINTER(point));
@@ -1025,7 +1025,7 @@ gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 static gint
 find_aspect_by_both_planets(GsweAspectData *aspect, struct GsweAspectFinder *aspect_finder)
 {
-    if (((aspect->planet1->planet_id == aspect_finder->planet1) && (aspect->planet2->planet_id == aspect_finder->planet2)) || ((aspect->planet1->planet_id == aspect_finder->planet2) && (aspect->planet2->planet_id == aspect_finder->planet1))) {
+    if (((aspect->planet1->planet == aspect_finder->planet1) && (aspect->planet2->planet == aspect_finder->planet2)) || ((aspect->planet1->planet == aspect_finder->planet2) && (aspect->planet2->planet == aspect_finder->planet1))) {
         return 0;
     }
 
@@ -1087,12 +1087,12 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
             struct GsweAspectFinder aspect_finder;
             GsweAspectData *aspect_data;
 
-            if (outer_planet->planet_id == inner_planet->planet_id) {
+            if (outer_planet->planet == inner_planet->planet) {
                 continue;
             }
 
-            aspect_finder.planet1 = outer_planet->planet_id;
-            aspect_finder.planet2 = inner_planet->planet_id;
+            aspect_finder.planet1 = outer_planet->planet;
+            aspect_finder.planet2 = inner_planet->planet;
 
             if (g_list_find_custom(moment->priv->aspect_list, &aspect_finder, (GCompareFunc)find_aspect_by_both_planets) != NULL) {
                 continue;
@@ -1167,7 +1167,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
     for (aspect = moment->priv->aspect_list; aspect; aspect = aspect->next) {
         GsweAspectData *aspect_data = aspect->data;
 
-        if ((aspect_data->planet1->planet_id == planet) || (aspect_data->planet2->planet_id == planet)) {
+        if ((aspect_data->planet1->planet == planet) || (aspect_data->planet2->planet == planet)) {
             ret = g_list_prepend(ret, aspect_data);
         }
     }
@@ -1215,7 +1215,7 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_info, GsweAntis
 static gint
 find_antiscion_by_both_planets(GsweAntiscionData *antiscion, struct GsweAspectFinder *antiscion_finder)
 {
-    if (((antiscion->planet1->planet_id == antiscion_finder->planet1) && (antiscion->planet2->planet_id == antiscion_finder->planet2)) || ((antiscion->planet1->planet_id == antiscion_finder->planet2) && (antiscion->planet2->planet_id == antiscion_finder->planet1))) {
+    if (((antiscion->planet1->planet == antiscion_finder->planet1) && (antiscion->planet2->planet == antiscion_finder->planet2)) || ((antiscion->planet1->planet == antiscion_finder->planet2) && (antiscion->planet2->planet == antiscion_finder->planet1))) {
         return 0;
     }
 
@@ -1243,12 +1243,12 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
             GsweAntiscionData *antiscion_data;
             struct GsweAspectFinder antiscion_finder;
 
-            if (outer_planet->planet_id == inner_planet->planet_id) {
+            if (outer_planet->planet == inner_planet->planet) {
                 continue;
             }
 
-            antiscion_finder.planet1 = outer_planet->planet_id;
-            antiscion_finder.planet2 = inner_planet->planet_id;
+            antiscion_finder.planet1 = outer_planet->planet;
+            antiscion_finder.planet2 = inner_planet->planet;
 
             if (g_list_find_custom(moment->priv->antiscia_list, &antiscion_finder, (GCompareFunc)find_antiscion_by_both_planets) != NULL) {
                 continue;
@@ -1320,7 +1320,7 @@ gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GErro
     for (antiscion = moment->priv->antiscia_list; antiscion; antiscion = g_list_next(antiscion)) {
         GsweAntiscionData *antiscion_data = antiscion->data;
 
-        if ((antiscion_data->planet1->planet_id == planet) || (antiscion_data->planet2->planet_id == planet)) {
+        if ((antiscion_data->planet1->planet == planet) || (antiscion_data->planet2->planet == planet)) {
             ret = g_list_prepend(ret, antiscion_data);
         }
     }
@@ -1391,7 +1391,7 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
     for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
         GsweAntiscionData *antiscion_data = antiscion_l->data;
 
-        if (((antiscion_data->planet1->planet_id == planet) || (antiscion_data->planet2->planet_id == planet))  && (antiscion_data->axis == axis)) {
+        if (((antiscion_data->planet1->planet == planet) || (antiscion_data->planet2->planet == planet))  && (antiscion_data->axis == axis)) {
             ret = g_list_prepend(ret, antiscion_data);
         }
     }

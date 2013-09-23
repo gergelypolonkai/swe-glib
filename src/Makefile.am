@@ -8,6 +8,7 @@ INST_H_SRC_FILES = \
 	gswe-types.h           \
 	gswe-moon-phase-data.h \
 	gswe-aspect-data.h     \
+	gswe-planet-data.h     \
 	gswe-moment.h          \
 	gswe-timestamp.h
 
@@ -20,6 +21,7 @@ libswe_glib_1_0_la_SOURCES = \
 	swe-glib.c             \
 	gswe-types.c           \
 	gswe-moon-phase-data.c \
+	gswe-planet-data.c     \
 	gswe-aspect-data.c     \
 	gswe-moment.c          \
 	gswe-timestamp.c       \

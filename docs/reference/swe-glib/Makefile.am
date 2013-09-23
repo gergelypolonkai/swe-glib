@@ -58,7 +58,12 @@ EXTRA_HFILES=
 
 # Header files or dirs to ignore when scanning. Use base file/dir names
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h private_code
-IGNORE_HFILES=swe-glib-private.h gswe-enumtypes.h gswe-moon-phase-data-private.h gswe-aspect-data-private.h
+IGNORE_HFILES = \
+				swe-glib-private.h                 \
+				gswe-enumtypes.h                   \
+				gswe-moon-phase-data-private.h     \
+				gswe-aspect-data-private.h         \
+				gswe-planet-data-private.h
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png

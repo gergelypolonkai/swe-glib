@@ -354,31 +354,6 @@ typedef struct {
 } GsweAntiscionAxisInfo;
 
 /**
- * GswePlanetData:
- * @planet_id: A GswePlanet, the identifier of the planet
- * @planet_info: A GswePlanetInfo structure, holding every information about the planet
- * @position: The longitude position of the planet
- * @retrograde: TRUE if the planet is in retrograde motion
- * @house: Number of the house in which the planet is in
- * @sign: A GsweSignInfo structure, holding every information about the sign the planet is in
- * @revision: An internal version number of the calculation
- *
- * Holds information of a given planet.
- */
-typedef struct {
-    GswePlanet planet_id;
-    GswePlanetInfo *planet_info;
-    gdouble position;
-    gboolean retrograde;
-    gint house;
-    GsweSignInfo *sign;
-    guint revision;
-} GswePlanetData;
-
-GType gswe_planet_data_get_type(void);
-#define GSWE_TYPE_PLANET_DATA (gswe_planet_data_get_type())
-
-/**
  * GsweCoordinates:
  * @longitude: longitude part of the coordinates
  * @latitude: latitude part of the coordinates
