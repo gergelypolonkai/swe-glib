@@ -26,7 +26,7 @@
  * @title: GsweAntiscionData
  * @stability: Stable
  * @include: swe-glib.h
- * @see_also: #GsweAntiscionInfo
+ * @see_also: #GsweAntiscionAxisInfo
  *
  * #GsweAntiscionData is a structure that represents an antiscion relationship
  * between two planets, based on a specified axis.
@@ -108,7 +108,7 @@ gswe_antiscion_data_get_axis(GsweAntiscionData *antiscion_data)
  *
  * Gets the axis information related to the antiscion relationship's axis.
  *
- * Returns: (transfer none): the #GsweAntiscionInfo associated with this axis
+ * Returns: (transfer none): the #GsweAntiscionAxisInfo associated with this axis
  */
 GsweAntiscionAxisInfo *
 gswe_antiscion_data_get_antiscion_axis_info(GsweAntiscionData *antiscion_data)
