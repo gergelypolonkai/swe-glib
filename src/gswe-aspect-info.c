@@ -21,6 +21,16 @@
 #include "gswe-aspect-info.h"
 #include "gswe-aspect-info-private.h"
 
+/**
+ * SECTION:gswe-aspect-info
+ * @short_description: a structure storing information about aspects
+ * @title: GsweAspectInfo
+ * @stability: Stable
+ * @include: swe-glib.h
+ *
+ * The #GsweAspectInfo stores information about an aspect.
+ */
+
 void
 gswe_aspect_info_free(GsweAspectInfo *aspect_info)
 {
