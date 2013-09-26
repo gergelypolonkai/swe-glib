@@ -183,7 +183,7 @@ gswe_init(void)
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_NONE,     0,   _("None"));
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_PLACIDUS, 'P', _("Placidus"));
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_KOCH,     'K', _("Koch"));
-    ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SISTEM_EQUAL,    'E', _("Equal"));
+    ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_EQUAL,    'E', _("Equal"));
 
     gswe_aspect_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_aspect_info);
 

@@ -210,7 +210,7 @@ typedef enum {
  * @GSWE_HOUSE_SYSTEM_NONE: no house system
  * @GSWE_HOUSE_SYSTEM_PLACIDUS: Placidus house system
  * @GSWE_HOUSE_SYSTEM_KOCH: Koch house system
- * @GSWE_HOUSE_SISTEM_EQUAL: Equal house system
+ * @GSWE_HOUSE_SYSTEM_EQUAL: Equal house system
  *
  * The house systems currently known by SWE-GLib.
  */
@@ -218,7 +218,7 @@ typedef enum {
     GSWE_HOUSE_SYSTEM_NONE,
     GSWE_HOUSE_SYSTEM_PLACIDUS,
     GSWE_HOUSE_SYSTEM_KOCH,
-    GSWE_HOUSE_SISTEM_EQUAL
+    GSWE_HOUSE_SYSTEM_EQUAL
 } GsweHouseSystem;
 
 /**
