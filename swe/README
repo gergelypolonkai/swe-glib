@@ -1,4 +1,4 @@
-This directory contains version 1.75 of the Swiss Ephemeris programming
+This directory contains version 1.76 of the Swiss Ephemeris programming
 library in a reduced form, so it can be used in an Autotools project like
 Astrognome.
 

@@ -41,7 +41,7 @@ PKG_CHECK_MODULES([GLIB], [glib-2.0])
 PKG_CHECK_MODULES([GOBJECT], [gobject-2.0])
 AC_CONFIG_MACRO_DIR([m4])
 
-LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.75.la'
+LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.76.la'
 AC_SUBST(LIBSWE_LIBS)
 
 LIBSWE_GLIB_LIBS='$(top_builddir)/src/libswe-glib-$(SWE_GLIB_API_VERSION).la'

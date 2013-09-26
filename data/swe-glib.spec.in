@@ -84,8 +84,8 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/locale/hu/LC_MESSAGES/swe-glib.mo
 %{_includedir}/*
 %{_libdir}/pkgconfig/*
 %{_datadir}/gir-1.0/SweGlib-1.0.gir
-%{_libdir}/libswe-1.75.so
 %{_libdir}/libswe-glib-1.0.so
+%{_libdir}/libswe-1.76.so
 
 %changelog
 
