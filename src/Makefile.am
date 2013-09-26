@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 AM_CPPFLAGS = -DG_LOG_DOMAIN=\"SWE-GLib\" -DLOCALEDIR=\"$(localedir)\" -D__SWE_GLIB_BUILDING__ -DPKGDATADIR=\"$(pkgdatadir)\"
 
-lib_LTLIBRARIES = libswe-glib-1.0.la
+lib_LTLIBRARIES = libswe-glib-2.0.la
 
 INST_H_SRC_FILES = \
 	swe-glib.h                 \
@@ -25,7 +25,7 @@ INST_H_BUILT_FILES = \
 
 gswe_enum_headers = gswe-timestamp.h gswe-types.h
 
-libswe_glib_1_0_la_SOURCES = \
+libswe_glib_2_0_la_SOURCES = \
 	swe-glib.c                 \
 	gswe-types.c               \
 	gswe-moon-phase-data.c     \
@@ -43,8 +43,8 @@ libswe_glib_1_0_la_SOURCES = \
 	gswe-enumtypes.c           \
 	$(NULL)
 
-libswe_glib_1_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
-libswe_glib_1_0_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
+libswe_glib_2_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
+libswe_glib_2_0_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
 
 BUILT_SOURCES = gswe-enumtypes.c gswe-enumtypes.h
 
@@ -63,9 +63,9 @@ gswe-enumtypes.c: $(gswe_enum_headers) gswe-enumtypes.h gswe-enumtypes.c.templat
 if HAVE_INTROSPECTION
 
 include $(INTROSPECTION_MAKEFILE)
-SweGlib-$(SWE_GLIB_API_VERSION).gir: libswe-glib-1.0.la
-SweGlib_@SWE_GLIB_API_VERSION_U@_gir_FILES = $(INST_H_SRC_FILES) $(INST_H_BUILT_FILES) $(filter %.c,$(libswe_glib_1_0_la_SOURCES))
-SweGlib_@SWE_GLIB_API_VERSION_U@_gir_LIBS = libswe-glib-1.0.la
+SweGlib-$(SWE_GLIB_API_VERSION).gir: libswe-glib-2.0.la
+SweGlib_@SWE_GLIB_API_VERSION_U@_gir_FILES = $(INST_H_SRC_FILES) $(INST_H_BUILT_FILES) $(filter %.c,$(libswe_glib_2_0_la_SOURCES))
+SweGlib_@SWE_GLIB_API_VERSION_U@_gir_LIBS = libswe-glib-2.0.la
 SweGlib_@SWE_GLIB_API_VERSION_U@_gir_SCANNERFLAGS = --identifier-prefix=Gswe --symbol-prefix=gswe --warn-all
 SweGlib_@SWE_GLIB_API_VERSION_U@_gir_INCLUDES = GLib-2.0 GObject-2.0
 SweGlib_@SWE_GLIB_API_VERSION_U@_gir_CFLAGS = -D__SWE_GLIB_BUILDING__ -I$(top_srcdir) -I$(srcdir) -I$(builddir)
