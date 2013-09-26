@@ -37,9 +37,21 @@ typedef struct _GsweSignInfo GsweSignInfo;
 GType gswe_sign_info_get_type(void);
 #define GSWE_TYPE_SIGN_INFO (gswe_sign_info_get_type())
 
+GsweSignInfo *gswe_sign_info_new(void);
+
+GsweSignInfo *gswe_sign_info_ref(GsweSignInfo *sign_info);
+void gswe_sign_info_unref(GsweSignInfo *sign_info);
+
+void gswe_sign_info_set_sign(GsweSignInfo *sign_info, GsweZodiac sign);
 GsweZodiac gswe_sign_info_get_sign(GsweSignInfo *sign_info);
+
+void gswe_sign_info_set_name(GsweSignInfo *sign_info, const gchar *name);
 const gchar *gswe_sign_info_get_name(GsweSignInfo *sign_info);
+
+void gswe_sign_info_set_element(GsweSignInfo *sign_info, GsweElement element);
 GsweElement gswe_sign_info_get_element(GsweSignInfo *sign_info);
+
+void gswe_sign_info_set_quality(GsweSignInfo *sign_info, GsweQuality quality);
 GsweQuality gswe_sign_info_get_quality(GsweSignInfo *sign_info);
 
 G_END_DECLS

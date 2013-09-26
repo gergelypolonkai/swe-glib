@@ -35,10 +35,10 @@ struct _GsweSignInfo {
 
     /* the quality of the sign */
     GsweQuality quality;
-};
 
-GsweSignInfo *gswe_sign_info_copy(GsweSignInfo *sign_info);
-void gswe_sign_info_free(GsweSignInfo *sign_info);
+    /* Reference counter */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_SIGN_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

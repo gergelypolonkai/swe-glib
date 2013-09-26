@@ -58,10 +58,17 @@ gswe_moon_phase_data_get_type
 <SECTION>
 <FILE>gswe-sign-info</FILE>
 GsweSignInfo
-gswe_sign_info_get_element
-gswe_sign_info_get_name
-gswe_sign_info_get_quality
+gswe_sign_info_new
+gswe_sign_info_ref
+gswe_sign_info_unref
+gswe_sign_info_set_sign
 gswe_sign_info_get_sign
+gswe_sign_info_set_name
+gswe_sign_info_get_name
+gswe_sign_info_set_element
+gswe_sign_info_get_element
+gswe_sign_info_set_quality
+gswe_sign_info_get_quality
 <SUBSECTION Standard>
 GSWE_TYPE_SIGN_INFO
 gswe_sign_info_get_type

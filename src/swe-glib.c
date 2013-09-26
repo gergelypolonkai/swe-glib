@@ -54,7 +54,7 @@ GsweTimestamp *gswe_full_moon_base_date;
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
 #define ADD_SIGN(ht, v, s, n, e, q) \
-    (v) = g_new0(GsweSignInfo, 1); \
+    (v) = gswe_sign_info_new(); \
     (v)->sign = (s); \
     (v)->name = g_strdup(n); \
     (v)->element = (e); \
