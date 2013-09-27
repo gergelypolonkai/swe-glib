@@ -34,10 +34,10 @@ struct _GsweAntiscionAxisInfo {
 
     /* if TRUE, the axis runs through the middle of its starting sign */
     gdouble sign_offset;
-};
 
-GsweAntiscionAxisInfo *gswe_antiscion_axis_info_copy(GsweAntiscionAxisInfo *antiscion_axis_info);
-void gswe_antiscion_axis_info_free(GsweAntiscionAxisInfo *antiscion_axis_info);
+    /* Reference counter */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_ANTISCION_AXIS_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

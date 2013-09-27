@@ -79,7 +79,7 @@ GsweTimestamp *gswe_full_moon_base_date;
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
 #define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) \
-    (v) = g_new0(GsweAntiscionAxisInfo, 1); \
+    (v) = gswe_antiscion_axis_info_new(); \
     (vs) = g_hash_table_lookup((hts), GINT_TO_POINTER(i)); \
     (v)->axis = (i); \
     (v)->start_sign = (vs); \

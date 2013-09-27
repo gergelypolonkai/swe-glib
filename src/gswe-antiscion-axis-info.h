@@ -38,10 +38,23 @@ typedef struct _GsweAntiscionAxisInfo GsweAntiscionAxisInfo;
 GType gswe_antiscion_axis_info_get_type(void);
 #define GSWE_TYPE_ANTISCION_AXIS_INFO (gswe_antiscion_axis_info_get_type())
 
+GsweAntiscionAxisInfo *gswe_antiscion_axis_info_new(void);
+
+GsweAntiscionAxisInfo *gswe_antiscion_axis_info_ref(GsweAntiscionAxisInfo *antiscion_axis_info);
+void gswe_antiscion_axis_info_unref(GsweAntiscionAxisInfo *antiscion_axis_info);
+
+void gswe_antiscion_axis_info_set_axis(GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionAxis axis);
 GsweAntiscionAxis gswe_antiscion_axis_info_get_axis(GsweAntiscionAxisInfo *antiscion_axis_info);
+
+void gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info);
+void gswe_antiscion_axis_info_set_start_sign_plain(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err);
 GsweSignInfo *gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info);
+
+void gswe_antiscion_axis_info_set_name(GsweAntiscionAxisInfo *antiscion_axis_info, const gchar *name);
 const gchar *gswe_antiscion_axis_info_get_name(GsweAntiscionAxisInfo *antiscion_axis_info);
-gboolean gswe_antiscion_axis_info_get_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_info);
+
+void gswe_antiscion_axis_info_set_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_info, gdouble sign_offset);
+gdouble gswe_antiscion_axis_info_get_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_info);
 
 G_END_DECLS
 
