@@ -14,13 +14,6 @@ Still, the documentation generates well, and at least gives a clue about object 
 
 Many functions return non-opaque C structs; their documentation can be found inline, and in the generated GTK-Doc. Unless otherwise stated, the returned values should never be freed.
 
-### Initialization
-
-First of all, you have to initialize the library:
-
-```c
-gswe_init();
-```
 ### Creating the required objects
 
 Then you need to create a `GsweTimestamp` object:
@@ -90,7 +83,7 @@ The Swiss Ephemeris library requires the altitude value to be specified for seve
 
 ## API stability
 
-The project is currently marked as 1.0. This means that API and ABI changes are very unlikely to happen.
+The project is currently transitioning to 2.0. master is a bit fragile at the moment, 1.x versions are considered to be stable (although see commit 8f52aba about a huge typo-bug).
 
 ## Limitations
 
