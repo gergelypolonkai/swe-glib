@@ -397,6 +397,8 @@ gswe_moment_get_house_system(GsweMoment *moment)
 GsweMoment *
 gswe_moment_new(void)
 {
+    gswe_init();
+
     return (GsweMoment *)g_object_new(GSWE_TYPE_MOMENT, NULL);
 }
 

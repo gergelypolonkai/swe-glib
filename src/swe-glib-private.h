@@ -30,6 +30,7 @@
 #include "gswe-house-system-info-private.h"
 #include "gswe-house-data-private.h"
 
+extern gboolean gswe_initialized;
 extern gchar *gswe_ephe_path;
 extern GsweTimestamp *gswe_full_moon_base_date;
 extern GHashTable *gswe_planet_info_table;

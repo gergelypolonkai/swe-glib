@@ -146,6 +146,10 @@ gswe_init(void)
     GsweAspectInfo *aspect_info;
     GsweAntiscionAxisInfo *antiscion_axis_info;
 
+    if (gswe_initialized) {
+        return;
+    }
+
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 
