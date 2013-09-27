@@ -74,11 +74,20 @@ gswe_sign_info_get_type
 <SECTION>
 <FILE>gswe-planet-info</FILE>
 GswePlanetInfo
+gswe_planet_info_new
+gswe_planet_info_ref
+gswe_planet_info_unref
+gswe_planet_info_set_name
 gswe_planet_info_get_name
+gswe_planet_info_set_orb
 gswe_planet_info_get_orb
+gswe_planet_info_set_planet
 gswe_planet_info_get_planet
+gswe_planet_info_set_points
 gswe_planet_info_get_points
+gswe_planet_info_set_real_body
 gswe_planet_info_get_real_body
+gswe_planet_info_set_sweph_id
 gswe_planet_info_get_sweph_id
 <SUBSECTION Standard>
 GSWE_TYPE_PLANET_INFO

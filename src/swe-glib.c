@@ -44,7 +44,7 @@ GHashTable *gswe_antiscion_axis_info_table;
 GsweTimestamp *gswe_full_moon_base_date;
 
 #define ADD_PLANET(ht, v, i, s, r, n, o, h) \
-    (v) = g_new0(GswePlanetInfo, 1); \
+    (v) = gswe_planet_info_new(); \
     (v)->planet = (i); \
     (v)->sweph_id = (s); \
     (v)->real_body = (r); \

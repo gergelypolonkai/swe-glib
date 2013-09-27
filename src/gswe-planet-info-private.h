@@ -40,10 +40,10 @@ struct _GswePlanetInfo {
 
     /* the value this planet counts in the element/quality points table */
     gint points;
-};
 
-void gswe_planet_info_free(GswePlanetInfo *planet_info);
-GswePlanetInfo *gswe_planet_info_copy(GswePlanetInfo *planet_info);
+    /* reference counter */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_PLANET_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */
