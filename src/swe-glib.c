@@ -87,6 +87,15 @@ GsweTimestamp *gswe_full_moon_base_date;
     (v)->sign_offset = m; \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
+/**
+ * gswe_error_quark:
+ *
+ * Gets the SWE-GLib Error Quark.
+ *
+ * Return value: a #GQuark
+ */
+G_DEFINE_QUARK(gswe-error-quark, gswe_error);
+
 void
 gswe_free_planet_info(gpointer planet_info)
 {

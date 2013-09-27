@@ -33,39 +33,6 @@ typedef struct _GsweTimestampClass GsweTimestampClass;
 typedef struct _GsweTimestampPrivate GsweTimestampPrivate;
 
 /**
- * GSWE_TIMESTAMP_ERROR:
- *
- * Error domain for GsweTimestamp. Errors in this domain will be from
- * #GsweTimestampError enumeration. See #GError for more information on error
- * domains.
- */
-#define GSWE_TIMESTAMP_ERROR (gswe_timestamp_error_quark())
-GQuark gswe_timestamp_error_quark(void);
-
-/**
- * GsweTimestampError:
- * @GSWE_TIMESTAMP_ERROR_SUCCESS: no error
- * @GSWE_TIMESTAMP_ERROR_INVALID_DATE: the Gregorian date specified in this
- *                                     GsweTimestamp is invalid
- * @GSWE_TIMESTAMP_ERROR_INVALID_TIME: the time specified in this
- *                                     GsweTimestamp is invalid
- * @GSWE_TIMESTAMP_ERROR_NO_VALID: the GsweTimestamp object holds no valid
- *                                 timestamp
- * @GSWE_TIMESTAMP_ERROR_SWE_ERROR: denotes an error detected by the Swiss
- *                                  Ephemeris library, converted from their
- *                                  static char array to a #GError
- *
- * Error codes returned by GsweTimestamp functions.
- */
-typedef enum {
-    GSWE_TIMESTAMP_ERROR_SUCCESS,
-    GSWE_TIMESTAMP_ERROR_INVALID_DATE,
-    GSWE_TIMESTAMP_ERROR_INVALID_TIME,
-    GSWE_TIMESTAMP_ERROR_NO_VALID,
-    GSWE_TIMESTAMP_ERROR_SWE_ERROR
-} GsweTimestampError;
-
-/**
  * GsweTimestamp:
  *
  * The GsweTimestamp object's instance definition.

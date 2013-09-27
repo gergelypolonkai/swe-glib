@@ -386,15 +386,6 @@ gswe_moment_get_house_system(GsweMoment *moment)
 }
 
 /**
- * gswe_moment_error_quark:
- *
- * Gets the GsweMoment Error Quark.
- *
- * Return value: a #GQuark
- */
-G_DEFINE_QUARK(gswe-moment-error-quark, gswe_moment_error);
-
-/**
  * gswe_moment_new:
  *
  * Creates a new, empty GsweMoment object. The object created this way can not
@@ -511,7 +502,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
     }
 
     if ((house_system_data = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(moment->priv->house_system))) == NULL) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_HSYS, "Unknown house system");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_HSYS, "Unknown house system");
 
         return;
     }
@@ -540,7 +531,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
             g_list_free_full(moment->priv->house_list, g_free);
             moment->priv->house_list = NULL;
             moment->priv->house_revision = 0;
-            g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_UNKNOWN_SIGN, "Calculation brought an unknown sign");
+            g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_SIGN, "Calculation brought an unknown sign");
 
             return;
         }
@@ -690,11 +681,11 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
     }
 
     if ((ret = swe_calc(jd, planet_data->planet_info->sweph_id, SEFLG_SPEED | SEFLG_TOPOCTR, x2, serr)) < 0) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_SWE_ERROR_FATAL, "Swiss Ephemeris error: %s", serr);
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_FATAL, "Swiss Ephemeris error: %s", serr);
 
         return;
     } else if (ret != (SEFLG_SPEED | SEFLG_TOPOCTR)) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_SWE_ERROR_NONFATAL, "Swiss Ephemeris error: %s", serr);
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_NONFATAL, "Swiss Ephemeris error: %s", serr);
     }
 
     gswe_calculate_data_by_position(moment, planet, x2[0], &calc_err);
@@ -868,7 +859,7 @@ gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
 
     if (planet_data == NULL) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1157,7 +1148,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
           *aspect;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1308,7 +1299,7 @@ gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GErro
           *antiscion;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1379,7 +1370,7 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
           *antiscion_l;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_MOMENT_ERROR, GSWE_MOMENT_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }

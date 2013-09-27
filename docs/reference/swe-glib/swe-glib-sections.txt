@@ -1,9 +1,6 @@
 <SECTION>
 <FILE>gswe-moment</FILE>
 <TITLE>GsweMoment</TITLE>
-GSWE_MOMENT_ERROR
-gswe_moment_error_quark
-GsweMomentError
 GsweMoment
 GsweMomentClass
 gswe_moment_new
@@ -180,9 +177,6 @@ gswe_house_data_get_type
 <SECTION>
 <FILE>gswe-timestamp</FILE>
 <TITLE>GsweTimestamp</TITLE>
-GSWE_TIMESTAMP_ERROR
-gswe_timestamp_error_quark
-GsweTimestampError
 GsweTimestamp
 GsweTimestampClass
 gswe_timestamp_new
@@ -238,6 +232,9 @@ gswe_coordinates_get_type
 
 <SECTION>
 <FILE>swe-glib</FILE>
+GsweError
+gswe_error_quark
+GSWE_ERROR
 gswe_init
 </SECTION>
 

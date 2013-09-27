@@ -21,6 +21,7 @@
 
 #include "../swe/src/swephexp.h"
 #include "swe-glib-private.h"
+#include "swe-glib.h"
 #include "gswe-timestamp.h"
 
 /**
@@ -383,7 +384,7 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err)
     }
 
     if (timestamp->priv->valid_dates == 0) {
-        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_NO_VALID, "This timestamp object holds no valid values");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NO_VALID_VALUE, "This timestamp object holds no valid values");
         return;
     }
 
@@ -802,14 +803,14 @@ gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err)
     }
 
     if (timestamp->priv->valid_dates == 0) {
-        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_NO_VALID, "This timestamp object holds no valid values");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NO_VALID_VALUE, "This timestamp object holds no valid values");
         return;
     }
 
     swe_utc_time_zone(timestamp->priv->gregorian_year, timestamp->priv->gregorian_month, timestamp->priv->gregorian_day, timestamp->priv->gregorian_hour, timestamp->priv->gregorian_minute, timestamp->priv->gregorian_second + timestamp->priv->gregorian_microsecond / 1000.0, timestamp->priv->gregorian_timezone_offset, &utc_year, &utc_month, &utc_day, &utc_hour, &utc_minute, &utc_second);
 
     if ((retval = swe_utc_to_jd(utc_year, utc_month, utc_day, utc_hour, utc_minute, utc_second, SE_GREG_CAL, dret, serr)) == ERR) {
-        g_set_error(err, GSWE_TIMESTAMP_ERROR, GSWE_TIMESTAMP_ERROR_SWE_ERROR, "Swiss Ephemeris error: %s", serr);
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_FATAL, "Swiss Ephemeris error: %s", serr);
     } else {
         timestamp->priv->julian_day = dret[0];
         timestamp->priv->valid_dates |= VALID_JULIAN_DAY;
@@ -852,15 +853,6 @@ gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
 
     return timestamp->priv->julian_day;
 }
-
-/**
- * gswe_timestamp_error_quark:
- *
- * Gets the GsweTimestamp Error Quark.
- *
- * Return value: a #GQuark
- */
-G_DEFINE_QUARK(gswe-timestamp-error-quark, gswe_timestamp_error);
 
 /**
  * gswe_timestamp_new:
