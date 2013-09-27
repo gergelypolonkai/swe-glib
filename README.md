@@ -10,6 +10,10 @@ The project utilizes [GTK-Doc](http://www.gtk.org/gtk-doc/), requiring version 1
 
 Still, the documentation generates well, and at least gives a clue about object usage.
 
+## Bindings
+
+SWE-GLib utilizes [GObject Introspection](https://wiki.gnome.org/GObjectIntrospection), which means it is available for many languages. Check out the [examples](examples) directory for some sample code!
+
 ## Usage
 
 Many functions return non-opaque C structs; their documentation can be found inline, and in the generated GTK-Doc. Unless otherwise stated, the returned values should never be freed.
