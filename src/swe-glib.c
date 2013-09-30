@@ -97,13 +97,6 @@ GsweTimestamp *gswe_full_moon_base_date;
 G_DEFINE_QUARK(gswe-error-quark, gswe_error);
 
 void
-gswe_free_planet_info(gpointer planet_info)
-{
-    g_free(((GswePlanetInfo *)planet_info)->name);
-    g_free(planet_info);
-}
-
-void
 gswe_free_sign_info(gpointer sign_info)
 {
     g_free(((GsweSignInfo *)sign_info)->name);
@@ -139,7 +132,7 @@ gswe_init(void)
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 
-    gswe_planet_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_planet_info);
+    gswe_planet_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_planet_info_unref);
 
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SUN,         SE_SUN,       TRUE,  _("Sun"),                 13.0, 2);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON,        SE_MOON,      TRUE,  _("Moon"),                9.0,  2);

@@ -878,7 +878,7 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
 {
     guint point;
 
-    gswe_moment_calculate_planet(moment, planet_data->planet, NULL);
+    gswe_moment_calculate_planet(moment, planet_data->planet_info->planet, NULL);
 
     point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element))) + planet_data->planet_info->points;
     g_hash_table_replace(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element), GINT_TO_POINTER(point));
