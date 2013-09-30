@@ -117,13 +117,6 @@ gswe_free_house_system_info(gpointer house_system_info)
     g_free(house_system_info);
 }
 
-void
-gswe_free_antiscion_axis_info(GsweAntiscionAxisInfo *antiscion_axis_info)
-{
-    g_free(antiscion_axis_info->name);
-    g_free(antiscion_axis_info);
-}
-
 /**
  * gswe_init:
  *
@@ -208,7 +201,7 @@ gswe_init(void)
     ADD_ASPECT(gswe_aspect_info_table, aspect_info, GSWE_ASPECT_QUINTILE,     _("Quintile"),      72,  3, TRUE,  FALSE);
     ADD_ASPECT(gswe_aspect_info_table, aspect_info, GSWE_ASPECT_BIQUINTILE,   _("Bi-quintile"),   144, 3, TRUE,  FALSE);
 
-    gswe_antiscion_axis_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_free_antiscion_axis_info);
+    gswe_antiscion_axis_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_antiscion_axis_info_unref);
 
     ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_NONE,       _("None"),               GSWE_SIGN_NONE,   0.0);
     ADD_ANTISCION(gswe_antiscion_axis_info_table, antiscion_axis_info, gswe_sign_info_table, sign_info, GSWE_ANTISCION_AXIS_ARIES,      _("Aries/Libra"),        GSWE_SIGN_ARIES,  0.0);
