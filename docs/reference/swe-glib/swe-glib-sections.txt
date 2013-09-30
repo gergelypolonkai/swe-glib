@@ -42,9 +42,10 @@ gswe_moment_get_type
 
 <SECTION>
 <FILE>gswe-moon-phase-data</FILE>
-gswe_moon_phase_data_set_phase
+gswe_moon_phase_data_new
+gswe_moon_phase_data_ref
+gswe_moon_phase_data_unref
 gswe_moon_phase_data_get_phase
-gswe_moon_phase_data_set_illumination
 gswe_moon_phase_data_get_illumination
 GsweMoonPhaseData
 <SUBSECTION Standard>

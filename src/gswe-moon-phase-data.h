@@ -34,9 +34,12 @@ G_BEGIN_DECLS
  */
 typedef struct _GsweMoonPhaseData GsweMoonPhaseData;
 
-void gswe_moon_phase_data_set_phase(GsweMoonPhaseData *moon_phase_data, GsweMoonPhase phase);
+GsweMoonPhaseData *gswe_moon_phase_data_new(void);
+
+GsweMoonPhaseData *gswe_moon_phase_data_ref(GsweMoonPhaseData *moon_phase_data);
+void gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data);
+
 GsweMoonPhase gswe_moon_phase_data_get_phase(GsweMoonPhaseData *moon_phase_data);
-void gswe_moon_phase_data_set_illumination(GsweMoonPhaseData *moon_phase_data, gdouble illumination);
 gdouble gswe_moon_phase_data_get_illumination(GsweMoonPhaseData *moon_phase_data);
 
 GType gswe_moon_phase_data_get_type(void);

@@ -28,9 +28,10 @@ struct _GsweMoonPhaseData {
 
     /* the illumination percentage of the Moon */
     gdouble illumination;
-};
 
-GsweMoonPhaseData *gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data);
+    /* reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_MOON_PHASE_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

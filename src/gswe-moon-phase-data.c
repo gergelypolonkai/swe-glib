@@ -32,37 +32,59 @@
  * Moon, including its illumination percentage.
  */
 
-G_DEFINE_BOXED_TYPE(GsweMoonPhaseData, gswe_moon_phase_data, (GBoxedCopyFunc)gswe_moon_phase_data_copy, (GBoxedFreeFunc)g_free);
+G_DEFINE_BOXED_TYPE(GsweMoonPhaseData, gswe_moon_phase_data, (GBoxedCopyFunc)gswe_moon_phase_data_ref, (GBoxedFreeFunc)gswe_moon_phase_data_unref);
 
+/**
+ * gswe_moon_phase_data_new:
+ *
+ * Creates a new #GsweMoonPhaseData object with reference count set to 1.
+ *
+ * Returns: (transfer full): a new #GsweMoonPhaseData object
+ */
 GsweMoonPhaseData *
-gswe_moon_phase_data_copy(GsweMoonPhaseData *moon_phase_data)
+gswe_moon_phase_data_new(void)
 {
-    GsweMoonPhaseData *ret = g_new0(struct _GsweMoonPhaseData, 1);
+    GsweMoonPhaseData *ret;
 
-    ret->phase = moon_phase_data->phase;
-    ret->illumination = moon_phase_data->illumination;
+    ret = g_new0(GsweMoonPhaseData, 1);
+    ret->refcount = 1;
 
     return ret;
 }
 
 /**
- * gswe_moon_phase_data_set_phase:
- * @moon_phase_data: a GsweMoonPhaseData
- * @phase: the phase to set
+ * gswe_moon_phase_data_ref:
+ * @moon_phase_data: (in): a #GsweMoonPhaseData
  *
- * Sets the phase of the Moon in the given GsweMoonPhaseData.
+ * Increases reference count on @moon_phase_data by one.
+ *
+ * Returns: (transfer none): the same #GsweMoonPhaseData
+ */
+GsweMoonPhaseData *
+gswe_moon_phase_data_ref(GsweMoonPhaseData *moon_phase_data)
+{
+    moon_phase_data->refcount++;
+
+    return moon_phase_data;
+}
+
+/**
+ * gswe_moon_phase_data_unref:
+ * @moon_phase_data: (in): a #GsweMoonPhaseData
+ *
+ * Decreases reference count on @moon_phase_data by one. If reference count drops to zero, @moon_phase_data is freed.
  */
 void
-gswe_moon_phase_data_set_phase(GsweMoonPhaseData *moon_phase_data, GsweMoonPhase phase)
+gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
 {
-    if (moon_phase_data) {
-        moon_phase_data->phase = phase;
+    if (--moon_phase_data->refcount == 0) {
+        g_free(moon_phase_data);
     }
 }
 
 /**
  * gswe_moon_phase_data_get_phase:
- * @moon_phase_data: a GsweMoonPhaseData
+ * @moon_phase_data: (in): a GsweMoonPhaseData
  *
  * Gets the phase of the Moon in the given GsweMoonPhaseData.
  *
@@ -79,23 +101,8 @@ gswe_moon_phase_data_get_phase(GsweMoonPhaseData *moon_phase_data)
 }
 
 /**
- * gswe_moon_phase_data_set_illumination:
- * @moon_phase_data: a GsweMoonPhaseData
- * @illumination: the illumination to set
- *
- * Sets the illumination percentage in the given GsweMoonPhaseData.
- */
-void
-gswe_moon_phase_data_set_illumination(GsweMoonPhaseData *moon_phase_data, gdouble illumination)
-{
-    if (moon_phase_data) {
-        moon_phase_data->illumination = illumination;
-    }
-}
-
-/**
  * gswe_moon_phase_data_get_illumination:
- * @moon_phase_data: a GsweMoonPhaseData
+ * @moon_phase_data: (in): a GsweMoonPhaseData
  *
  * Gets the illumination percentage from the given GsweMoonPhaseData.
  *
