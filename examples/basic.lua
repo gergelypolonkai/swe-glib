@@ -1,5 +1,5 @@
 local lgi = require 'lgi'
-local SweGlib = lgi.require('SweGlib', '1.0')
+local SweGlib = lgi.require('SweGlib', '2.0')
 
 SweGlib.init()
 
@@ -14,4 +14,4 @@ moment:set_house_system(SweGlib.HouseSystem.PLACIDUS)
 moment:add_all_planets()
 
 local planet = moment:get_planet(SweGlib.Planet.SUN)
-io.write(planet.position, "\n")
+io.write(planet:get_position(), "\n")

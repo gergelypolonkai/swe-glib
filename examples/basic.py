@@ -12,4 +12,4 @@ moment.set_house_system(SweGlib.HouseSystem.PLACIDUS)
 moment.add_all_planets()
 
 planet = moment.get_planet(SweGlib.Planet.SUN)
-print planet.position
+print planet.get_position()

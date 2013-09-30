@@ -2,7 +2,7 @@ package SweGlib;
 
 use Glib::Object::Introspection;
 
-Glib::Object::Introspection->setup(basename => 'SweGlib', version => '1.0', package => 'SweGlib');
+Glib::Object::Introspection->setup(basename => 'SweGlib', version => '2.0', package => 'SweGlib');
 
 package main;
 
@@ -18,4 +18,4 @@ $moment->set_house_system("placidus");
 $moment->add_all_planets();
 
 $planet = $moment->get_planet("sun");
-print($planet->position, "\n");
+print($planet->get_position(), "\n");

@@ -12,4 +12,4 @@ moment.set_coordinates(19.03990999, 47.49801000, 280);
 moment.set_house_system(Swe.HouseSystem.PLACIDUS);
 
 planet = moment.get_planet(Swe.Planet.SUN);
-log(planet.position);
+log(planet.get_position());
