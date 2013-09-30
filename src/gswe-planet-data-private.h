@@ -23,9 +23,6 @@
 #include "gswe-planet-info.h"
 
 struct _GswePlanetData {
-    /* A GswePlanet, the identifier of the planet */
-    GswePlanet planet;
-
     /* A GswePlanetInfo structure, holding every information about the planet */
     GswePlanetInfo *planet_info;
 
@@ -39,13 +36,14 @@ struct _GswePlanetData {
     gint house;
 
     /* A GsweSignInfo structure, holding every information about the sign the planet is in */
-    GsweSignInfo *sign;
+    GsweSignInfo *sign_info;
 
     /* An internal version number of the calculation */
     guint revision;
-};
 
-GswePlanetData *gswe_planet_data_copy(GswePlanetData *planet_data);
+    /* reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_PLANET_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

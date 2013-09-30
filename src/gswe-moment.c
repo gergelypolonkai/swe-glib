@@ -201,7 +201,7 @@ gswe_moment_finalize(GObject *gobject)
     GsweMoment *moment = GSWE_MOMENT(gobject);
 
     g_list_free_full(moment->priv->house_list, g_free);
-    g_list_free_full(moment->priv->planet_list, g_free);
+    g_list_free_full(moment->priv->planet_list, (GDestroyNotify)gswe_planet_data_unref);
     g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
 
     G_OBJECT_CLASS(gswe_moment_parent_class)->finalize(gobject);
@@ -434,12 +434,13 @@ gswe_moment_new_full(GsweTimestamp *timestamp, gdouble longitude, gdouble latitu
 }
 
 static gint
-find_by_planet_id(gconstpointer a, gconstpointer b)
+find_planet_by_id(GswePlanetData *planet_data, GswePlanet *planet)
 {
-    const GswePlanetData *planet_data = a;
-    const GswePlanet *planet = b;
+    if (planet_data->planet_info == NULL) {
+        return -1;
+    }
 
-    if (planet_data->planet == *planet) {
+    if (planet_data->planet_info->planet == *planet) {
         return 0;
     }
 
@@ -447,13 +448,18 @@ find_by_planet_id(gconstpointer a, gconstpointer b)
 }
 
 static void
-gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble position, GError **err)
+calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble position, GError **err)
 {
-    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
+    GswePlanetData *planet_data;
     GsweZodiac sign;
     GsweSignInfo *sign_info;
+    GList *result;
 
-    if (planet_data == NULL) {
+    if ((result = g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)) == NULL) {
+        return;
+    }
+
+    if ((planet_data = (GswePlanetData *)(result->data)) == NULL) {
         return;
     }
 
@@ -476,7 +482,7 @@ gswe_calculate_data_by_position(GsweMoment *moment, GswePlanet planet, gdouble p
     planet_data->position = position;
     planet_data->retrograde = FALSE;
     planet_data->house = gswe_moment_get_house(moment, position, err);
-    planet_data->sign = sign_info;
+    planet_data->sign_info = gswe_sign_info_ref(sign_info);
     planet_data->revision = moment->priv->revision;
 }
 
@@ -547,15 +553,15 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
     // The Ascendent, MC and Vertex points are also calculated by swe_houses(),
     // so let's update them.
     if (gswe_moment_has_planet(moment, GSWE_PLANET_ASCENDENT)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0], err);
+        calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0], err);
     }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_MC)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_MC, ascmc[1], err);
+        calculate_data_by_position(moment, GSWE_PLANET_MC, ascmc[1], err);
     }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_VERTEX)) {
-        gswe_calculate_data_by_position(moment, GSWE_PLANET_VERTEX, ascmc[3], err);
+        calculate_data_by_position(moment, GSWE_PLANET_VERTEX, ascmc[3], err);
     }
 }
 
@@ -590,20 +596,22 @@ gswe_moment_get_house_cusps(GsweMoment *moment, GError **err)
 gboolean
 gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet)
 {
-    return (g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id) != NULL);
+    return (g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id) != NULL);
 }
 
 /**
  * gswe_moment_add_planet:
  * @moment: a GsweMoment object
  * @planet: the planet to add
+ * @err: a #GError
  *
- * Adds @planet to the calculated planets of @moment.
+ * Adds @planet to the calculated planets of @moment. @err is populated with
+ * GSWE_ERROR_UNKNOWN_PLANET if the given planet is not known to SWE-GLib.
  */
 void
-gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
+gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
-    GswePlanetData *planet_data = g_new0(GswePlanetData, 1);
+    GswePlanetData *planet_data;
     GswePlanetInfo *planet_info;
 
     if (gswe_moment_has_planet(moment, planet)) {
@@ -611,20 +619,13 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet)
     }
 
     if ((planet_info = g_hash_table_lookup(gswe_planet_info_table, GINT_TO_POINTER(planet))) == NULL) {
-        // TODO: Some real error checking should be done here, like checking if
-        // @planet is really from GswePlanet. If so, that is a fatal error.
-        // Otherwise, the developer erred, and a warning may be still issued.
-        // Also, a GError ** should be added to the parameters.
-        g_warning("Unknown planet ID: %d", planet);
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Unknown planet");
 
         return;
     }
 
-    planet_data->planet = planet;
+    planet_data = gswe_planet_data_new();
     planet_data->planet_info = planet_info;
-    planet_data->position = 0.0;
-    planet_data->house = 0;
-    planet_data->sign = NULL;
     planet_data->revision = 0;
 
     moment->priv->planet_list = g_list_append(moment->priv->planet_list, planet_data);
@@ -636,7 +637,7 @@ planet_add(gpointer key, gpointer value, gpointer user_data)
     GswePlanet planet = (GswePlanet)GPOINTER_TO_INT(key);
     GsweMoment *moment = GSWE_MOMENT(user_data);
 
-    gswe_moment_add_planet(moment, planet);
+    gswe_moment_add_planet(moment, planet, NULL);
 }
 
 /**
@@ -654,7 +655,7 @@ gswe_moment_add_all_planets(GsweMoment *moment)
 static void
 gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
-    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
+    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)->data);
     gchar serr[AS_MAXCH];
     gint ret;
     gdouble x2[6],
@@ -691,7 +692,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_NONFATAL, "Swiss Ephemeris error: %s", serr);
     }
 
-    gswe_calculate_data_by_position(moment, planet, x2[0], &calc_err);
+    calculate_data_by_position(moment, planet, x2[0], &calc_err);
 
     if (calc_err != NULL) {
         g_clear_error(err);
@@ -707,7 +708,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
 static void
 calculate_planet(GswePlanetData *planet_data, GsweMoment *moment)
 {
-    gswe_moment_calculate_planet(moment, planet_data->planet, NULL);
+    gswe_moment_calculate_planet(moment, planet_data->planet_info->planet, NULL);
 }
 
 static void
@@ -859,10 +860,10 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
 const GswePlanetData *
 gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
-    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, find_by_planet_id)->data);
+    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)->data);
 
     if (planet_data == NULL) {
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1019,7 +1020,16 @@ gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 static gint
 find_aspect_by_both_planets(GsweAspectData *aspect, struct GsweAspectFinder *aspect_finder)
 {
-    if (((aspect->planet1->planet == aspect_finder->planet1) && (aspect->planet2->planet == aspect_finder->planet2)) || ((aspect->planet1->planet == aspect_finder->planet2) && (aspect->planet2->planet == aspect_finder->planet1))) {
+    if (
+        (
+            (aspect->planet1->planet_info->planet == aspect_finder->planet1)
+            && (aspect->planet2->planet_info->planet == aspect_finder->planet2)
+        )
+        || (
+            (aspect->planet1->planet_info->planet == aspect_finder->planet2)
+            && (aspect->planet2->planet_info->planet == aspect_finder->planet1)
+        )
+    ) {
         return 0;
     }
 
@@ -1108,7 +1118,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
           *aspect;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1118,7 +1128,10 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
     for (aspect = moment->priv->aspect_list; aspect; aspect = aspect->next) {
         GsweAspectData *aspect_data = aspect->data;
 
-        if ((aspect_data->planet1->planet == planet) || (aspect_data->planet2->planet == planet)) {
+        if (
+            (aspect_data->planet1->planet_info->planet == planet)
+            || (aspect_data->planet2->planet_info->planet == planet)
+        ) {
             ret = g_list_prepend(ret, aspect_data);
         }
     }
@@ -1164,7 +1177,16 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, Gswe
 static gint
 find_antiscion_by_both_planets(GsweAntiscionData *antiscion, struct GsweAspectFinder *antiscion_finder)
 {
-    if (((antiscion->planet1->planet == antiscion_finder->planet1) && (antiscion->planet2->planet == antiscion_finder->planet2)) || ((antiscion->planet1->planet == antiscion_finder->planet2) && (antiscion->planet2->planet == antiscion_finder->planet1))) {
+    if (
+        (
+            (antiscion->planet1->planet_info->planet == antiscion_finder->planet1)
+            && (antiscion->planet2->planet_info->planet == antiscion_finder->planet2)
+        )
+        || (
+            (antiscion->planet1->planet_info->planet == antiscion_finder->planet2)
+            && (antiscion->planet2->planet_info->planet == antiscion_finder->planet1)
+        )
+    ) {
         return 0;
     }
 
@@ -1192,12 +1214,12 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
             GsweAntiscionData *antiscion_data;
             struct GsweAspectFinder antiscion_finder;
 
-            if (outer_planet->planet == inner_planet->planet) {
+            if (outer_planet->planet_info->planet == inner_planet->planet_info->planet) {
                 continue;
             }
 
-            antiscion_finder.planet1 = outer_planet->planet;
-            antiscion_finder.planet2 = inner_planet->planet;
+            antiscion_finder.planet1 = outer_planet->planet_info->planet;
+            antiscion_finder.planet2 = inner_planet->planet_info->planet;
 
             if (g_list_find_custom(moment->priv->antiscia_list, &antiscion_finder, (GCompareFunc)find_antiscion_by_both_planets) != NULL) {
                 continue;
@@ -1259,7 +1281,7 @@ gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GErro
           *antiscion;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1269,7 +1291,7 @@ gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GErro
     for (antiscion = moment->priv->antiscia_list; antiscion; antiscion = g_list_next(antiscion)) {
         GsweAntiscionData *antiscion_data = antiscion->data;
 
-        if ((antiscion_data->planet1->planet == planet) || (antiscion_data->planet2->planet == planet)) {
+        if ((antiscion_data->planet1->planet_info->planet == planet) || (antiscion_data->planet2->planet_info->planet == planet)) {
             ret = g_list_prepend(ret, antiscion_data);
         }
     }
@@ -1330,7 +1352,7 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
           *antiscion_l;
 
     if (!gswe_moment_has_planet(moment, planet)) {
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_NONADDED_PLANET, "Specified planet is not added to the moment object");
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
 
         return NULL;
     }
@@ -1340,7 +1362,13 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
     for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
         GsweAntiscionData *antiscion_data = antiscion_l->data;
 
-        if (((antiscion_data->planet1->planet == planet) || (antiscion_data->planet2->planet == planet))  && (antiscion_data->axis == axis)) {
+        if (
+            (
+                (antiscion_data->planet1->planet_info->planet == planet)
+                || (antiscion_data->planet2->planet_info->planet == planet)
+            )
+            && (antiscion_data->antiscion_axis_info->axis == axis)
+        ) {
             ret = g_list_prepend(ret, antiscion_data);
         }
     }

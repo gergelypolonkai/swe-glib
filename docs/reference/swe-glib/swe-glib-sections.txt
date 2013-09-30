@@ -97,12 +97,18 @@ gswe_planet_info_get_type
 <SECTION>
 <FILE>gswe-planet-data</FILE>
 GswePlanetData
+gswe_planet_data_new
+gswe_planet_data_ref
+gswe_planet_data_unref
+gswe_planet_data_set_planet
 gswe_planet_data_get_planet
+gswe_planet_data_set_planet_info
 gswe_planet_data_get_planet_info
 gswe_planet_data_get_position
 gswe_planet_data_get_retrograde
 gswe_planet_data_get_house
 gswe_planet_data_get_sign
+gswe_planet_data_get_sign_info
 <SUBSECTION Standard>
 GSWE_TYPE_PLANET_DATA
 gswe_planet_data_get_type

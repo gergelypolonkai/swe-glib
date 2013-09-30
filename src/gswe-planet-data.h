@@ -39,12 +39,22 @@ typedef struct _GswePlanetData GswePlanetData;
 GType gswe_planet_data_get_type(void);
 #define GSWE_TYPE_PLANET_DATA (gswe_planet_data_get_type())
 
+GswePlanetData *gswe_planet_data_new(void);
+
+GswePlanetData *gswe_planet_data_ref(GswePlanetData *planet_data);
+void gswe_planet_data_unref(GswePlanetData *planet_data);
+
+void gswe_planet_data_set_planet(GswePlanetData *planet_data, GswePlanet planet, GError **err);
 GswePlanet gswe_planet_data_get_planet(GswePlanetData *planet_data);
+
+void gswe_planet_data_set_planet_info(GswePlanetData *planet_data, GswePlanetInfo *planet_info);
 GswePlanetInfo *gswe_planet_data_get_planet_info(GswePlanetData *planet_data);
+
 gdouble gswe_planet_data_get_position(GswePlanetData *planet_data);
 gboolean gswe_planet_data_get_retrograde(GswePlanetData *planet_data);
-gint gswe_planet_data_get_house(GswePlanetData *planet_data);
-GsweSignInfo *gswe_planet_data_get_sign(GswePlanetData *planet_data);
+guint gswe_planet_data_get_house(GswePlanetData *planet_data);
+GsweZodiac gswe_planet_data_get_sign(GswePlanetData *planet_data);
+GsweSignInfo *gswe_planet_data_get_sign_info(GswePlanetData *planet_data);
 
 G_END_DECLS
 

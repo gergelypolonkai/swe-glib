@@ -44,8 +44,8 @@
  * @GSWE_ERROR_NO_VALID_VALUE: the #GsweTimestamp object holds no valid values
  * @GSWE_ERROR_UNKNOWN_HSYS: the requested house system is unknown
  * @GSWE_ERROR_UNKNOWN_SIGN: an invalid zodiac sign would have been returned
- * @GSWE_ERROR_NONADDED_PLANET: the referenced planet was not added with
- *                              gswe_moment_add_planet()
+ * @GSWE_ERROR_UNKNOWN_PLANET: the referenced planet was not added with
+ *                             gswe_moment_add_planet()
  *
  * Error codes returned by the SWE-GLib functions.
  */
@@ -58,7 +58,7 @@ typedef enum {
     GSWE_ERROR_NO_VALID_VALUE,
     GSWE_ERROR_UNKNOWN_HSYS,
     GSWE_ERROR_UNKNOWN_SIGN,
-    GSWE_ERROR_NONADDED_PLANET,
+    GSWE_ERROR_UNKNOWN_PLANET,
 } GsweError;
 
 /**

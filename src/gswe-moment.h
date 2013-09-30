@@ -105,7 +105,7 @@ GList *gswe_moment_get_house_cusps(GsweMoment *moment, GError **err);
 gint gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err);
 
 gboolean gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet);
-void gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet);
+void gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err);
 void gswe_moment_add_all_planets(GsweMoment *moment);
 GList *gswe_moment_get_all_planets(GsweMoment *moment);
 const GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err);
