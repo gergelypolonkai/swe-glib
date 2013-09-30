@@ -26,17 +26,19 @@
 struct _GsweAntiscionData {
     /* the first planet in the antiscion */
     GswePlanetData *planet1;
+
     /* the second planet in the antiscion */
     GswePlanetData *planet2;
-    /* the axis on which this antiscion is */
-    GsweAntiscionAxis axis;
+
     /* the #GsweAntiscionAxisInfo structure associated with this antiscion */
     GsweAntiscionAxisInfo *antiscion_axis_info;
+
     /* the difference in degrees between an exact antiscion and this given antiscion */
     gdouble difference;
-};
 
-GsweAntiscionData *gswe_antiscion_data_copy(GsweAntiscionData *antiscion_data);
+    /* reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_ANTISCION_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

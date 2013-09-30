@@ -46,6 +46,7 @@
  * @GSWE_ERROR_UNKNOWN_SIGN: an invalid zodiac sign would have been returned
  * @GSWE_ERROR_UNKNOWN_PLANET: the referenced planet was not added with
  *                             gswe_moment_add_planet()
+ * @GSWE_ERROR_UNKNOWN_ANTISCION_AXIS: the given axis is unknown to SWE-GLib
  *
  * Error codes returned by the SWE-GLib functions.
  */
@@ -59,6 +60,7 @@ typedef enum {
     GSWE_ERROR_UNKNOWN_HSYS,
     GSWE_ERROR_UNKNOWN_SIGN,
     GSWE_ERROR_UNKNOWN_PLANET,
+    GSWE_ERROR_UNKNOWN_ANTISCION_AXIS,
 } GsweError;
 
 /**

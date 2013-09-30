@@ -204,6 +204,7 @@ gswe_moment_finalize(GObject *gobject)
     g_list_free_full(moment->priv->house_list, g_free);
     g_list_free_full(moment->priv->planet_list, (GDestroyNotify)gswe_planet_data_unref);
     g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
+    g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
     gswe_moon_phase_data_unref(moment->priv->moon_phase);
 
     G_OBJECT_CLASS(gswe_moment_parent_class)->finalize(gobject);
@@ -1166,7 +1167,6 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, Gswe
 
     if ((antiscion_data->difference = fabs(antiscion_data->planet2->position - axis_position)) <= planet_orb) {
         antiscion_data->antiscion_axis_info = antiscion_axis_info;
-        antiscion_data->axis = axis;
 
         return TRUE;
     } else {
@@ -1206,7 +1206,7 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
     }
 
     gswe_moment_calculate_all_planets(moment);
-    g_list_free_full(moment->priv->antiscia_list, g_free);
+    g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
     moment->priv->antiscia_list = NULL;
 
     for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
@@ -1227,14 +1227,14 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
                 continue;
             }
 
-            antiscion_data = g_new0(GsweAntiscionData, 1);
+            antiscion_data = gswe_antiscion_data_new();
             antiscion_data->planet1 = outer_planet;
             antiscion_data->planet2 = inner_planet;
-            antiscion_data->axis = GSWE_ANTISCION_AXIS_NONE;
+            antiscion_data->antiscion_axis_info = NULL;
 
             (void)g_hash_table_find(gswe_antiscion_axis_info_table, (GHRFunc)find_antiscion, antiscion_data);
 
-            if (antiscion_data->axis == GSWE_ANTISCION_AXIS_NONE) {
+            if (antiscion_data->antiscion_axis_info->axis == GSWE_ANTISCION_AXIS_NONE) {
                 antiscion_data->antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
             }
 
@@ -1324,7 +1324,7 @@ gswe_moment_get_axis_all_antiscia(GsweMoment *moment, GsweAntiscionAxis axis)
     for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
         GsweAntiscionData *antiscion_data = antiscion_l->data;
 
-        if (antiscion_data->axis == axis) {
+        if (antiscion_data->antiscion_axis_info->axis == axis) {
             ret = g_list_prepend(ret, antiscion_data);
         }
     }

@@ -17,6 +17,8 @@
  */
 #include <glib-object.h>
 
+#include "swe-glib-private.h"
+#include "swe-glib.h"
 #include "gswe-antiscion-data.h"
 #include "gswe-antiscion-data-private.h"
 
@@ -32,25 +34,92 @@
  * between two planets, based on a specified axis.
  */
 
-GsweAntiscionData *
-gswe_antiscion_data_copy(GsweAntiscionData *antiscion_data)
-{
-    GsweAntiscionData *ret = g_new0(GsweAntiscionData, 1);
+G_DEFINE_BOXED_TYPE(GsweAntiscionData, gswe_antiscion_data, (GBoxedCopyFunc)gswe_antiscion_data_ref, (GBoxedFreeFunc)gswe_antiscion_data_unref);
 
-    ret->planet1 = antiscion_data->planet1;
-    ret->planet2 = antiscion_data->planet2;
-    ret->axis = antiscion_data->axis;
-    ret->antiscion_axis_info = antiscion_data->antiscion_axis_info;
-    ret->difference = antiscion_data->difference;
+static void
+gswe_antiscion_data_free(GsweAntiscionData *antiscion_data)
+{
+    if (antiscion_data->planet1) {
+        gswe_planet_data_unref(antiscion_data->planet1);
+    }
+
+    if (antiscion_data->planet2) {
+        gswe_planet_data_unref(antiscion_data->planet2);
+    }
+
+    if (antiscion_data->antiscion_axis_info) {
+        gswe_antiscion_axis_info_unref(antiscion_data->antiscion_axis_info);
+    }
+}
+
+/**
+ * gswe_antiscion_data_new:
+ *
+ * Creates a new #GsweAntiscionData object with reference count set to 1.
+ *
+ * Returns: (transfer full): a new #GsweAntiscionData object
+ */
+GsweAntiscionData *
+gswe_antiscion_data_new(void)
+{
+    GsweAntiscionData *ret;
+
+    ret = g_new0(GsweAntiscionData, 1);
+    ret->refcount = 1;
 
     return ret;
 }
 
-G_DEFINE_BOXED_TYPE(GsweAntiscionData, gswe_antiscion_data, (GBoxedCopyFunc)gswe_antiscion_data_copy, (GBoxedFreeFunc)g_free);
+/**
+ * gswe_antiscion_data_ref:
+ * @antiscion_data: (in): a #GsweAntiscionData
+ *
+ * Increases reference count on @antiscion_data.
+ *
+ * Returns: (transfer none): the same #GsweAntiscionData
+ */
+GsweAntiscionData *
+gswe_antiscion_data_ref(GsweAntiscionData *antiscion_data)
+{
+    antiscion_data->refcount++;
+
+    return antiscion_data;
+}
+
+/**
+ * gswe_antiscion_data_unref:
+ * @antiscion_data: (in): a #GsweAntiscionData
+ *
+ * Decreases reference count on @antiscion_data. If reference count reaches zero, @antiscion_data is freed.
+ */
+void
+gswe_antiscion_data_unref(GsweAntiscionData *antiscion_data)
+{
+    if (--antiscion_data->refcount == 0) {
+        gswe_antiscion_data_free(antiscion_data);
+    }
+}
+
+/**
+ * gswe_antiscion_data_set_planet1:
+ * @antiscion_data: (in): a #GsweAntiscionData
+ * @planet1: (in): a #GswePlanetData
+ *
+ * Sets @planet1 as the first planet of the antiscion.
+ */
+void
+gswe_antiscion_data_set_planet1(GsweAntiscionData *antiscion_data, GswePlanetData *planet1)
+{
+    if (antiscion_data->planet1) {
+        gswe_planet_data_unref(antiscion_data->planet1);
+    }
+
+    antiscion_data->planet1 = gswe_planet_data_ref(planet1);
+}
 
 /**
  * gswe_antiscion_data_get_planet1:
- * @antiscion_data: a #GsweAntiscionData
+ * @antiscion_data: (in): a #GsweAntiscionData
  *
  * Gets the first in the antiscion relationship.
  *
@@ -59,16 +128,29 @@ G_DEFINE_BOXED_TYPE(GsweAntiscionData, gswe_antiscion_data, (GBoxedCopyFunc)gswe
 GswePlanetData *
 gswe_antiscion_data_get_planet1(GsweAntiscionData *antiscion_data)
 {
-    if (antiscion_data) {
-        return antiscion_data->planet1;
-    } else {
-        return NULL;
+    return antiscion_data->planet1;
+}
+
+/**
+ * gswe_antiscion_data_set_planet2:
+ * @antiscion_data: (in): a #GsweAntiscionData
+ * @planet2: (in): a #GswePlanetData
+ *
+ * Sets @planet2 as the second planet of the antiscion.
+ */
+void
+gswe_antiscion_data_set_planet2(GsweAntiscionData *antiscion_data, GswePlanetData *planet2)
+{
+    if (antiscion_data->planet2) {
+        gswe_planet_data_unref(antiscion_data->planet2);
     }
+
+    antiscion_data->planet2 = gswe_planet_data_ref(planet2);
 }
 
 /**
  * gswe_antiscion_data_get_planet2:
- * @antiscion_data: a #GsweAntiscionData
+ * @antiscion_data: (in): a #GsweAntiscionData
  *
  * Gets the second in the antiscion relationship.
  *
@@ -77,16 +159,40 @@ gswe_antiscion_data_get_planet1(GsweAntiscionData *antiscion_data)
 GswePlanetData *
 gswe_antiscion_data_get_planet2(GsweAntiscionData *antiscion_data)
 {
-    if (antiscion_data) {
-        return antiscion_data->planet2;
-    } else {
-        return NULL;
+    return antiscion_data->planet2;
+}
+
+/**
+ * gswe_antiscion_data_set_axis:
+ * @antiscion_data: a #GsweAntiscionData
+ * @axis: the axis to set in @antiscion_data
+ * @err: a #GError
+ *
+ * Sets the antiscion axis, which must be known by SWE-GLib (e.g. by calling
+ * gswe_init()). @err is populated with GSWE_ERROR_UNKNOWN_ANTISCION_AXIS if
+ * the axis is not known.
+ */
+void
+gswe_antiscion_data_set_axis(GsweAntiscionData *antiscion_data, GsweAntiscionAxis axis, GError **err)
+{
+    GsweAntiscionAxisInfo *antiscion_axis_info;
+
+    if ((antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(axis))) == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_ANTISCION_AXIS, "Unknown antiscion axis");
+
+        return;
     }
+
+    if (antiscion_data->antiscion_axis_info) {
+        gswe_antiscion_axis_info_unref(antiscion_data->antiscion_axis_info);
+    }
+
+    antiscion_data->antiscion_axis_info = gswe_antiscion_axis_info_ref(antiscion_axis_info);
 }
 
 /**
  * gswe_antiscion_data_get_axis:
- * @antiscion_data: a #GsweAntiscionData
+ * @antiscion_data: (in): a #GsweAntiscionData
  *
  * Gets the axis on which the antiscion relationship exists.
  *
@@ -95,16 +201,33 @@ gswe_antiscion_data_get_planet2(GsweAntiscionData *antiscion_data)
 GsweAntiscionAxis
 gswe_antiscion_data_get_axis(GsweAntiscionData *antiscion_data)
 {
-    if (antiscion_data) {
-        return antiscion_data->axis;
+    if (antiscion_data->antiscion_axis_info) {
+        return antiscion_data->antiscion_axis_info->axis;
     } else {
         return GSWE_ANTISCION_AXIS_NONE;
     }
 }
 
 /**
+ * gswe_antiscion_data_set_antiscion_axis_info:
+ * @antiscion_data: (in): a #GsweAntiscionData
+ * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
+ *
+ * Sets @antiscion_axis_info as the axis of this #GsweAntiscionData.
+ */
+void
+gswe_antiscion_data_set_antiscion_axis_info(GsweAntiscionData *antiscion_data, GsweAntiscionAxisInfo *antiscion_axis_info)
+{
+    if (antiscion_data->antiscion_axis_info) {
+        gswe_antiscion_axis_info_unref(antiscion_data->antiscion_axis_info);
+    }
+
+    antiscion_data->antiscion_axis_info = gswe_antiscion_axis_info_ref(antiscion_axis_info);
+}
+
+/**
  * gswe_antiscion_data_get_antiscion_axis_info:
- * @antiscion_data: a #GsweAntiscionData
+ * @antiscion_data: (in): a #GsweAntiscionData
  *
  * Gets the axis information related to the antiscion relationship's axis.
  *
@@ -113,16 +236,25 @@ gswe_antiscion_data_get_axis(GsweAntiscionData *antiscion_data)
 GsweAntiscionAxisInfo *
 gswe_antiscion_data_get_antiscion_axis_info(GsweAntiscionData *antiscion_data)
 {
-    if (antiscion_data) {
-        return antiscion_data->antiscion_axis_info;
-    } else {
-        return NULL;
-    }
+    return antiscion_data->antiscion_axis_info;
+}
+
+/**
+ * gswe_antiscion_data_set_difference:
+ * @antiscion_data: a #GsweAntiscionData
+ * @difference: the difference from an exact antiscion, in degrees
+ *
+ * Sets the difference of this antiscion from an exact antiscion.
+ */
+void
+gswe_antiscion_data_set_difference(GsweAntiscionData *antiscion_data, gdouble difference)
+{
+    antiscion_data->difference = difference;
 }
 
 /**
  * gswe_antiscion_data_get_difference:
- * @antiscion_data: a #GsweAntiscionData
+ * @antiscion_data: (in): a #GsweAntiscionData
  *
  * Gets the difference between an exact antiscion and this antiscion relationship.
  *
@@ -131,10 +263,6 @@ gswe_antiscion_data_get_antiscion_axis_info(GsweAntiscionData *antiscion_data)
 gdouble
 gswe_antiscion_data_get_difference(GsweAntiscionData *antiscion_data)
 {
-    if (antiscion_data) {
-        return antiscion_data->difference;
-    } else {
-        return 0.0;
-    }
+    return antiscion_data->difference;
 }
 
