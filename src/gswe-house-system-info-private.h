@@ -32,10 +32,10 @@ struct _GsweHouseSystemInfo {
 
     /* the name of this house system */
     gchar *name;
-};
 
-GsweHouseSystemInfo *gswe_house_system_info_copy(GsweHouseSystemInfo *house_system_info);
-void gswe_house_system_info_free(GsweHouseSystemInfo *house_system_info);
+    /* reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_HOUSE_SYSTEM_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

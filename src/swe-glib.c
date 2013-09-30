@@ -62,7 +62,7 @@ GsweTimestamp *gswe_full_moon_base_date;
     g_hash_table_replace((ht), GINT_TO_POINTER(s), (v));
 
 #define ADD_HOUSE_SYSTEM(ht, v, i, s, n) \
-    (v) = g_new0(GsweHouseSystemInfo, 1); \
+    (v) = gswe_house_system_info_new(); \
     (v)->house_system = i; \
     (v)->sweph_id = s; \
     (v)->name = g_strdup(n); \
@@ -95,13 +95,6 @@ GsweTimestamp *gswe_full_moon_base_date;
  * Return value: a #GQuark
  */
 G_DEFINE_QUARK(gswe-error-quark, gswe_error);
-
-void
-gswe_free_house_system_info(gpointer house_system_info)
-{
-    g_free(((GsweHouseSystemInfo *)house_system_info)->name);
-    g_free(house_system_info);
-}
 
 /**
  * gswe_init:
@@ -163,7 +156,7 @@ gswe_init(void)
     ADD_SIGN(gswe_sign_info_table, sign_info, GSWE_SIGN_AQUARIUS,    _("Aquarius"),    GSWE_ELEMENT_AIR,   GSWE_QUALITY_FIX);
     ADD_SIGN(gswe_sign_info_table, sign_info, GSWE_SIGN_PISCES,      _("Pisces"),      GSWE_ELEMENT_WATER, GSWE_QUALITY_MUTABLE);
 
-    gswe_house_system_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_house_system_info);
+    gswe_house_system_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_house_system_info_unref);
 
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_NONE,     0,   _("None"));
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_PLACIDUS, 'P', _("Placidus"));

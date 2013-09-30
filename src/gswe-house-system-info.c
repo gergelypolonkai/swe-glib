@@ -29,40 +29,83 @@
  * #GsweHouseSystemInfo stores information of a house system.
  */
 
-G_DEFINE_BOXED_TYPE(GsweHouseSystemInfo, gswe_house_system_info, (GBoxedCopyFunc)gswe_house_system_info_copy, (GBoxedFreeFunc)gswe_house_system_info_free);
+G_DEFINE_BOXED_TYPE(GsweHouseSystemInfo, gswe_house_system_info, (GBoxedCopyFunc)gswe_house_system_info_ref, (GBoxedFreeFunc)gswe_house_system_info_unref);
 
+static void
+gswe_house_system_info_free(GsweHouseSystemInfo *house_system_info)
+{
+    if (house_system_info->name) {
+        g_free(house_system_info->name);
+    }
+
+    g_free(house_system_info);
+}
+
+/**
+ * gswe_house_system_info_new:
+ *
+ * Creates a new #GsweHouseSystemInfo with reference count of 1.
+ *
+ * Returns: (transfer full): a new #GsweHouseSystemInfo
+ */
 GsweHouseSystemInfo *
-gswe_house_system_info_copy(GsweHouseSystemInfo *house_system_info)
+gswe_house_system_info_new(void)
 {
     GsweHouseSystemInfo *ret;
 
-    if (house_system_info == NULL) {
-        return NULL;
-    }
-
-    ret               = g_new0(GsweHouseSystemInfo, 1);
-    ret->house_system = house_system_info->house_system;
-    ret->sweph_id     = house_system_info->sweph_id;
-    ret->name         = g_strdup(house_system_info->name);
+    ret = g_new0(GsweHouseSystemInfo, 1);
+    ret->refcount = 1;
 
     return ret;
 }
 
-void
-gswe_house_system_info_free(GsweHouseSystemInfo *house_system_info)
+/**
+ * gswe_house_system_info_ref:
+ * @house_system_info: (in): a #GsweHouseSystemInfo
+ *
+ * Increases reference count on @house_system_info by one.
+ *
+ * Returns: (transfer none): the same #GsweHouseSystemInfo
+ */
+GsweHouseSystemInfo *
+gswe_house_system_info_ref(GsweHouseSystemInfo *house_system_info)
 {
-    if (house_system_info) {
-        if (house_system_info->name) {
-            g_free(house_system_info->name);
-        }
+    house_system_info->refcount++;
 
-        g_free(house_system_info);
+    return house_system_info;
+}
+
+/**
+ * gswe_house_system_info_unref:
+ * @house_system_info: a #GsweHouseSystemInfo
+ *
+ * Decreases reference count on @house_system_info by one. If reference count
+ * drops to zero, @house_system_info is freed.
+ */
+void
+gswe_house_system_info_unref(GsweHouseSystemInfo *house_system_info)
+{
+    if (--house_system_info->refcount == 0) {
+        gswe_house_system_info_free(house_system_info);
     }
 }
 
 /**
+ * gswe_house_system_info_set_house_system:
+ * @house_system_info: (in): a #GsweHouseSystemInfo
+ * @house_system: a #GsweHouseSystem
+ *
+ * Sets up @house_system_info to represent @house_system.
+ */
+void
+gswe_house_system_info_set_house_system(GsweHouseSystemInfo *house_system_info, GsweHouseSystem house_system)
+{
+    house_system_info->house_system = house_system;
+}
+
+/**
  * gswe_house_system_info_get_house_system:
- * @house_system_info: (in) (allow-none): a #GsweHouseSystemInfo
+ * @house_system_info: (in): a #GsweHouseSystemInfo
  *
  * Gets the house system ID this #GsweHouseSystemInfo represents.
  *
@@ -71,16 +114,26 @@ gswe_house_system_info_free(GsweHouseSystemInfo *house_system_info)
 GsweHouseSystem
 gswe_house_system_info_get_house_system(GsweHouseSystemInfo *house_system_info)
 {
-    if (house_system_info) {
-        return house_system_info->house_system;
-    } else {
-        return GSWE_HOUSE_SYSTEM_NONE;
-    }
+    return house_system_info->house_system;
+}
+
+/**
+ * gswe_house_system_info_set_sweph_id:
+ * @house_system_info: a #GsweHouseSystemInfo
+ * @sweph_id: a character recognized by Swiss Ephemeris as a house system
+ *
+ * Sets up @house_system_info to represent the Swiss Ephemeris house system
+ * marked by @sweph_id.
+ */
+void
+gswe_house_system_info_set_sweph_id(GsweHouseSystemInfo *house_system_info, gchar sweph_id)
+{
+    house_system_info->sweph_id = sweph_id;
 }
 
 /**
  * gswe_house_system_info_get_sweph_id:
- * @house_system_info: (in) (allow-none): a #GsweHouseSystemInfo
+ * @house_system_info: (in): a #GsweHouseSystemInfo
  *
  * Gets the Swiss Ephemeris ID for the house system.
  *
@@ -89,16 +142,29 @@ gswe_house_system_info_get_house_system(GsweHouseSystemInfo *house_system_info)
 gchar
 gswe_house_system_info_get_sweph_id(GsweHouseSystemInfo *house_system_info)
 {
-    if (house_system_info) {
-        return house_system_info->sweph_id;
-    } else {
-        return 0;
+    return house_system_info->sweph_id;
+}
+
+/**
+ * gswe_house_system_info_set_name:
+ * @house_system_info: a #GsweHouseSystemInfo
+ * @name: the new name for this house system
+ *
+ * Sets the name of @house_system_info.
+ */
+void
+gswe_house_system_info_set_name(GsweHouseSystemInfo *house_system_info, const gchar *name)
+{
+    if (house_system_info->name) {
+        g_free(house_system_info->name);
     }
+
+    house_system_info->name = g_strdup(name);
 }
 
 /**
  * gswe_house_system_info_get_name:
- * @house_system_info: (in) (allow-none): a #GsweHouseSystemInfo
+ * @house_system_info: (in): a #GsweHouseSystemInfo
  *
  * Gets the name of the house system.
  *
@@ -107,10 +173,6 @@ gswe_house_system_info_get_sweph_id(GsweHouseSystemInfo *house_system_info)
 const gchar *
 gswe_house_system_info_get_name(GsweHouseSystemInfo *house_system_info)
 {
-    if (house_system_info) {
-        return house_system_info->name;
-    } else {
-        return NULL;
-    }
+    return house_system_info->name;
 }
 

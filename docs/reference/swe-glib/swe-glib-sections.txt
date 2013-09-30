@@ -194,9 +194,15 @@ gswe_antiscion_data_get_type
 <SECTION>
 <FILE>gswe-house-system-info</FILE>
 GsweHouseSystemInfo
+gswe_house_system_info_new
+gswe_house_system_info_ref
+gswe_house_system_info_unref
+gswe_house_system_info_set_house_system
 gswe_house_system_info_get_house_system
-gswe_house_system_info_get_name
+gswe_house_system_info_set_sweph_id
 gswe_house_system_info_get_sweph_id
+gswe_house_system_info_set_name
+gswe_house_system_info_get_name
 <SUBSECTION Standard>
 GSWE_TYPE_HOUSE_SYSTEM_INFO
 gswe_house_system_info_get_type

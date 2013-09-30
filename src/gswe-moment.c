@@ -495,7 +495,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
             ascmc[10],
             jd;
     gint i;
-    GsweHouseSystemInfo *house_system_data;
+    GsweHouseSystemInfo *house_system_info;
 
     if (moment->priv->house_revision == moment->priv->revision) {
         return;
@@ -512,7 +512,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
         return;
     }
 
-    if ((house_system_data = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(moment->priv->house_system))) == NULL) {
+    if ((house_system_info = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(moment->priv->house_system))) == NULL) {
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_HSYS, "Unknown house system");
 
         return;
@@ -526,7 +526,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
         return;
     }
 
-    swe_houses(jd, moment->priv->coordinates.latitude, moment->priv->coordinates.longitude, house_system_data->sweph_id, cusps, ascmc);
+    swe_houses(jd, moment->priv->coordinates.latitude, moment->priv->coordinates.longitude, house_system_info->sweph_id, cusps, ascmc);
 
     /* TODO: SWE house system 'G' (Gauquelin sector cusps) have 36 houses; we
      * should detect that somehow (house system 'G' is not implemented yet in
