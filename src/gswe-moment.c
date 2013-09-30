@@ -531,12 +531,13 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
      * GsweHouseSystem, and all other house systems have exactly 12 houses, so
      * this should not cause trouble yet, though) */
     for (i = 12; i >= 1; i--) {
+        GsweSignInfo *sign_info;
         GsweHouseData *house_data = g_new0(GsweHouseData, 1);
 
         house_data->house = i;
         house_data->cusp_position = cusps[i];
 
-        if ((house_data->sign = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER((gint)ceilf(cusps[i] / 30.0)))) == NULL) {
+        if ((sign_info = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER((gint)ceilf(cusps[i] / 30.0)))) == NULL) {
             g_list_free_full(moment->priv->house_list, g_free);
             moment->priv->house_list = NULL;
             moment->priv->house_revision = 0;
@@ -545,6 +546,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
             return;
         }
 
+        house_data->sign_info = gswe_sign_info_ref(sign_info);
         moment->priv->house_list = g_list_prepend(moment->priv->house_list, house_data);
     }
 
@@ -754,7 +756,7 @@ gswe_moment_get_sign_planets(GsweMoment *moment, GsweZodiac sign)
     for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
         GswePlanetData *pd = planet->data;
 
-        if (pd->sign->sign == sign) {
+        if (pd->sign_info->sign == sign) {
             ret = g_list_prepend(ret, pd);
         }
     }
@@ -880,13 +882,11 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
 
     gswe_moment_calculate_planet(moment, planet_data->planet_info->planet, NULL);
 
-    point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element))) + planet_data->planet_info->points;
-    g_hash_table_replace(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign->element), GINT_TO_POINTER(point));
+    point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign_info->element))) + planet_data->planet_info->points;
+    g_hash_table_replace(moment->priv->element_points, GINT_TO_POINTER(planet_data->sign_info->element), GINT_TO_POINTER(point));
 
-    point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->quality_points, GINT_TO_POINTER(planet_data->sign->quality)));
-
-    point += planet_data->planet_info->points;
-    g_hash_table_replace(moment->priv->quality_points, GINT_TO_POINTER(planet_data->sign->quality), GINT_TO_POINTER(point));
+    point = GPOINTER_TO_INT(g_hash_table_lookup(moment->priv->quality_points, GINT_TO_POINTER(planet_data->sign_info->quality))) + planet_data->planet_info->points;
+    g_hash_table_replace(moment->priv->quality_points, GINT_TO_POINTER(planet_data->sign_info->quality), GINT_TO_POINTER(point));
 }
 
 static void

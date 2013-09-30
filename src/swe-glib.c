@@ -97,13 +97,6 @@ GsweTimestamp *gswe_full_moon_base_date;
 G_DEFINE_QUARK(gswe-error-quark, gswe_error);
 
 void
-gswe_free_sign_info(gpointer sign_info)
-{
-    g_free(((GsweSignInfo *)sign_info)->name);
-    g_free(sign_info);
-}
-
-void
 gswe_free_house_system_info(gpointer house_system_info)
 {
     g_free(((GsweHouseSystemInfo *)house_system_info)->name);
@@ -155,7 +148,7 @@ gswe_init(void)
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MC,          -1,           FALSE, _("Midheaven"),           5.0,  1);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VERTEX,      -1,           FALSE, _("Vertex"),              2.0,  0);
 
-    gswe_sign_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_sign_info);
+    gswe_sign_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_sign_info_unref);
 
     ADD_SIGN(gswe_sign_info_table, sign_info, GSWE_SIGN_ARIES,       _("Aries"),       GSWE_ELEMENT_FIRE,  GSWE_QUALITY_CARDINAL);
     ADD_SIGN(gswe_sign_info_table, sign_info, GSWE_SIGN_TAURUS,      _("Taurus"),      GSWE_ELEMENT_EARTH, GSWE_QUALITY_FIX);
