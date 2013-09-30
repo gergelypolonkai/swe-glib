@@ -69,7 +69,7 @@ GsweTimestamp *gswe_full_moon_base_date;
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v));
 
 #define ADD_ASPECT(ht, v, i, n, s, o, h, m) \
-    (v) = g_new0(GsweAspectInfo, 1); \
+    (v) = gswe_aspect_info_new(); \
     (v)->aspect = (i); \
     (v)->name = g_strdup(n); \
     (v)->size = (s); \
@@ -115,13 +115,6 @@ gswe_free_house_system_info(gpointer house_system_info)
 {
     g_free(((GsweHouseSystemInfo *)house_system_info)->name);
     g_free(house_system_info);
-}
-
-void
-gswe_free_aspect_info(gpointer aspect_info)
-{
-    g_free(((GsweAspectInfo *)aspect_info)->name);
-    g_free(aspect_info);
 }
 
 void
@@ -198,7 +191,7 @@ gswe_init(void)
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_KOCH,     'K', _("Koch"));
     ADD_HOUSE_SYSTEM(gswe_house_system_info_table, house_system_info, GSWE_HOUSE_SYSTEM_EQUAL,    'E', _("Equal"));
 
-    gswe_aspect_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, gswe_free_aspect_info);
+    gswe_aspect_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_aspect_info_unref);
 
     // Note that because all aspects must be <= 180°, GSWE_ASPECT_NONE can
     // never really exist. It is provided for name fetching purposes only.

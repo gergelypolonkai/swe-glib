@@ -37,11 +37,27 @@ typedef struct _GsweAspectInfo GsweAspectInfo;
 GType gswe_aspect_info_get_type(void);
 #define GSWE_TYPE_ASPECT_INFO (gswe_aspect_info_get_type())
 
+GsweAspectInfo *gswe_aspect_info_new(void);
+
+GsweAspectInfo *gswe_aspect_info_ref(GsweAspectInfo *aspect_info);
+void gswe_aspect_info_unref(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_aspect(GsweAspectInfo *aspect_info, GsweAspect aspect);
 GsweAspect gswe_aspect_info_get_aspect(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_name(GsweAspectInfo *aspect_info, const gchar *name);
 const gchar *gswe_aspect_info_get_name(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_size(GsweAspectInfo *aspect_info, gdouble size);
 gdouble gswe_aspect_info_get_size(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_orb_modifier(GsweAspectInfo *aspect_info, gdouble orb_modifier);
 gdouble gswe_aspect_info_get_orb_modifier(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_harmonic(GsweAspectInfo *aspect_info, gboolean harmonic);
 gboolean gswe_aspect_info_get_harmonic(GsweAspectInfo *aspect_info);
+
+void gswe_aspect_info_set_major(GsweAspectInfo *aspect_info, gboolean major);
 gboolean gswe_aspect_info_get_major(GsweAspectInfo *aspect_info);
 
 G_END_DECLS

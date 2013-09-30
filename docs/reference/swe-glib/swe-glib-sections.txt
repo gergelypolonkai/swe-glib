@@ -111,12 +111,21 @@ gswe_planet_data_get_type
 <SECTION>
 <FILE>gswe-aspect-info</FILE>
 GsweAspectInfo
+gswe_aspect_info_new
+gswe_aspect_info_ref
+gswe_aspect_info_unref
+gswe_aspect_info_set_aspect
 gswe_aspect_info_get_aspect
-gswe_aspect_info_get_harmonic
-gswe_aspect_info_get_major
+gswe_aspect_info_set_name
 gswe_aspect_info_get_name
-gswe_aspect_info_get_orb_modifier
+gswe_aspect_info_set_size
 gswe_aspect_info_get_size
+gswe_aspect_info_set_orb_modifier
+gswe_aspect_info_get_orb_modifier
+gswe_aspect_info_set_harmonic
+gswe_aspect_info_get_harmonic
+gswe_aspect_info_set_major
+gswe_aspect_info_get_major
 <SUBSECTION Standard>
 GSWE_TYPE_ASPECT_INFO
 gswe_aspect_info_get_type

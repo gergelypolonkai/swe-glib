@@ -40,10 +40,10 @@ struct _GsweAspectInfo {
 
     /* shows whether this aspect is major (Ptolemaic) or not */
     gboolean major;
-};
 
-void gswe_aspect_info_free(GsweAspectInfo *aspect_info);
-GsweAspectInfo *gswe_aspect_info_copy(GsweAspectInfo *aspect_info);
+    /** reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_ASPECT_INFO_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */
