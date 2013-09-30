@@ -32,17 +32,17 @@ struct _GsweAspectData {
     /* the distance between the two planets, in degrees */
     gdouble distance;
 
-    /* the aspect between the two planets */
-    GsweAspect aspect;
-
     /* the #GsweAspectInfo structure associated with the aspect */
     GsweAspectInfo *aspect_info;
 
     /* the difference in percent between an exact aspect and this given aspect */
     gdouble difference;
+
+    /* reference count */
+    guint refcount;
 };
 
-GsweAspectData *gswe_aspect_data_copy(GsweAspectData *aspect_data);
+void gswe_aspect_data_calculate(GsweAspectData *aspect_data);
 
 #endif /* __SWE_GLIB_GSWE_ASPECT_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

@@ -202,6 +202,7 @@ gswe_moment_finalize(GObject *gobject)
 
     g_list_free_full(moment->priv->house_list, g_free);
     g_list_free_full(moment->priv->planet_list, g_free);
+    g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
 
     G_OBJECT_CLASS(gswe_moment_parent_class)->finalize(gobject);
 }
@@ -1025,40 +1026,6 @@ find_aspect_by_both_planets(GsweAspectData *aspect, struct GsweAspectFinder *asp
     return 1;
 }
 
-static gboolean
-find_aspect(gpointer aspect_p, GsweAspectInfo *aspect_info, GsweAspectData *aspect_data)
-{
-    GsweAspect aspect = GPOINTER_TO_INT(aspect_p);
-    gdouble diff,
-            planet_orb,
-            aspect_orb;
-
-    aspect_data->distance = fabs(aspect_data->planet1->position - aspect_data->planet2->position);
-
-    if (aspect_data->distance > 180.0) {
-        aspect_data->distance = 360.0 - aspect_data->distance;
-    }
-
-    diff = fabs(aspect_info->size - aspect_data->distance);
-    planet_orb = fmin(aspect_data->planet1->planet_info->orb, aspect_data->planet2->planet_info->orb);
-    aspect_orb = fmax(1.0, planet_orb - aspect_info->orb_modifier);
-
-    if (diff < aspect_orb) {
-        aspect_data->aspect = aspect;
-        aspect_data->aspect_info = aspect_info;
-
-        if (aspect_info->size == 0) {
-            aspect_data->difference = (1 - ((360.0 - diff) / 360.0)) * 100.0;
-        } else {
-            aspect_data->difference = (1 - ((aspect_info->size - diff) / aspect_info->size)) * 100.0;
-        }
-
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
 static void
 gswe_moment_calculate_aspects(GsweMoment *moment)
 {
@@ -1070,7 +1037,7 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
     }
 
     gswe_moment_calculate_all_planets(moment);
-    g_list_free_full(moment->priv->aspect_list, g_free);
+    g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
     moment->priv->aspect_list = NULL;
 
     for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
@@ -1079,30 +1046,21 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
                            *inner_planet = iplanet->data;
             struct GsweAspectFinder aspect_finder;
             GsweAspectData *aspect_data;
+            GList *aspect_data_element;
 
-            if (outer_planet->planet == inner_planet->planet) {
+            if (outer_planet->planet_info->planet == inner_planet->planet_info->planet) {
                 continue;
             }
 
-            aspect_finder.planet1 = outer_planet->planet;
-            aspect_finder.planet2 = inner_planet->planet;
+            aspect_finder.planet1 = outer_planet->planet_info->planet;
+            aspect_finder.planet2 = inner_planet->planet_info->planet;
 
-            if (g_list_find_custom(moment->priv->aspect_list, &aspect_finder, (GCompareFunc)find_aspect_by_both_planets) != NULL) {
-                continue;
+            if ((aspect_data_element = g_list_find_custom(moment->priv->aspect_list, &aspect_finder, (GCompareFunc)find_aspect_by_both_planets)) != NULL) {
+                gswe_aspect_data_calculate(aspect_data_element->data);
+            } else {
+                aspect_data = gswe_aspect_data_new_with_planets(inner_planet, outer_planet);
+                moment->priv->aspect_list = g_list_prepend(moment->priv->aspect_list, aspect_data);
             }
-
-            aspect_data = g_new0(GsweAspectData, 1);
-            aspect_data->planet1 = outer_planet;
-            aspect_data->planet2 = inner_planet;
-            aspect_data->aspect = GSWE_ASPECT_NONE;
-
-            (void)g_hash_table_find(gswe_aspect_info_table, (GHRFunc)find_aspect, aspect_data);
-
-            if (aspect_data->aspect == GSWE_ASPECT_NONE) {
-                aspect_data->aspect_info = g_hash_table_lookup(gswe_aspect_info_table, GINT_TO_POINTER(GSWE_ASPECT_NONE));
-            }
-
-            moment->priv->aspect_list = g_list_prepend(moment->priv->aspect_list, aspect_data);
         }
     }
 

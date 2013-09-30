@@ -39,8 +39,18 @@ typedef struct _GsweAspectData GsweAspectData;
 GType gswe_aspect_data_get_type(void);
 #define GSWE_TYPE_ASPECT_DATA (gswe_aspect_data_get_type())
 
+GsweAspectData *gswe_aspect_data_new(void);
+GsweAspectData *gswe_aspect_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *planet2);
+
+GsweAspectData *gswe_aspect_data_ref(GsweAspectData *aspect_data);
+void gswe_aspect_data_unref(GsweAspectData *aspect_data);
+
+void gswe_aspect_data_set_planet1(GsweAspectData *aspect_data, GswePlanetData *planet1);
 GswePlanetData *gswe_aspect_data_get_planet1(GsweAspectData *aspect_data);
+
+void gswe_aspect_data_set_planet2(GsweAspectData *aspect_data, GswePlanetData *planet2);
 GswePlanetData *gswe_aspect_data_get_planet2(GsweAspectData *aspect_data);
+
 gdouble gswe_aspect_data_get_distance(GsweAspectData *aspect_data);
 GsweAspect gswe_aspect_data_get_aspect(GsweAspectData *aspect_data);
 GsweAspectInfo *gswe_aspect_data_get_aspect_info(GsweAspectData *aspect_data);
