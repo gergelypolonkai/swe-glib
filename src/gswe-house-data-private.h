@@ -29,10 +29,11 @@ struct _GsweHouseData {
     gdouble cusp_position;
 
     /* the #GsweSignInfo structure associated with the sign in which the house cusp is in */
-    GsweSignInfo *sign;
-};
+    GsweSignInfo *sign_info;
 
-GsweHouseData *gswe_house_data_copy(GsweHouseData *house_data);
+    /* reference count */
+    guint refcount;
+};
 
 #endif /* __SWE_GLIB_GSWE_HOUSE_DATA_PRIVATE_H__ */
 #else /* not defined __SWE_GLIB_BUILDING__ */

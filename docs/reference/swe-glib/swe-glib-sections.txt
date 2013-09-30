@@ -216,9 +216,13 @@ gswe_house_system_info_get_type
 <SECTION>
 <FILE>gswe-house-data</FILE>
 GsweHouseData
-gswe_house_data_get_cusp_position
+gswe_house_data_new
+gswe_house_data_ref
+gswe_house_data_unref
 gswe_house_data_get_house
+gswe_house_data_get_cusp_position
 gswe_house_data_get_sign
+gswe_house_data_get_sign_info
 <SUBSECTION Standard>
 GSWE_TYPE_HOUSE_DATA
 gswe_house_data_get_type

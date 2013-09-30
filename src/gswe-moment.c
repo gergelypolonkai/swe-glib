@@ -201,7 +201,7 @@ gswe_moment_finalize(GObject *gobject)
 {
     GsweMoment *moment = GSWE_MOMENT(gobject);
 
-    g_list_free_full(moment->priv->house_list, g_free);
+    g_list_free_full(moment->priv->house_list, (GDestroyNotify)gswe_house_data_unref);
     g_list_free_full(moment->priv->planet_list, (GDestroyNotify)gswe_planet_data_unref);
     g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
     g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
@@ -502,7 +502,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
         return;
     }
 
-    g_list_free_full(moment->priv->house_list, g_free);
+    g_list_free_full(moment->priv->house_list, (GDestroyNotify)gswe_house_data_unref);
     moment->priv->house_list = NULL;
 
     // If no house system is set, we need no calculations at all. Just leave
@@ -535,13 +535,13 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
      * this should not cause trouble yet, though) */
     for (i = 12; i >= 1; i--) {
         GsweSignInfo *sign_info;
-        GsweHouseData *house_data = g_new0(GsweHouseData, 1);
+        GsweHouseData *house_data = gswe_house_data_new();
 
         house_data->house = i;
         house_data->cusp_position = cusps[i];
 
         if ((sign_info = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER((gint)ceilf(cusps[i] / 30.0)))) == NULL) {
-            g_list_free_full(moment->priv->house_list, g_free);
+            g_list_free_full(moment->priv->house_list, (GDestroyNotify)gswe_house_data_unref);
             moment->priv->house_list = NULL;
             moment->priv->house_revision = 0;
             g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_SIGN, "Calculation brought an unknown sign");

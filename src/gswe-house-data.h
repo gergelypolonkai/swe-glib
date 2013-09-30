@@ -37,9 +37,15 @@ typedef struct _GsweHouseData GsweHouseData;
 GType gswe_house_data_get_type(void);
 #define GSWE_TYPE_HOUSE_DATA (gswe_house_data_get_type())
 
+GsweHouseData *gswe_house_data_new(void);
+
+GsweHouseData *gswe_house_data_ref(GsweHouseData *house_data);
+void gswe_house_data_unref(GsweHouseData *house_data);
+
 guint gswe_house_data_get_house(GsweHouseData *house_data);
 gdouble gswe_house_data_get_cusp_position(GsweHouseData *house_data);
-GsweSignInfo *gswe_house_data_get_sign(GsweHouseData *house_data);
+GsweZodiac gswe_house_data_get_sign(GsweHouseData *house_data);
+GsweSignInfo *gswe_house_data_get_sign_info(GsweHouseData *house_data);
 
 G_END_DECLS
 

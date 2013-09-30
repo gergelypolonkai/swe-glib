@@ -17,6 +17,8 @@
  */
 #include "gswe-types.h"
 
+#include "swe-glib-private.h"
+#include "swe-glib.h"
 #include "gswe-house-data.h"
 #include "gswe-house-data-private.h"
 
@@ -31,23 +33,69 @@
  * #GsweHouseData is a structure that represents a house's position.
  */
 
-G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_copy, (GBoxedFreeFunc)g_free);
+G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_ref, (GBoxedFreeFunc)gswe_house_data_unref);
 
-GsweHouseData *
-gswe_house_data_copy(GsweHouseData *house_data)
+static void
+gswe_house_data_free(GsweHouseData *house_data)
 {
-    GsweHouseData *ret = g_new0(GsweHouseData, 1);
+    if (house_data->sign_info) {
+        gswe_sign_info_unref(house_data->sign_info);
+    }
 
-    ret->house = house_data->house;
-    ret->cusp_position = house_data->cusp_position;
-    ret->sign = house_data->sign;
+    g_free(house_data);
+}
+
+/**
+ * gswe_house_data_new:
+ *
+ * Creates a new #GsweHouseData with reference count set to 1.
+ *
+ * Returns: (transfer full): a new #GsweHouseData
+ */
+GsweHouseData *
+gswe_house_data_new(void)
+{
+    GsweHouseData *ret;
+
+    ret = g_new0(GsweHouseData, 1);
+    ret->refcount = 1;
 
     return ret;
 }
 
 /**
+ * gswe_house_data_ref:
+ * @house_data: a #GsweHouseData
+ *
+ * Increases reference count on @house_data by one.
+ *
+ * Returns: (transfer none): the same #GsweHouseData
+ */
+GsweHouseData *
+gswe_house_data_ref(GsweHouseData *house_data)
+{
+    house_data->refcount++;
+
+    return house_data;
+}
+
+/**
+ * gswe_house_data_unref:
+ * @house_data: a #GsweHouseData
+ *
+ * Decreases reference count on @house_data by one. If reference count drops to zero, @house_data is freed.
+ */
+void
+gswe_house_data_unref(GsweHouseData *house_data)
+{
+    if (--house_data->refcount == 0) {
+        gswe_house_data_free(house_data);
+    }
+}
+
+/**
  * gswe_house_data_get_house:
- * @house_data: (in) (allow-none): a #GsweHouseData
+ * @house_data: (in): a #GsweHouseData
  *
  * Gets the number of the house.
  *
@@ -56,16 +104,12 @@ gswe_house_data_copy(GsweHouseData *house_data)
 guint
 gswe_house_data_get_house(GsweHouseData *house_data)
 {
-    if (house_data) {
-        return house_data->house;
-    } else {
-        return 0;
-    }
+    return house_data->house;
 }
 
 /**
  * gswe_house_data_get_cusp_position:
- * @house_data: (in) (allow-none): a #GsweHouseData
+ * @house_data: (in): a #GsweHouseData
  *
  * Gets the position of the house's cusp.
  *
@@ -74,28 +118,38 @@ gswe_house_data_get_house(GsweHouseData *house_data)
 gdouble
 gswe_house_data_get_cusp_position(GsweHouseData *house_data)
 {
-    if (house_data) {
-        return house_data->cusp_position;
-    } else {
-        return 0.0;
-    }
+    return house_data->cusp_position;
 }
 
 /**
  * gswe_house_data_get_sign:
- * @house_data: (in) (allow-none): a #GsweHouseData
+ * @house_data: a #GsweHouseData
  *
- * Gets the sign in which the house's cusp is.
+ * Gets the sign which the house's cusp is in.
+ *
+ * Returns: the GsweZodiac of the house cusp's sign
+ */
+GsweZodiac
+gswe_house_data_get_sign(GsweHouseData *house_data)
+{
+    if (house_data->sign_info) {
+        return house_data->sign_info->sign;
+    } else {
+        return GSWE_SIGN_NONE;
+    }
+}
+
+/**
+ * gswe_house_data_get_sign_info:
+ * @house_data: (in): a #GsweHouseData
+ *
+ * Gets the #GsweSignInfo that represents the sign which the house's cusp is in.
  *
  * Returns: (transfer none): a #GsweSignInfo representing the sign
  */
 GsweSignInfo *
-gswe_house_data_get_sign(GsweHouseData *house_data)
+gswe_house_data_get_sign_info(GsweHouseData *house_data)
 {
-    if (house_data) {
-        return house_data->sign;
-    } else {
-        return NULL;
-    }
+    return house_data->sign_info;
 }
 
