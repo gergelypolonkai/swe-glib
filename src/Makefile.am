@@ -23,6 +23,20 @@ INST_H_SRC_FILES = \
 INST_H_BUILT_FILES = \
 	gswe-enumtypes.h
 
+PRIV_H_SRC_FILES = \
+	swe-glib-private.h                 \
+	gswe-moon-phase-data-private.h     \
+	gswe-sign-info-private.h           \
+	gswe-planet-info-private.h         \
+	gswe-planet-data-private.h         \
+	gswe-aspect-info-private.h         \
+	gswe-aspect-data-private.h         \
+	gswe-antiscion-axis-info-private.h \
+	gswe-antiscion-data-private.h      \
+	gswe-house-system-info-private.h   \
+	gswe-house-data-private.h          \
+	$(NULL)
+
 gswe_enum_headers = gswe-timestamp.h gswe-types.h
 
 libswe_glib_2_0_la_SOURCES = \
@@ -50,7 +64,7 @@ BUILT_SOURCES = gswe-enumtypes.c gswe-enumtypes.h
 
 CLEANFILES = $(BUILT_SOURCES)
 
-EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template swe-glib-private.h $(INST_H_SRC_FILES)
+EXTRA_DIST = gswe-enumtypes.h.template gswe-enumtypes.c.template $(PRIV_H_SRC_FILES) $(INST_H_SRC_FILES)
 
 gswe-enumtypes.h: $(gswe_enum_headers) gswe-enumtypes.h.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \

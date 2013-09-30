@@ -70,7 +70,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/locale/hu/LC_MESSAGES/swe-glib.mo
 
 %files
 %doc ChangeLog
-%{_libdir}/libswe-1.75.so.*
+%{_libdir}/libswe-1.76.so.*
 %{_libdir}/libswe-glib-@SWE_GLIB_API_VERSION@.so.*
 %{_libdir}/girepository-1.0/SweGlib-@SWE_GLIB_API_VERSION@.typelib
 
