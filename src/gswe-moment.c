@@ -675,15 +675,26 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
         return;
     }
 
-    // TODO: This function should know about Ascendant, MC and Vertex, so it could calculate their positions, too
-    if (planet_data->planet_info->real_body == FALSE) {
-        g_warning("The position data of planet %d can not be calculated by this function", planet);
-
-        return;
-    }
-
     swe_set_topo(moment->priv->coordinates.longitude, moment->priv->coordinates.latitude, moment->priv->coordinates.altitude);
     jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+
+    if (planet_data->planet_info->real_body == FALSE) {
+        if (
+            (planet_data->planet_info->planet != GSWE_PLANET_ASCENDENT)
+            && (planet_data->planet_info->planet != GSWE_PLANET_MC)
+            && (planet_data->planet_info->planet != GSWE_PLANET_VERTEX)
+        ) {
+            g_warning("The position data of planet %d can not be calculated by this function", planet);
+
+            return;
+        } else {
+            // gswe_moment_calculate_house_positions() calculates house cusp
+            // positions, together with Ascendant, MC and Vertex points
+            gswe_moment_calculate_house_positions(moment, err);
+
+            return;
+        }
+    }
 
     if ((err) && (*err)) {
         return;
