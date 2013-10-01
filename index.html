@@ -1,0 +1,184 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>SWE-GLib</title>
+  <meta name="description" content="A GLib style wrapper library around Swiss Ephemeris">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">SWE-GLib</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A GLib style wrapper library around Swiss Ephemeris</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/gergelypolonkai/swe-glib/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/gergelypolonkai/swe-glib/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/gergelypolonkai/swe-glib" class="code">View SWE-GLib on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="swe-glib" class="anchor" href="#swe-glib"><span class="octicon octicon-link"></span></a>SWE-GLib</h1>
+
+<p>SWE-GLib is a GLib style wrapper library around Astrodienst's <a href="http://www.astro.com/swisseph/">Swiss Ephemeris library</a>.</p>
+
+<p>The source tree contains Astrodienst's ephemeride files, as requested by Alois Treindl of Astrodienst in a mail written to me on 24 July, 2013.</p>
+
+<h2>
+<a name="gtk-doc" class="anchor" href="#gtk-doc"><span class="octicon octicon-link"></span></a>GTK-Doc</h2>
+
+<p>The project utilizes <a href="http://www.gtk.org/gtk-doc/">GTK-Doc</a>, requiring version 1.19 or later. Although the generated documentation is a bit messy (not everything is documented, and there are some unresolved variables, like [SERVER] on the generated index page.</p>
+
+<p>Still, the documentation generates well, and at least gives a clue about object usage.</p>
+
+<h2>
+<a name="bindings" class="anchor" href="#bindings"><span class="octicon octicon-link"></span></a>Bindings</h2>
+
+<p>SWE-GLib utilizes <a href="https://wiki.gnome.org/GObjectIntrospection">GObject Introspection</a>, which means it is available for many languages. Check out the <a href="examples">examples</a> directory for some sample code!</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Many functions return non-opaque C structs; their documentation can be found inline, and in the generated GTK-Doc. Unless otherwise stated, the returned values should never be freed.</p>
+
+<h3>
+<a name="creating-the-required-objects" class="anchor" href="#creating-the-required-objects"><span class="octicon octicon-link"></span></a>Creating the required objects</h3>
+
+<p>Then you need to create a <code>GsweTimestamp</code> object:</p>
+
+<div class="highlight highlight-c"><pre><span class="n">GsweTimestamp</span> <span class="o">*</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">gswe_timestamp_new_from_gregorian_full</span><span class="p">(</span><span class="mi">1983</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</pre></div>
+
+<p>The <code>GsweTimetamp</code> object is used to convert dates between the Gregorian calendar dates and Julian Day values (not to be confused with Julian calendar dates).</p>
+
+<p>Next, you have to create a <code>GsweMoment</code> object:</p>
+
+<div class="highlight highlight-c"><pre><span class="n">GsweMoment</span> <span class="o">*</span><span class="n">moment</span> <span class="o">=</span> <span class="n">gswe_moment_new_full</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="mf">19.081599</span><span class="p">,</span> <span class="mf">47.462485</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">GSWE_HOUSE_PLACIDUS</span><span class="p">);</span>
+</pre></div>
+
+<p>The <code>GsweMoment</code> object holds information of a given moment at a given place on earth. <code>gswe_moment_new_full()</code> requires a <code>GsweTimestamp</code> object, some geographical coordinates (in degrees) together with altitude above sea level (in meters), and a house system to use.</p>
+
+<h3>
+<a name="adding-planets" class="anchor" href="#adding-planets"><span class="octicon octicon-link"></span></a>Adding planets</h3>
+
+<p>After that you have to add some planets you want to do calculations on.</p>
+
+<div class="highlight highlight-c"><pre><span class="n">gswe_moment_add_planet</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">GSWE_PLANET_SUN</span><span class="p">);</span>
+</pre></div>
+
+<p>Alternatively, you can add every planets known by SWE-GLib with</p>
+
+<div class="highlight highlight-c"><pre><span class="n">gswe_moment_add_all_planets</span><span class="p">(</span><span class="n">moment</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="getting-planet-positions-and-such" class="anchor" href="#getting-planet-positions-and-such"><span class="octicon octicon-link"></span></a>Getting planet positions and such</h3>
+
+<p>Then, you can get the planet data with</p>
+
+<div class="highlight highlight-c"><pre><span class="n">GswePlanetData</span> <span class="o">*</span><span class="n">sun_data</span> <span class="o">=</span> <span class="n">gswe_moment_get_planet</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">GSWE_PLANET_SUN</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="getting-aspects-and-antiscia" class="anchor" href="#getting-aspects-and-antiscia"><span class="octicon octicon-link"></span></a>Getting aspects and antiscia</h3>
+
+<p>SWE-GLib is also able to calculate aspects and antiscia. This functionality does not exist in the Swiss Ephemeris library, though. For this, of course, you have to add multiple planets (at least two) to your <code>GsweMoment</code>. After that, you can call <code>gswe_moment_get_planet_aspects()</code> and <code>gswe_moment_get_planet_antiscia()</code>.</p>
+
+<div class="highlight highlight-c"><pre><span class="n">GList</span> <span class="o">*</span><span class="n">sun_aspects</span> <span class="o">=</span> <span class="n">gswe_moment_get_planet_aspects</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">GSWE_PLANET_SUN</span><span class="p">);</span>
+<span class="n">GList</span> <span class="o">*</span><span class="n">sun_antiscia</span> <span class="o">=</span> <span class="n">gswe_moment_get_planet_antiscia</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">GSWE_PLANET_SUN</span><span class="p">);</span>
+</pre></div>
+
+<p>The returned GList objects hold zero or more <code>GsweAspectData</code> or <code>GsweAntiscionData</code> objects, respectively.</p>
+
+<h3>
+<a name="getting-the-moon-phase" class="anchor" href="#getting-the-moon-phase"><span class="octicon octicon-link"></span></a>Getting the Moon phase</h3>
+
+<p>Last, but not least, SWE-GLib can calculate Moon's phase at the given moment. For that, you have to call <code>gswe_moment_get_moon_phase()</code>:</p>
+
+<div class="highlight highlight-c"><pre><span class="n">GsweMoonPhaseData</span> <span class="o">*</span><span class="n">moon_phase</span> <span class="o">=</span> <span class="n">gswe_moment_get_moon_phase</span><span class="p">(</span><span class="n">moment</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="about-altitude" class="anchor" href="#about-altitude"><span class="octicon octicon-link"></span></a>About altitude</h3>
+
+<p>The Swiss Ephemeris library requires the altitude value to be specified for several calculations. It also notifies how important it is:</p>
+
+<blockquote>
+<p>the altitude above sea must be in meters. Neglecting the altitude can result in an error of about 2 arc seconds with the moon and at an altitude 3000m.</p>
+</blockquote>
+
+<p>2 arc seconds is about 0.000555 degrees of error, which is, well, kind of small. Of course, if you need very precise horoscopes or need planetary positions for a totally different thing, you should really provide a (close to) exact value; otherwise, it is safe to pass any value (well, which seems logical: the average level of all dry lands is about 840 meters; the average level of the whole planet Earth (including oceans and seas) is around 280 meters. Providing a value of ~400 should be OK most of the time).</p>
+
+<h2>
+<a name="api-stability" class="anchor" href="#api-stability"><span class="octicon octicon-link"></span></a>API stability</h2>
+
+<p>The project is currently transitioning to 2.0. master is a bit fragile at the moment, 1.x versions are considered to be stable (although see commit 8f52aba about a huge typo-bug).</p>
+
+<h2>
+<a name="limitations" class="anchor" href="#limitations"><span class="octicon octicon-link"></span></a>Limitations</h2>
+
+<h3>
+<a name="topocentric-calculations-only" class="anchor" href="#topocentric-calculations-only"><span class="octicon octicon-link"></span></a>Topocentric calculations only</h3>
+
+<p>Although the original Swiss Ephemeris library supports it, SWE-GLib can't do Heliocentric, nor Geocentric (as seen from the center of Earth) calculations, only Topocentric (as seen from a given point on Earth"s surface) calculations yet.</p>
+
+<h3>
+<a name="database-size" class="anchor" href="#database-size"><span class="octicon octicon-link"></span></a>Database size</h3>
+
+<p>The size of all data files provided by Astrodienst is around 40MB. Although it should not be a problem with today's home hardware, it can be a hard requirement on embedded systems. For basic calculations, keeping the following files under $(datadir)/swe-glib is usually enough:</p>
+
+<ul>
+<li>seas_18.se1</li>
+<li>semo_18.se1</li>
+<li>sepl_18.se1</li>
+</ul><h3>
+<a name="fixed-stars-are-not-known-yet" class="anchor" href="#fixed-stars-are-not-known-yet"><span class="octicon octicon-link"></span></a>Fixed stars are not known yet</h3>
+
+<p>Although Swiss Ephemeris has the functionality to calculate the position of fixed stars, SWE-GLib doesn't provide such functionality. This, however, is a planned feature for the close future.</p>
+
+<h2>
+<a name="licencing" class="anchor" href="#licencing"><span class="octicon octicon-link"></span></a>Licencing</h2>
+
+<p>As the underlying Swiss Ephemeris is published under GPL (or a commercial license I can not afford), SWE-GLib is also uses that. This means that you can currently use SWE-GLib in software published under the GNU GPL v3.</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/gergelypolonkai" class="avatar"><img src="https://0.gravatar.com/avatar/586cd837b40cb957deed4942ba1850d5?d=https%3A%2F%2Fidenticons.github.com%2F8cecd48a0cc0a82daf4f56a9c2140d9b.png&amp;s=30" width="48" height="48"/></a> <a href="https://github.com/gergelypolonkai">gergelypolonkai</a> maintains <a href="https://github.com/gergelypolonkai/swe-glib">SWE-GLib</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/gergelypolonkai/swe-glib/tarball/master" class="tar">tar</a><a href="https://github.com/gergelypolonkai/swe-glib/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
