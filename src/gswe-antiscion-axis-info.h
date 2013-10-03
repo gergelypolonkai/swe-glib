@@ -46,9 +46,11 @@ void gswe_antiscion_axis_info_unref(GsweAntiscionAxisInfo *antiscion_axis_info);
 void gswe_antiscion_axis_info_set_axis(GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionAxis axis);
 GsweAntiscionAxis gswe_antiscion_axis_info_get_axis(GsweAntiscionAxisInfo *antiscion_axis_info);
 
-void gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info);
-void gswe_antiscion_axis_info_set_start_sign_plain(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err);
-GsweSignInfo *gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info);
+void gswe_antiscion_axis_info_set_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info);
+GsweSignInfo *gswe_antiscion_axis_info_get_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info);
+
+void gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err);
+GsweZodiac gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info);
 
 void gswe_antiscion_axis_info_set_name(GsweAntiscionAxisInfo *antiscion_axis_info, const gchar *name);
 const gchar *gswe_antiscion_axis_info_get_name(GsweAntiscionAxisInfo *antiscion_axis_info);

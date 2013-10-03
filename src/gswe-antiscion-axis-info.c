@@ -32,16 +32,14 @@
 
 G_DEFINE_BOXED_TYPE(GsweAntiscionAxisInfo, gswe_antiscion_axis_info, (GBoxedCopyFunc)gswe_antiscion_axis_info_ref, (GBoxedFreeFunc)gswe_antiscion_axis_info_unref);
 
-void
+static void
 gswe_antiscion_axis_info_free(GsweAntiscionAxisInfo *antiscion_axis_info)
 {
-    if (antiscion_axis_info) {
-        if (antiscion_axis_info->name) {
-            g_free(antiscion_axis_info->name);
-        }
-
-        g_free(antiscion_axis_info);
+    if (antiscion_axis_info->name) {
+        g_free(antiscion_axis_info->name);
     }
+
+    g_free(antiscion_axis_info);
 }
 
 /**
@@ -127,7 +125,7 @@ gswe_antiscion_axis_info_get_axis(GsweAntiscionAxisInfo *antiscion_axis_info)
  * Sets the starting sign of the axis.
  */
 void
-gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info)
+gswe_antiscion_axis_info_set_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info)
 {
     if (antiscion_axis_info->start_sign != NULL) {
         gswe_sign_info_unref(antiscion_axis_info->start_sign);
@@ -137,7 +135,21 @@ gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_in
 }
 
 /**
- * gswe_antiscion_axis_info_set_start_sign_plain:
+ * gswe_antiscion_axis_info_get_start_sign_info:
+ * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
+ *
+ * Gets the starting sign of the axis.
+ *
+ * Returns: (transfer none): the #GsweSignInfo of the sign in which this axis starts
+ */
+GsweSignInfo *
+gswe_antiscion_axis_info_get_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info)
+{
+    return antiscion_axis_info->start_sign;
+}
+
+/**
+ * gswe_antiscion_axis_info_set_start_sign:
  * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
  * @sign: the new starting sign of @antiscion_axis_info
  * @err: a #GError
@@ -149,7 +161,7 @@ gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_in
  * be found.
  */
 void
-gswe_antiscion_axis_info_set_start_sign_plain(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err)
+gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err)
 {
     GsweSignInfo *sign_info;
 
@@ -173,12 +185,16 @@ gswe_antiscion_axis_info_set_start_sign_plain(GsweAntiscionAxisInfo *antiscion_a
  *
  * Gets the starting sign of the axis.
  *
- * Returns: (transfer none): the #GsweSignInfo of the sign in which this axis starts
+ * Returns: the corresponding sign ID
  */
-GsweSignInfo *
+GsweZodiac
 gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info)
 {
-    return antiscion_axis_info->start_sign;
+    if (antiscion_axis_info->start_sign) {
+        return antiscion_axis_info->start_sign->sign;
+    } else {
+        return GSWE_SIGN_NONE;
+    }
 }
 
 /**
