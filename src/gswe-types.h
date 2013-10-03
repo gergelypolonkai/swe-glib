@@ -53,7 +53,7 @@
  * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
  * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
  *                           or Lilith)
- * @GSWE_PLANET_ASCENDENT: the ascendent
+ * @GSWE_PLANET_ASCENDANT: the ascendant
  * @GSWE_PLANET_MC: midheaven (Medium Coeli)
  * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
  *                      primal vertical)
@@ -80,7 +80,7 @@ typedef enum {
     GSWE_PLANET_VESTA,
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
-    GSWE_PLANET_ASCENDENT,
+    GSWE_PLANET_ASCENDANT,
     GSWE_PLANET_MC,
     GSWE_PLANET_VERTEX
 } GswePlanet;

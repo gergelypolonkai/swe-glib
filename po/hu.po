@@ -86,7 +86,7 @@ msgid "Dark Moon"
 msgstr "Sötét Hold"
 
 #: ../src/swe-glib.c:133
-msgid "Ascendent"
+msgid "Ascendant"
 msgstr "Aszcendens"
 
 #: ../src/swe-glib.c:134

@@ -555,10 +555,10 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
 
     moment->priv->house_revision = moment->priv->revision;
 
-    // The Ascendent, MC and Vertex points are also calculated by swe_houses(),
+    // The Ascendant, MC and Vertex points are also calculated by swe_houses(),
     // so let's update them.
-    if (gswe_moment_has_planet(moment, GSWE_PLANET_ASCENDENT)) {
-        calculate_data_by_position(moment, GSWE_PLANET_ASCENDENT, ascmc[0], err);
+    if (gswe_moment_has_planet(moment, GSWE_PLANET_ASCENDANT)) {
+        calculate_data_by_position(moment, GSWE_PLANET_ASCENDANT, ascmc[0], err);
     }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_MC)) {
@@ -680,7 +680,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
 
     if (planet_data->planet_info->real_body == FALSE) {
         if (
-            (planet_data->planet_info->planet != GSWE_PLANET_ASCENDENT)
+            (planet_data->planet_info->planet != GSWE_PLANET_ASCENDANT)
             && (planet_data->planet_info->planet != GSWE_PLANET_MC)
             && (planet_data->planet_info->planet != GSWE_PLANET_VERTEX)
         ) {

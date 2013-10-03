@@ -137,7 +137,7 @@ gswe_init(void)
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VESTA,       SE_VESTA,     TRUE,  _("Vesta"),               2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_NODE,   SE_MEAN_NODE, TRUE,  _("Ascending Moon Node"), 2.0,  1);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_APOGEE, SE_MEAN_APOG, TRUE,  _("Dark Moon"),           2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASCENDENT,   -1,           FALSE, _("Ascendent"),           9.0,  2);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASCENDANT,   -1,           FALSE, _("Ascendant"),           9.0,  2);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MC,          -1,           FALSE, _("Midheaven"),           5.0,  1);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VERTEX,      -1,           FALSE, _("Vertex"),              2.0,  0);
 
