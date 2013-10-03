@@ -15,10 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
+#include <math.h>
+
 #include "gswe-types.h"
 
+#include "swe-glib-private.h"
 #include "gswe-moon-phase-data.h"
 #include "gswe-moon-phase-data-private.h"
+#include "gswe-timestamp.h"
+
+#define SYNODIC 29.53058867
 
 /**
  * SECTION:gswe-moon-phase-data
@@ -80,6 +86,79 @@ gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
     if (--moon_phase_data->refcount == 0) {
         g_free(moon_phase_data);
     }
+}
+
+/**
+ * gswe_moon_phase_data_calculate_by_timestamp:
+ * @moon_phase_data: a #GsweMoonPhaseData
+ * @timestamp: a #GsweTimestamp with a valid timestamp set
+ * @err: a #GError
+ *
+ * Calculates the moon at a given time, specified by @jd.
+ */
+void
+gswe_moon_phase_data_calculate_by_jd(GsweMoonPhaseData *moon_phase_data, gdouble jd, GError **err)
+{
+    gdouble jdb,
+            phase_percent;
+
+    jdb = gswe_timestamp_get_julian_day(gswe_full_moon_base_date, err);
+
+    if ((err) && (*err)) {
+        return;
+    }
+
+    if ((phase_percent = fmod(((jd - jdb) * 100) / SYNODIC, 100)) < 0) {
+        phase_percent += 100.0;
+    }
+
+    if ((phase_percent < 0) || (phase_percent > 100)) {
+        g_error("Error during Moon phase calculation!");
+    }
+
+    moon_phase_data->illumination = (50.0 - fabs(phase_percent - 50.0)) * 2;
+
+    if (phase_percent == 0) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_NEW;
+    } else if (phase_percent < 25) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WAXING_CRESCENT;
+    } else if (phase_percent == 25) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WAXING_HALF;
+    } else if (phase_percent < 50) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WAXING_GIBBOUS;
+    } else if (phase_percent == 50) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_FULL;
+    } else if (phase_percent < 75) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WANING_GIBBOUS;
+    } else if (phase_percent == 75) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WANING_HALF;
+    } else if (phase_percent < 100) {
+        moon_phase_data->phase = GSWE_MOON_PHASE_WANING_CRESCENT;
+    } else {
+        moon_phase_data->phase = GSWE_MOON_PHASE_DARK;
+    }
+}
+
+/**
+ * gswe_moon_phase_data_calculate_by_timestamp:
+ * @moon_phase_data: a #GsweMoonPhaseData
+ * @timestamp: a #GsweTimestamp with a valid timestamp set
+ * @err: a #GError
+ *
+ * Calculates the moon at a given time, specified by @timestamp.
+ */
+void
+gswe_moon_phase_data_calculate_by_timestamp(GsweMoonPhaseData *moon_phase_data, GsweTimestamp *timestamp, GError **err)
+{
+    gdouble jd;
+
+    jd = gswe_timestamp_get_julian_day(timestamp, err);
+
+    if (*err) {
+        return;
+    }
+
+    gswe_moon_phase_data_calculate_by_jd(moon_phase_data, jd, err);
 }
 
 /**
