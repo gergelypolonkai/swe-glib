@@ -974,7 +974,7 @@ gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
         return moment->priv->moon_phase;
     }
 
-    gswe_moon_phase_data_calculate_by_timestamp(moment->priv->timestamp, err);
+    gswe_moon_phase_data_calculate_by_timestamp(moment->priv->moon_phase, moment->priv->timestamp, err);
 
     if (!err || !*err) {
         moment->priv->moon_phase_revision = moment->priv->revision;
