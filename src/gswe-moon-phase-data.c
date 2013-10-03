@@ -89,9 +89,9 @@ gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
 }
 
 /**
- * gswe_moon_phase_data_calculate_by_timestamp:
+ * gswe_moon_phase_data_calculate_by_jd:
  * @moon_phase_data: a #GsweMoonPhaseData
- * @timestamp: a #GsweTimestamp with a valid timestamp set
+ * @jd: a Julian Day number, with hours as fractions
  * @err: a #GError
  *
  * Calculates the moon at a given time, specified by @jd.
