@@ -93,14 +93,10 @@ typelibsdir = $(libdir)/girepository-1.0
 typelibs_DATA = SweGlib-$(SWE_GLIB_API_VERSION).typelib
 
 headerdir = $(includedir)/swe-glib
-header_DATA =            \
-	swe-glib.h       \
-	gswe-types.h     \
-	gswe-enumtypes.h \
-	gswe-moment.h    \
-	gswe-timestamp.h \
+header_DATA = \
+	$(INST_H_SRC_FILES)   \
+	$(INST_H_BUILT_FILES) \
 	$(NULL)
-
 
 CLEANFILES += $(gir_DATA) $(typelibs_DATA)
 
