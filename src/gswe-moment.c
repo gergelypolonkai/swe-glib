@@ -722,7 +722,11 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
 static void
 calculate_planet(GswePlanetData *planet_data, GsweMoment *moment)
 {
-    gswe_moment_calculate_planet(moment, planet_data->planet_info->planet, NULL);
+    if (planet_data->planet_info) {
+        gswe_moment_calculate_planet(moment, planet_data->planet_info->planet, NULL);
+    } else {
+        g_warning("planet_data holds no planet. This is a possible bug in SWE-GLib, or in your application.");
+    }
 }
 
 static void
