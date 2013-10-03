@@ -93,11 +93,7 @@ gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
 GsweMoonPhase
 gswe_moon_phase_data_get_phase(GsweMoonPhaseData *moon_phase_data)
 {
-    if (moon_phase_data) {
-        return moon_phase_data->phase;
-    } else {
-        return GSWE_MOON_PHASE_NONE;
-    }
+    return moon_phase_data->phase;
 }
 
 /**
@@ -111,10 +107,6 @@ gswe_moon_phase_data_get_phase(GsweMoonPhaseData *moon_phase_data)
 gdouble
 gswe_moon_phase_data_get_illumination(GsweMoonPhaseData *moon_phase_data)
 {
-    if (moon_phase_data) {
-        return moon_phase_data->illumination;
-    } else {
-        return 0.0;
-    }
+    return moon_phase_data->illumination;
 }
 

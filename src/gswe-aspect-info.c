@@ -42,13 +42,11 @@ G_DEFINE_BOXED_TYPE(GsweAspectInfo, gswe_aspect_info, (GBoxedCopyFunc)gswe_aspec
 static void
 gswe_aspect_info_free(GsweAspectInfo *aspect_info)
 {
-    if (aspect_info) {
-        if (aspect_info->name) {
-            g_free(aspect_info->name);
-        }
-
-        g_free(aspect_info);
+    if (aspect_info->name) {
+        g_free(aspect_info->name);
     }
+
+    g_free(aspect_info);
 }
 
 /**
@@ -240,11 +238,7 @@ gswe_aspect_info_set_harmonic(GsweAspectInfo *aspect_info, gboolean harmonic)
 gboolean
 gswe_aspect_info_get_harmonic(GsweAspectInfo *aspect_info)
 {
-    if (aspect_info) {
-        return aspect_info->harmonic;
-    } else {
-        return FALSE;
-    }
+    return aspect_info->harmonic;
 }
 
 /**
@@ -273,10 +267,6 @@ gswe_aspect_info_set_major(GsweAspectInfo *aspect_info, gboolean major)
 gboolean
 gswe_aspect_info_get_major(GsweAspectInfo *aspect_info)
 {
-    if (aspect_info) {
-        return aspect_info->major;
-    } else {
-        return FALSE;
-    }
+    return aspect_info->major;
 }
 

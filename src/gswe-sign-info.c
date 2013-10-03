@@ -35,13 +35,11 @@ G_DEFINE_BOXED_TYPE(GsweSignInfo, gswe_sign_info, (GBoxedCopyFunc)gswe_sign_info
 static void
 gswe_sign_info_free(GsweSignInfo *sign_info)
 {
-    if (sign_info) {
-        if (sign_info->name) {
-            g_free(sign_info->name);
-        }
-
-        g_free(sign_info);
+    if (sign_info->name) {
+        g_free(sign_info->name);
     }
+
+    g_free(sign_info);
 }
 
 /**

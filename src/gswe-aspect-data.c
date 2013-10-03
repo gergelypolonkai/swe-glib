@@ -239,11 +239,7 @@ gswe_aspect_data_set_planet2(GsweAspectData *aspect_data, GswePlanetData *planet
 GswePlanetData *
 gswe_aspect_data_get_planet2(GsweAspectData *aspect_data)
 {
-    if (aspect_data) {
-        return aspect_data->planet2;
-    } else {
-        return NULL;
-    }
+    return aspect_data->planet2;
 }
 
 /**
@@ -257,11 +253,7 @@ gswe_aspect_data_get_planet2(GsweAspectData *aspect_data)
 gdouble
 gswe_aspect_data_get_distance(GsweAspectData *aspect_data)
 {
-    if (aspect_data) {
-        return aspect_data->distance;
-    } else {
-        return -1.0;
-    }
+    return aspect_data->distance;
 }
 
 /**
@@ -293,11 +285,7 @@ gswe_aspect_data_get_aspect(GsweAspectData *aspect_data)
 GsweAspectInfo *
 gswe_aspect_data_get_aspect_info(GsweAspectData *aspect_data)
 {
-    if (aspect_data) {
-        return aspect_data->aspect_info;
-    } else {
-        return NULL;
-    }
+    return aspect_data->aspect_info;
 }
 
 /**
@@ -311,10 +299,6 @@ gswe_aspect_data_get_aspect_info(GsweAspectData *aspect_data)
 gdouble
 gswe_aspect_data_get_difference(GsweAspectData *aspect_data)
 {
-    if (aspect_data) {
-        return aspect_data->difference;
-    } else {
-        return -1.0;
-    }
+    return aspect_data->difference;
 }
 
