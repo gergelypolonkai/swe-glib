@@ -118,7 +118,7 @@ gswe_antiscion_axis_info_get_axis(GsweAntiscionAxisInfo *antiscion_axis_info)
 }
 
 /**
- * gswe_antiscion_axis_info_set_start_sign:
+ * gswe_antiscion_axis_info_set_start_sign_info:
  * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
  * @sign_info: a #GsweSignInfo to set as the starting sign of @antiscion_axis_info
  *
