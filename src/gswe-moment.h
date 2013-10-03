@@ -108,14 +108,14 @@ gboolean gswe_moment_has_planet(GsweMoment *moment, GswePlanet planet);
 void gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err);
 void gswe_moment_add_all_planets(GsweMoment *moment);
 GList *gswe_moment_get_all_planets(GsweMoment *moment);
-const GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err);
+GswePlanetData *gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err);
 GList *gswe_moment_get_sign_planets(GsweMoment *moment, GsweZodiac sign);
 GList *gswe_moment_get_house_planets(GsweMoment *moment, guint house);
 
 guint gswe_moment_get_element_points(GsweMoment *moment, GsweElement element);
 guint gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality);
 
-const GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment, GError **err);
+GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment, GError **err);
 
 GList *gswe_moment_get_all_aspects(GsweMoment *moment);
 GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **err);

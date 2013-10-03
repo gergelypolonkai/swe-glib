@@ -871,9 +871,9 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
  * warning. Thus, you should always provide a non-NULL value for @err, and
  * always check it after calling this function.
  *
- * Returns: (transfer none): @planet's data
+ * Returns: (transfer full): @planet's data
  */
-const GswePlanetData *
+GswePlanetData *
 gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)->data);
@@ -886,7 +886,7 @@ gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 
     gswe_moment_calculate_planet(moment, planet, err);
 
-    return planet_data;
+    return gswe_planet_data_ref(planet_data);
 }
 
 static void
@@ -967,9 +967,9 @@ gswe_moment_get_quality_points(GsweMoment *moment, GsweQuality quality)
  *
  * Gets the phase of the Moon.
  *
- * Returns: (transfer none): a #GsweMoonPhaseData representing the phase of the Moon
+ * Returns: (transfer full): a #GsweMoonPhaseData representing the phase of the Moon
  */
-const GsweMoonPhaseData *
+GsweMoonPhaseData *
 gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 {
     gdouble difference,
@@ -1028,7 +1028,7 @@ gswe_moment_get_moon_phase(GsweMoment *moment, GError **err)
 
     moment->priv->moon_phase_revision = moment->priv->revision;
 
-    return moment->priv->moon_phase;
+    return gswe_moon_phase_data_ref(moment->priv->moon_phase);
 }
 
 static gint
