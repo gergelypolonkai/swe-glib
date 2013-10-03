@@ -1245,7 +1245,7 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
 
             (void)g_hash_table_find(gswe_antiscion_axis_info_table, (GHRFunc)find_antiscion, antiscion_data);
 
-            if (antiscion_data->antiscion_axis_info->axis == GSWE_ANTISCION_AXIS_NONE) {
+            if (antiscion_data->antiscion_axis_info == NULL) {
                 antiscion_data->antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
             }
 
