@@ -51,6 +51,13 @@ Makefile.in
 /compile
 /so_locations
 
+# Testing related files
+/test-driver
+/tests/*-test
+/tests/*-test.log
+/tests/*-test.trs
+/tests/test-suite.log
+
 # Translation related files
 /ABOUT-NLS
 /po/POTFILES
