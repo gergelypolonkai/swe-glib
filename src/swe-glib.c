@@ -94,7 +94,15 @@ GsweTimestamp *gswe_full_moon_base_date;
  *
  * Return value: a #GQuark
  */
+#if GLIB_CHECK_VERSION(2, 34, 0)
 G_DEFINE_QUARK(gswe-error-quark, gswe_error);
+#else
+GQuark
+gswe_error_quark(void)
+{
+    return g_quark_from_static_string("gswe-error-quark");
+}
+#endif
 
 /**
  * gswe_init:
