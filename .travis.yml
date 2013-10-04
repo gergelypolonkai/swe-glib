@@ -1,0 +1,2 @@
+language: c
+install: apt-get install glib-devel && ./autogen.sh
