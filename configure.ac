@@ -39,7 +39,11 @@ AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.17])
 LT_INIT
 AC_CHECK_LIB([m], [atan])
-GTK_DOC_CHECK([1.19], [--flavour no-tmpl])
+m4_ifdef([GTK_DOC_CHECK], [
+    GTK_DOC_CHECK([1.19], [--flavour no-tmpl])
+],[
+    AM_CONDITIONAL([ENABLE_GTK_DOC], false)
+])
 GOBJECT_INTROSPECTION_CHECK([1.0])
 PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
