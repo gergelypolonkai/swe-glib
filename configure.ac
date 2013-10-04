@@ -12,6 +12,12 @@ AC_ARG_ENABLE(debug, [AC_HELP_STRING([--enable-debug], [compile with debugging s
 
 if test "x$enable_debug" = "xyes" ; then
     AC_DEFINE([DEBUG], [1], [Define if debugging is enabled])
+    if test x$cflags_set != xset ; then
+        case " $CFLAGS " in
+            *[[\ \	]]-g[[\ \	]]*) ;;
+            *) CFLAGS="$CFLAGS -g" ;;
+        esac
+    fi
 fi
 
 AC_SUBST([SWE_GLIB_MAJOR_VERSION], [swe_glib_major_version])
@@ -37,6 +43,17 @@ GTK_DOC_CHECK([1.19], [--flavour no-tmpl])
 GOBJECT_INTROSPECTION_CHECK([1.0])
 PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
+AC_CANONICAL_HOST
+native_win32=no
+case "$host" in
+    *-*-mingw*)
+        native_win32=yes
+        ;;
+esac
+AM_CONDITIONAL(OS_WIN32, [test "$native_win32" = "yes"])
+AM_CONDITIONAL(OS_UNIX, [test "$native_win32" != "yes"])
+AC_PATH_PROG([GTESTER], [gtester])
+AC_PATH_PROG([GTESTER_REPORT], [gtester-report])
 PKG_CHECK_MODULES([GLIB], [glib-2.0])
 PKG_CHECK_MODULES([GOBJECT], [gobject-2.0])
 AC_CONFIG_MACRO_DIR([m4])
@@ -55,6 +72,7 @@ AC_CONFIG_FILES([
     src/Makefile
     data/Makefile
     po/Makefile.in
+    tests/Makefile
     docs/reference/swe-glib/version.xml
     docs/reference/swe-glib/Makefile
     data/swe-glib.pc
