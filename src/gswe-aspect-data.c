@@ -87,13 +87,11 @@ find_aspect(gpointer aspect_p, GsweAspectInfo *aspect_info, GsweAspectData *aspe
 void
 gswe_aspect_data_calculate(GsweAspectData *aspect_data)
 {
-    GsweAspectInfo *aspect_info;
-
     if ((aspect_data->distance = fabs(aspect_data->planet1->position - aspect_data->planet2->position)) > 180.0) {
         aspect_data->distance = 360.0 - aspect_data->distance;
     }
 
-    if ((aspect_info = g_hash_table_find(gswe_aspect_info_table, (GHRFunc)find_aspect, aspect_data)) == NULL) {
+    if ((aspect_data->aspect_info = g_hash_table_find(gswe_aspect_info_table, (GHRFunc)find_aspect, aspect_data)) == NULL) {
         aspect_data->aspect_info = gswe_aspect_info_ref(g_hash_table_lookup(gswe_aspect_info_table, GINT_TO_POINTER(GSWE_ASPECT_NONE)));
     }
 }
