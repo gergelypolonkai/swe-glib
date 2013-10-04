@@ -1,2 +1,2 @@
 language: c
-install: sudo apt-get install glib-devel && ./autogen.sh
+install: sudo apt-get install libglib2.0-dev gtk-doc-tools && ./autogen.sh --enable-gtk-doc
