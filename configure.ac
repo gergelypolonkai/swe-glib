@@ -77,9 +77,13 @@ AC_CONFIG_FILES([
     data/Makefile
     po/Makefile.in
     tests/Makefile
-    docs/reference/swe-glib/version.xml
-    docs/reference/swe-glib/Makefile
     data/swe-glib.pc
     data/swe-glib.spec
+])
+AM_COND_IF([ENABLE_GTK_DOC], [
+    AC_CONFIG_FILES([
+        docs/reference/swe-glib/version.xml
+        docs/reference/swe-glib/Makefile
+    ])
 ])
 AC_OUTPUT
