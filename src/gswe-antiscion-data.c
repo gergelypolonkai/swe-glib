@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
+#include <math.h>
 #include <glib-object.h>
 
 #include "swe-glib-private.h"
@@ -66,6 +67,62 @@ gswe_antiscion_data_new(void)
 
     ret = g_new0(GsweAntiscionData, 1);
     ret->refcount = 1;
+
+    return ret;
+}
+
+static gboolean
+find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionData *antiscion_data)
+{
+    GsweAntiscionAxis axis;
+    gdouble start_point,
+            axis_position,
+            planet_orb;
+
+    if ((axis = GPOINTER_TO_INT(axis_p)) == GSWE_ANTISCION_AXIS_NONE) {
+        return FALSE;
+    }
+
+    planet_orb = fmin(antiscion_data->planet1->planet_info->orb, antiscion_data->planet2->planet_info->orb);
+    start_point = (antiscion_axis_info->start_sign->sign - 1) * 30.0;
+
+    start_point += antiscion_axis_info->sign_offset;
+
+    axis_position = 2 * start_point - antiscion_data->planet1->position;
+
+    if (axis_position < 0) {
+        axis_position += 360.0;
+    }
+
+    if ((antiscion_data->difference = fabs(antiscion_data->planet2->position - axis_position)) <= planet_orb) {
+        antiscion_data->antiscion_axis_info = antiscion_axis_info;
+
+        return TRUE;
+    } else {
+        antiscion_data->difference = 0.0;
+    }
+
+    return FALSE;
+}
+
+void
+gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data)
+{
+    if ((antiscion_data->antiscion_axis_info = g_hash_table_find(gswe_antiscion_axis_info_table, (GHRFunc)find_antiscion, antiscion_data)) == NULL) {
+        antiscion_data->antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
+    }
+}
+
+GsweAntiscionData *
+gswe_antiscion_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *planet2)
+{
+    GsweAntiscionData *ret;
+
+    ret = gswe_antiscion_data_new();
+    ret->planet1 = planet1;
+    ret->planet2 = planet2;
+
+    gswe_antiscion_data_calculate(ret);
 
     return ret;
 }
