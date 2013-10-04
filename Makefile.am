@@ -1,5 +1,9 @@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = swe swe/src swe/doc src po docs/reference/swe-glib data tests
+SUBDIRS = swe swe/src swe/doc src po data tests
+
+if ENABLE_GTK_DOC
+SUBDIRS += docs/reference/swe-glib
+endif
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
