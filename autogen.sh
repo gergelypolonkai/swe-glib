@@ -13,22 +13,49 @@ PKG_NAME="swe-glib"
     exit 1
 }
 
+m4dir=`grep '^AC_CONFIG_MACRO_DIR' configure.ac | sed -n -e 's/AC_CONFIG_MACRO_DIR(\([^()]*\))/\1/p' | sed -e 's/^\[\(.*\)\]$/\1/' | sed -e 1q`
+if [ -n "$m4dir" ]; then
+    m4dir="-I $m4dir"
+fi
+
+echo "Running libtoolize"
+libtoolize --force --copy || exit $?
+
+echo "Running autopoint"
+autopoint --force || exit $?
+
+echo "Running intltoolize"
+intltoolize --force --copy --automake || exit $?
+
 GTKDOCIZE=$(which gtkdocize 2>/dev/null)
 if test -z $GTKDOCIZE; then
-        echo "You don't have gtk-doc installed, and thus won't be able to generate the documentation."
-        rm -f gtk-doc.make
-        cat > gtk-doc.make <<EOF
+    echo "You don't have gtk-doc installed, and thus won't be able to generate the documentation."
+    rm -f gtk-doc.make
+    rm -f $m4dir/gtk-doc.m4
+    cat > gtk-doc.make <<EOF
 EXTRA_DIST =
 CLEANFILES =
 EOF
 else
-        gtkdocize || exit $?
+    echo "Running gtkdocize"
+    gtkdocize --copy || exit $?
 fi
 
-which gnome-autogen.sh || {
-    echo "gnome-autogen.sh not found, you need to install gnome-common"
-    exit 1
-}
+echo "Running aclocal"
+aclocal $m4dir $ACLOCAL_FLAGS || exit $?
 
-REQUIRED_AUTOMAKE_VERSION=1.9 . gnome-autogen.sh
+echo "Running autoconf"
+autoconf || exit $?
+
+if grep "^A[CM]_CONFIG_HEADER" configure.ac >/dev/null; then
+    echo "Running autoheader"
+    autoheader || exit $?
+    # this prevents automake from thinking config.h.in is out of
+    # date, since autoheader doesn't touch the file if it doesn't
+    # change.
+    test -f config.h.in && touch config.h.in
+fi
+
+echo "Running automake"
+automake --gnu --add-missing --copy -Wno-portability || exit $?
 
