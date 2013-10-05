@@ -865,6 +865,8 @@ gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
 GsweTimestamp *
 gswe_timestamp_new(void)
 {
+    gswe_init();
+
     return GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP, NULL));
 }
 
@@ -886,7 +888,11 @@ gswe_timestamp_new(void)
 GsweTimestamp *
 gswe_timestamp_new_from_gregorian_full(gint year, gint month, gint day, gint hour, gint minute, gint second, gint microsecond, gdouble time_zone_offset)
 {
-    GsweTimestamp *timestamp = GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP,
+    GsweTimestamp *timestamp;
+
+    gswe_init();
+
+    timestamp = GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP,
                 "gregorian-year",            year,
                 "gregorian-month",           month,
                 "gregorian-day",             day,
