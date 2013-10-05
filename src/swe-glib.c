@@ -42,6 +42,7 @@ GHashTable *gswe_house_system_info_table;
 GHashTable *gswe_aspect_info_table;
 GHashTable *gswe_antiscion_axis_info_table;
 GsweTimestamp *gswe_full_moon_base_date;
+static gboolean gswe_initializing = FALSE;
 
 #define ADD_PLANET(ht, v, i, s, r, n, o, h) \
     (v) = gswe_planet_info_new(); \
@@ -119,14 +120,20 @@ gswe_init(void)
     GsweAspectInfo *aspect_info;
     GsweAntiscionAxisInfo *antiscion_axis_info;
 
+    if (gswe_initialized) {
+        return;
+    }
+
+    if (gswe_initializing) {
+        return;
+    }
+
+    gswe_initializing = TRUE;
+
     /* Before 2.34, g_type_init() must have been called. Let's do it! */
 #if !GLIB_CHECK_VERSION(2, 36, 0)
     g_type_init();
 #endif
-
-    if (gswe_initialized) {
-        return;
-    }
 
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
