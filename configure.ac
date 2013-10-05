@@ -58,8 +58,8 @@ AM_CONDITIONAL(OS_WIN32, [test "$native_win32" = "yes"])
 AM_CONDITIONAL(OS_UNIX, [test "$native_win32" != "yes"])
 AC_PATH_PROG([GTESTER], [gtester])
 AC_PATH_PROG([GTESTER_REPORT], [gtester-report])
-PKG_CHECK_MODULES([GLIB], [glib-2.0])
-PKG_CHECK_MODULES([GOBJECT], [gobject-2.0])
+PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.32.0])
+PKG_CHECK_MODULES([GOBJECT], [gobject-2.0 >= 2.32.0])
 AC_CONFIG_MACRO_DIR([m4])
 
 LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.76.la'
