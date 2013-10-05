@@ -119,6 +119,11 @@ gswe_init(void)
     GsweAspectInfo *aspect_info;
     GsweAntiscionAxisInfo *antiscion_axis_info;
 
+    /* Before 2.34, g_type_init() must have been called. Let's do it! */
+#if !GLIB_CHECK_VERSION(2, 36, 0)
+    g_type_init();
+#endif
+
     if (gswe_initialized) {
         return;
     }
