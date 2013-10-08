@@ -39,9 +39,12 @@ GType gswe_antiscion_data_get_type(void);
 #define GSWE_TYPE_ANTISCION_DATA (gswe_antiscion_data_get_type())
 
 GsweAntiscionData *gswe_antiscion_data_new(void);
+GsweAntiscionData *gswe_antiscion_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *planet2);
 
 GsweAntiscionData *gswe_antiscion_data_ref(GsweAntiscionData *antiscion_data);
 void gswe_antiscion_data_unref(GsweAntiscionData *antiscion_data);
+
+void gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data);
 
 void gswe_antiscion_data_set_planet1(GsweAntiscionData *antiscion_data, GswePlanetData *planet1);
 GswePlanetData *gswe_antiscion_data_get_planet1(GsweAntiscionData *antiscion_data);

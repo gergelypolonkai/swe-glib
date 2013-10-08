@@ -105,6 +105,25 @@ find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, Gswe
     return FALSE;
 }
 
+/**
+ * gswe_antiscion_data_calculate:
+ * @antiscion_data: a #GsweAntiscionData
+ *
+ * Calculates the antiscion between the planets set in @antiscion_data. Planets
+ * can be set either by calling gswe_antiscion_data_set_planet1() and
+ * gswe_antiscion_data_set_planet2(), or by creating the #GsweAntiscionData
+ * with gswe_antiscion_data_new_with_planets().
+ *
+ * <note><para>If the object is created by
+ * gswe_antiscion_data_new_with_planets(), or when both planets are set by
+ * calling gswe_antiscion_data_set_planet1() and
+ * gswe_antiscion_data_set_planet2(), the antiscion information is
+ * automatically calculated. However, when either planet's data changes, the
+ * antiscion data is not calculated automatically, so if you expect the planets
+ * to get a new position (e.g. the #GsweTimestamp changes in a #GsweMoment
+ * which holds the @antiscion_data, in which case the planet positions are
+ * automatically adjusted), this function should be called.</para></note>
+ */
 void
 gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data)
 {
@@ -113,6 +132,16 @@ gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data)
     }
 }
 
+/**
+ * gswe_antiscion_data_new_with_planets:
+ * @planet1: a #GswePlanetData
+ * @planet2: a #GswePlanetData
+ *
+ * Creates a new #GsweAntiscionData object with both planets initially set. The
+ * respective antiscion is instantly calculated.
+ *
+ * Returns: (transfer full): a new #GsweAntiscionData
+ */
 GsweAntiscionData *
 gswe_antiscion_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *planet2)
 {
