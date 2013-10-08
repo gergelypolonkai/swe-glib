@@ -20,6 +20,8 @@
 
 #include "../swe/src/swephexp.h"
 
+#define glforeach(a, b) for ((a) = (b); (a); (a) = g_list_next((a)))
+
 /**
  * SECTION:gswe-moment
  * @short_description: an exact moment of the sky, as seen from a given point
@@ -769,7 +771,7 @@ gswe_moment_get_sign_planets(GsweMoment *moment, GsweZodiac sign)
 
     gswe_moment_calculate_all_planets(moment);
 
-    for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
+    glforeach (planet, moment->priv->planet_list) {
         GswePlanetData *pd = planet->data;
 
         if (pd->sign_info->sign == sign) {
@@ -803,7 +805,7 @@ gswe_moment_get_house_planets(GsweMoment *moment, guint house)
 
     gswe_moment_calculate_all_planets(moment);
 
-    for (planet = moment->priv->planet_list; planet; planet = g_list_next(planet)) {
+    glforeach (planet, moment->priv->planet_list) {
         GswePlanetData *pd = planet->data;
 
         if (pd->house == house) {
@@ -1204,7 +1206,7 @@ GList *
 gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GError **err)
 {
     GList *ret = NULL,
-          *antiscion;
+          *antiscion_l;
 
     if (!gswe_moment_has_planet(moment, planet)) {
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
@@ -1214,8 +1216,8 @@ gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GErro
 
     gswe_moment_calculate_antiscia(moment);
 
-    for (antiscion = moment->priv->antiscia_list; antiscion; antiscion = g_list_next(antiscion)) {
-        GsweAntiscionData *antiscion_data = antiscion->data;
+    glforeach (antiscion_l, moment->priv->antiscia_list) {
+        GsweAntiscionData *antiscion_data = antiscion_l->data;
 
         if ((antiscion_data->planet1->planet_info->planet == planet) || (antiscion_data->planet2->planet_info->planet == planet)) {
             ret = g_list_prepend(ret, antiscion_data);
@@ -1245,7 +1247,7 @@ gswe_moment_get_axis_all_antiscia(GsweMoment *moment, GsweAntiscionAxis axis)
 
     gswe_moment_calculate_antiscia(moment);
 
-    for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
+    glforeach (antiscion_l, moment->priv->antiscia_list) {
         GsweAntiscionData *antiscion_data = antiscion_l->data;
 
         if (antiscion_data->antiscion_axis_info->axis == axis) {
@@ -1285,7 +1287,7 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
 
     gswe_moment_calculate_antiscia(moment);
 
-    for (antiscion_l = moment->priv->antiscia_list; antiscion_l; antiscion_l = g_list_next(antiscion_l)) {
+    glforeach (antiscion_l, moment->priv->antiscia_list) {
         GsweAntiscionData *antiscion_data = antiscion_l->data;
 
         if (
