@@ -292,7 +292,7 @@ gswe_aspect_data_get_aspect_info(GsweAspectData *aspect_data)
  *
  * Gets the difference between an exact aspect and this one.
  *
- * Returns: the difference in pertent.
+ * Returns: the difference in percent.
  */
 gdouble
 gswe_aspect_data_get_difference(GsweAspectData *aspect_data)
