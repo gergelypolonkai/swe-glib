@@ -93,6 +93,8 @@ gswe_aspect_data_calculate(GsweAspectData *aspect_data)
 
     if ((aspect_data->aspect_info = g_hash_table_find(gswe_aspect_info_table, (GHRFunc)find_aspect, aspect_data)) == NULL) {
         aspect_data->aspect_info = gswe_aspect_info_ref(g_hash_table_lookup(gswe_aspect_info_table, GINT_TO_POINTER(GSWE_ASPECT_NONE)));
+    } else {
+        gswe_aspect_info_ref(aspect_data->aspect_info);
     }
 }
 

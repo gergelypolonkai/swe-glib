@@ -128,7 +128,9 @@ void
 gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data)
 {
     if ((antiscion_data->antiscion_axis_info = g_hash_table_find(gswe_antiscion_axis_info_table, (GHRFunc)find_antiscion, antiscion_data)) == NULL) {
-        antiscion_data->antiscion_axis_info = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE));
+        antiscion_data->antiscion_axis_info = gswe_antiscion_axis_info_ref(g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(GSWE_ANTISCION_AXIS_NONE)));
+    } else {
+        gswe_antiscion_axis_info_ref(antiscion_data->antiscion_axis_info);
     }
 }
 
@@ -148,8 +150,8 @@ gswe_antiscion_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *pl
     GsweAntiscionData *ret;
 
     ret = gswe_antiscion_data_new();
-    ret->planet1 = planet1;
-    ret->planet2 = planet2;
+    ret->planet1 = gswe_planet_data_ref(planet1);
+    ret->planet2 = gswe_planet_data_ref(planet2);
 
     gswe_antiscion_data_calculate(ret);
 

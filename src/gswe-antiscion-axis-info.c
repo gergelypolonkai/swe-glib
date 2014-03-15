@@ -39,6 +39,10 @@ gswe_antiscion_axis_info_free(GsweAntiscionAxisInfo *antiscion_axis_info)
         g_free(antiscion_axis_info->name);
     }
 
+    if (antiscion_axis_info->start_sign != NULL) {
+        gswe_sign_info_unref(antiscion_axis_info->start_sign);
+    }
+
     g_free(antiscion_axis_info);
 }
 
