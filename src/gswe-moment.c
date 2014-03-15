@@ -1022,8 +1022,8 @@ gswe_moment_calculate_aspects(GsweMoment *moment)
     g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
     moment->priv->aspect_list = NULL;
 
-    for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
-        for (iplanet = moment->priv->planet_list; iplanet; iplanet = iplanet->next) {
+    for (oplanet = moment->priv->planet_list; oplanet; oplanet = g_list_next(oplanet)) {
+        for (iplanet = moment->priv->planet_list; iplanet; iplanet = g_list_next(iplanet)) {
             GswePlanetData *outer_planet = oplanet->data,
                            *inner_planet = iplanet->data;
             struct GsweAspectFinder aspect_finder;
@@ -1097,7 +1097,7 @@ gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **e
 
     gswe_moment_calculate_aspects(moment);
 
-    for (aspect = moment->priv->aspect_list; aspect; aspect = aspect->next) {
+    for (aspect = moment->priv->aspect_list; aspect; aspect = g_list_next(aspect)) {
         GsweAspectData *aspect_data = aspect->data;
 
         if (
@@ -1144,8 +1144,8 @@ gswe_moment_calculate_antiscia(GsweMoment *moment)
     g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
     moment->priv->antiscia_list = NULL;
 
-    for (oplanet = moment->priv->planet_list; oplanet; oplanet = oplanet->next) {
-        for (iplanet = moment->priv->planet_list; iplanet; iplanet = iplanet->next) {
+    for (oplanet = moment->priv->planet_list; oplanet; oplanet = g_list_next(oplanet)) {
+        for (iplanet = moment->priv->planet_list; iplanet; iplanet = g_list_next(iplanet)) {
             GswePlanetData *outer_planet = oplanet->data,
                            *inner_planet = iplanet->data;
             struct GsweAspectFinder antiscion_finder;
