@@ -71,6 +71,16 @@ gswe_antiscion_data_new(void)
     return ret;
 }
 
+/*
+ * find_antiscion:
+ * @axis_p: a pointer made with GINT_TO_POINTER(), holding the antiscion axis ID
+ * @antiscion_axis_info: a GsweAntiscionAxisInfo, which will be checked against @antiscion_data
+ * @antiscion_data: a GsweAntiscionData, whose planets' positions will be checked against @antiscion_axis_info
+ *
+ * This function is called internally by gswe_antiscion_data_calculate() to
+ * check if the two planets in @antiscion_data are antiscia of each other on
+ * the axis in @antiscion_axis_info
+ */
 static gboolean
 find_antiscion(gpointer axis_p, GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionData *antiscion_data)
 {
