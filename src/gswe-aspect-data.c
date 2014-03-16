@@ -58,6 +58,15 @@ gswe_aspect_data_free(GsweAspectData *aspect_data)
     g_free(aspect_data);
 }
 
+/*
+ * find_aspect:
+ * @aspect_p: a pointer made with GINT_TO_POINTER(), holding the aspect ID
+ * @aspect_info: a GsweAspectInfo, which will be checked against @aspect_data
+ * @aspect_data: a GsweAspectData, whose planets' positions will be checked against @aspect_info
+ *
+ * This function is called internally by gswe_aspect_data_calculate() to check
+ * if the two planets in @aspect_data are in aspect according to @aspect_info
+ */
 static gboolean
 find_aspect(gpointer aspect_p, GsweAspectInfo *aspect_info, GsweAspectData *aspect_data)
 {
