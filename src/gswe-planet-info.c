@@ -69,7 +69,10 @@ gswe_planet_info_ref(GswePlanetInfo *planet_info)
 static void
 gswe_planet_info_free(GswePlanetInfo *planet_info)
 {
-    g_free(planet_info->name);
+    if (planet_info->name) {
+        g_free(planet_info->name);
+    }
+
     g_free(planet_info);
 }
 
