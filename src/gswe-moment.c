@@ -637,10 +637,9 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 }
 
 static void
-planet_add(gpointer key, gpointer value, gpointer user_data)
+planet_add(gpointer key, gpointer value, GsweMoment *moment)
 {
     GswePlanet planet = (GswePlanet)GPOINTER_TO_INT(key);
-    GsweMoment *moment = GSWE_MOMENT(user_data);
 
     gswe_moment_add_planet(moment, planet, NULL);
 }
@@ -654,7 +653,7 @@ planet_add(gpointer key, gpointer value, gpointer user_data)
 void
 gswe_moment_add_all_planets(GsweMoment *moment)
 {
-    g_hash_table_foreach(gswe_planet_info_table, planet_add, moment);
+    g_hash_table_foreach(gswe_planet_info_table, (GHFunc)planet_add, moment);
 }
 
 static void
