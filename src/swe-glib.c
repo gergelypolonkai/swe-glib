@@ -53,7 +53,6 @@ static gboolean gswe_initializing = FALSE;
     (v)->name = g_strdup(n); \
     (v)->points = (h); \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v)); \
-    gswe_planet_info_ref((v));
 
 #define ADD_SIGN(ht, v, s, n, e, q) \
     (v) = gswe_sign_info_new(); \
@@ -62,7 +61,6 @@ static gboolean gswe_initializing = FALSE;
     (v)->element = (e); \
     (v)->quality = (q); \
     g_hash_table_replace((ht), GINT_TO_POINTER(s), (v)); \
-    gswe_sign_info_ref((v));
 
 #define ADD_HOUSE_SYSTEM(ht, v, i, s, n) \
     (v) = gswe_house_system_info_new(); \
@@ -70,7 +68,6 @@ static gboolean gswe_initializing = FALSE;
     (v)->sweph_id = s; \
     (v)->name = g_strdup(n); \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v)); \
-    gswe_house_system_info_ref((v));
 
 #define ADD_ASPECT(ht, v, i, n, s, o, h, m) \
     (v) = gswe_aspect_info_new(); \
@@ -81,7 +78,6 @@ static gboolean gswe_initializing = FALSE;
     (v)->harmonic = (h); \
     (v)->major = (m); \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v)); \
-    gswe_aspect_info_ref((v));
 
 #define ADD_ANTISCION(ht, v, hts, vs, i, n, s, m) \
     (v) = gswe_antiscion_axis_info_new(); \
@@ -91,7 +87,6 @@ static gboolean gswe_initializing = FALSE;
     (v)->name = g_strdup(n); \
     (v)->sign_offset = m; \
     g_hash_table_replace((ht), GINT_TO_POINTER(i), (v)); \
-    gswe_antiscion_axis_info_ref((v));
 
 /**
  * gswe_error_quark:
