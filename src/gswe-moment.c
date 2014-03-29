@@ -633,7 +633,7 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err)
     planet_data->planet_info = gswe_planet_info_ref(planet_info);
     planet_data->revision = 0;
 
-    moment->priv->planet_list = g_list_append(moment->priv->planet_list, gswe_planet_data_ref(planet_data));
+    moment->priv->planet_list = g_list_append(moment->priv->planet_list, planet_data);
 }
 
 static void
