@@ -205,7 +205,10 @@ gswe_moment_finalize(GObject *gobject)
     g_list_free_full(moment->priv->planet_list, (GDestroyNotify)gswe_planet_data_unref);
     g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
     g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
+    g_object_unref(moment->priv->timestamp);
     gswe_moon_phase_data_unref(moment->priv->moon_phase);
+    g_hash_table_unref(moment->priv->element_points);
+    g_hash_table_unref(moment->priv->quality_points);
 
     G_OBJECT_CLASS(gswe_moment_parent_class)->finalize(gobject);
 }
@@ -258,6 +261,7 @@ gswe_moment_get_property(GObject *object, guint prop_id, GValue *value, GParamSp
         case PROP_COORDINATES:
             {
                 GsweCoordinates *coords = gswe_coordinates_copy(&(priv->coordinates));
+
                 g_value_set_boxed(value, coords);
             }
 
