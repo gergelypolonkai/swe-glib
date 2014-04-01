@@ -106,13 +106,14 @@ gswe_error_quark(void)
 #endif
 
 /**
- * gswe_init:
+ * gswe_init_with_dir:
+ * @directory: the path that contains the Swiss Ephemeris data files
  *
- * Initializes the SWE-GLib library. It must be called before any calculations
- * are made.
+ * Initializes the SWE-GLib library with @directory as the Swiss Ephemeris
+ * data files' location. This, or gswe_init() must be called before any
+ * calculations are made.
  */
-void
-gswe_init(void)
+void gswe_init_with_dir(gchar *directory)
 {
     GswePlanetInfo *planet_info;
     GsweSignInfo *sign_info;
@@ -210,8 +211,21 @@ gswe_init(void)
 
     gswe_full_moon_base_date = gswe_timestamp_new_from_gregorian_full(2005, 5, 8, 3, 48, 0, 0, 0.0);
 
-    gswe_ephe_path = g_strdup(PKGDATADIR);
-    swe_set_ephe_path(PKGDATADIR);
+    gswe_ephe_path = g_strdup(directory);
+    g_print("Starting with %s\n", directory);
+    swe_set_ephe_path(directory);
     gswe_initialized = TRUE;
+}
+
+/**
+ * gswe_init:
+ *
+ * Initializes the SWE-GLib library. It must be called before any calculations
+ * are made.
+ */
+void
+gswe_init(void)
+{
+    gswe_init_with_dir(PKGDATADIR);
 }
 
