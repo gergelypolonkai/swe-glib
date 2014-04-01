@@ -50,6 +50,9 @@
  * @GSWE_PLANET_PALLAS: dwarf planet Pallas
  * @GSWE_PLANET_JUNO: dwarf planet Juno
  * @GSWE_PLANET_VESTA: dwarf planet Vesta
+ * @GSWE_PLANET_PHOLUS: asteroid Pholus
+ * @GSWE_PLANET_NESSUS: asteroid Nessus
+ * @GSWE_PLANET_CHARIKLO: asteroid Chariklo
  * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
  * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
  *                           or Lilith)
@@ -78,6 +81,9 @@ typedef enum {
     GSWE_PLANET_PALLAS,
     GSWE_PLANET_JUNO,
     GSWE_PLANET_VESTA,
+    GSWE_PLANET_PHOLUS,
+    GSWE_PLANET_NESSUS,
+    GSWE_PLANET_CHARIKLO,
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
     GSWE_PLANET_ASCENDANT,
