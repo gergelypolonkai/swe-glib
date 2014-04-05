@@ -138,6 +138,10 @@ gswe_planet_data_set_planet(GswePlanetData *planet_data, GswePlanet planet, GErr
 GswePlanet
 gswe_planet_data_get_planet(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return GSWE_PLANET_NONE;
+    }
+
     if (planet_data->planet_info) {
         return planet_data->planet_info->planet;
     } else {
@@ -155,6 +159,10 @@ gswe_planet_data_get_planet(GswePlanetData *planet_data)
 void
 gswe_planet_data_set_planet_info(GswePlanetData *planet_data, GswePlanetInfo *planet_info)
 {
+    if (planet_data == NULL) {
+        return;
+    }
+
     if (planet_data->planet_info) {
         gswe_planet_info_unref(planet_data->planet_info);
     }
@@ -173,6 +181,10 @@ gswe_planet_data_set_planet_info(GswePlanetData *planet_data, GswePlanetInfo *pl
 GswePlanetInfo *
 gswe_planet_data_get_planet_info(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return NULL;
+    }
+
     return planet_data->planet_info;
 }
 
@@ -187,6 +199,10 @@ gswe_planet_data_get_planet_info(GswePlanetData *planet_data)
 gdouble
 gswe_planet_data_get_position(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return 0.0;
+    }
+
     return planet_data->position;
 }
 
@@ -202,6 +218,10 @@ gswe_planet_data_get_position(GswePlanetData *planet_data)
 gboolean
 gswe_planet_data_get_retrograde(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return FALSE;
+    }
+
     return planet_data->retrograde;
 }
 
@@ -216,6 +236,10 @@ gswe_planet_data_get_retrograde(GswePlanetData *planet_data)
 guint
 gswe_planet_data_get_house(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return 0;
+    }
+
     return planet_data->house;
 }
 
@@ -230,6 +254,10 @@ gswe_planet_data_get_house(GswePlanetData *planet_data)
 GsweZodiac
 gswe_planet_data_get_sign(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return GSWE_SIGN_NONE;
+    }
+
     if (planet_data->sign_info) {
         return planet_data->sign_info->sign;
     } else {
@@ -248,6 +276,10 @@ gswe_planet_data_get_sign(GswePlanetData *planet_data)
 GsweSignInfo *
 gswe_planet_data_get_sign_info(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return NULL;
+    }
+
     return planet_data->sign_info;
 }
 
