@@ -883,7 +883,14 @@ gswe_moment_get_house(GsweMoment *moment, gdouble position, GError **err)
 GswePlanetData *
 gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 {
-    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)->data);
+    GList *planet_element;
+    GswePlanetData *planet_data;
+
+    if ((planet_element = g_list_find_custom(moment->priv->planet_list, &planet, (GCompareFunc)find_planet_by_id)) == NULL) {
+        return NULL;
+    }
+
+    planet_data = (GswePlanetData *)(planet_element->data);
 
     if (planet_data == NULL) {
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Specified planet is not added to the moment object");
