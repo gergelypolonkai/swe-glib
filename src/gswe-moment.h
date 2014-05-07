@@ -119,6 +119,7 @@ GsweMoonPhaseData *gswe_moment_get_moon_phase(GsweMoment *moment, GError **err);
 
 GList *gswe_moment_get_all_aspects(GsweMoment *moment);
 GList *gswe_moment_get_planet_aspects(GsweMoment *moment, GswePlanet planet, GError **err);
+GsweAspectData *gswe_moment_get_aspect_by_planets(GsweMoment *moment, GswePlanet planet1, GswePlanet planet2, GError **err);
 
 GList *gswe_moment_get_all_antiscia(GsweMoment *moment);
 GList *gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GError **err);
