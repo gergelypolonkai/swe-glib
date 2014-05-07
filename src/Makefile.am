@@ -59,6 +59,8 @@ libswe_glib_2_0_la_SOURCES = \
 
 libswe_glib_2_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
 libswe_glib_2_0_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) $(LIBSWE_LIBS)
+libswe_glib_2_0_la_DEPENDENCIES = \
+	$(NULL)
 
 BUILT_SOURCES = gswe-enumtypes.c gswe-enumtypes.h
 
@@ -73,6 +75,9 @@ gswe-enumtypes.h: $(gswe_enum_headers) gswe-enumtypes.h.template
 gswe-enumtypes.c: $(gswe_enum_headers) gswe-enumtypes.h gswe-enumtypes.c.template
 	$(GLIB_MKENUMS) --template $(filter %.template,$^) $(filter-out %.template,$^) > \
 	gswe-enumtypes.c.tmp && mv gswe-enumtypes.c.tmp gswe-enumtypes.c
+
+SweGlib-2.0.vapi: SweGlib-$(SWE_GLIB_API_VERSION).gir
+	$(AM_V_GEN)$(VAPIGEN) --library=SweGlib-2.0 SweGlib-2.0.gir
 
 if HAVE_INTROSPECTION
 
@@ -99,5 +104,10 @@ header_DATA = \
 	$(NULL)
 
 CLEANFILES += $(gir_DATA) $(typelibs_DATA)
+
+if HAVE_VAPIGEN
+vapidir = $(datadir)/vala/vapi
+vapi_DATA = SweGlib-$(SWE_GLIB_API_VERSION).vapi
+endif
 
 endif

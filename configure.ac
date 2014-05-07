@@ -1,6 +1,6 @@
 m4_define([swe_glib_major_version], [2])
 m4_define([swe_glib_minor_version], [0])
-m4_define([swe_glib_micro_version], [0])
+m4_define([swe_glib_micro_version], [1])
 m4_define([swe_glib_version], [swe_glib_major_version.swe_glib_minor_version.swe_glib_micro_version])
 m4_define([swe_glib_api_version], [swe_glib_major_version.0])
 
@@ -45,6 +45,12 @@ GTK_DOC_CHECK([1.19], [--flavour no-tmpl])
 AM_CONDITIONAL([ENABLE_GTK_DOC], false)
 ])
 GOBJECT_INTROSPECTION_CHECK([1.0])
+m4_ifdef([VALA_PROG_VAPIGEN], [
+VALA_PROG_VAPIGEN([0.21])
+AM_CONDITIONAL([HAVE_VAPIGEN], true)
+],[
+AM_CONDITIONAL([HAVE_VAPIGEN], false)
+])
 PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
 AC_CANONICAL_HOST

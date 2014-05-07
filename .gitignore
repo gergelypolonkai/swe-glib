@@ -83,11 +83,12 @@ Makefile.in
 /intltool-update.in
 
 # SWE-GLib related files
-src/gswe-enumtypes.c
-src/gswe-enumtypes.h
-src/gswetest
+/src/gswe-enumtypes.c
+/src/gswe-enumtypes.h
+/src/gswetest
 /data/swe-glib.pc
 /data/swe-glib.spec
+/src/*.vapi
 
 # Documentation related files
 /docs/reference/*/*.args
