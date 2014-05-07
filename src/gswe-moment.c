@@ -1351,3 +1351,40 @@ gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis,
     return ret;
 }
 
+/**
+ * gswe_moment_get_antiscion_by_planets:
+ * @moment: the GsweMoment to operate on
+ * @planet1: the first planet
+ * @planet2: the second planet
+ * @err: a #GError
+ *
+ * Get the aspect between two given planets. The order of @planet1 and @planet2
+ * doesn’t matter.
+ *
+ * Returns: (transfer none): a #GsweAspectData containing the aspect data of the
+ *          two planets. If an error occurs, like when one of the planets are
+ *          not added to the planet list, returns NULL, and @err is set
+ *          accordingly.
+ */
+GsweAntiscionData *
+gswe_moment_get_antiscion_by_planets(GsweMoment *moment, GswePlanet planet1, GswePlanet planet2, GError **err)
+{
+    struct GsweAspectFinder antiscion_finder;
+    GList *antiscion_data_element;
+
+    if (!gswe_moment_has_planet(moment, planet1) || !gswe_moment_has_planet(moment, planet2)) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "One of the planets is not found in the planet list");
+
+        return NULL;
+    }
+
+    antiscion_finder.planet1 = planet1;
+    antiscion_finder.planet2 = planet2;
+
+    if ((antiscion_data_element = g_list_find_custom(moment->priv->antiscia_list, &antiscion_finder, (GCompareFunc)find_antiscion_by_both_planets)) != NULL) {
+        return antiscion_data_element->data;
+    }
+
+    return NULL;
+}
+

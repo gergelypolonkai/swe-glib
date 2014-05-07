@@ -125,6 +125,7 @@ GList *gswe_moment_get_all_antiscia(GsweMoment *moment);
 GList *gswe_moment_get_all_planet_antiscia(GsweMoment *moment, GswePlanet planet, GError **err);
 GList *gswe_moment_get_axis_all_antiscia(GsweMoment *moment, GsweAntiscionAxis axis);
 GList *gswe_moment_get_axis_planet_antiscia(GsweMoment *moment, GsweAntiscionAxis axis, GswePlanet planet, GError **err);
+GsweAntiscionData *gswe_moment_get_antiscion_by_planets(GsweMoment *moment, GswePlanet planet1, GswePlanet planet2, GError **err);
 
 #endif /* __GSWE_MOMENT_H__ */
 

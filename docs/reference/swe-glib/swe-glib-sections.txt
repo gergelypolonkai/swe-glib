@@ -30,6 +30,7 @@ gswe_moment_get_all_antiscia
 gswe_moment_get_all_planet_antiscia
 gswe_moment_get_axis_all_antiscia
 gswe_moment_get_axis_planet_antiscia
+gswe_moment_get_antiscion_by_planets
 <SUBSECTION Standard>
 GSWE_IS_MOMENT
 GSWE_IS_MOMENT_CLASS
