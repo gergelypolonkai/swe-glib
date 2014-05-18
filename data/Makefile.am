@@ -57,6 +57,7 @@ sweph_DATA = \
 	sweph-data/seplm42.se1 \
 	sweph-data/seplm48.se1 \
 	sweph-data/seplm54.se1 \
+	sweph-data/seleapsec.txt \
 	$(NULL)
 
 EXTRA_DIST = \
