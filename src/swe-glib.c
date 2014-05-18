@@ -141,29 +141,29 @@ void gswe_init_with_dir(gchar *directory)
 
     gswe_planet_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_planet_info_unref);
 
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SUN,         SE_SUN,                TRUE,  _("Sun"),                 13.0, 2);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON,        SE_MOON,               TRUE,  _("Moon"),                9.0,  2);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MERCURY,     SE_MERCURY,            TRUE,  _("Mercury"),             7.0,  2);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VENUS,       SE_VENUS,              TRUE,  _("Venus"),               7.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MARS,        SE_MARS,               TRUE,  _("Mars"),                7.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_JUPITER,     SE_JUPITER,            TRUE,  _("Jupiter"),             9.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SATURN,      SE_SATURN,             TRUE,  _("Saturn"),              7.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_URANUS,      SE_URANUS,             TRUE,  _("Uranus"),              5.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_NEPTUNE,     SE_NEPTUNE,            TRUE,  _("Neptune"),             5.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PLUTO,       SE_PLUTO,              TRUE,  _("Pluto"),               3.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CHIRON,      SE_CHIRON,             TRUE,  _("Chiron"),              2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CERES,       SE_CERES,              TRUE,  _("Ceres"),               2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PALLAS,      SE_PALLAS,             TRUE,  _("Pallas"),              2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_JUNO,        SE_JUNO,               TRUE,  _("Juno"),                2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VESTA,       SE_VESTA,              TRUE,  _("Vesta"),               2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PHOLUS,      SE_PHOLUS,             TRUE,  _("Pholus"),              2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_NESSUS,      SE_AST_OFFSET + 7066,  TRUE,  _("Nessus"),              2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CHARIKLO,    SE_AST_OFFSET + 10199, TRUE,  _("Chariklo"),            2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_NODE,   SE_MEAN_NODE,          TRUE,  _("Ascending Moon Node"), 2.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_APOGEE, SE_MEAN_APOG,          TRUE,  _("Dark Moon"),           2.0,  0);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASCENDANT,   -1,                    FALSE, _("Ascendant"),           9.0,  2);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MC,          -1,                    FALSE, _("Midheaven"),           5.0,  1);
-    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VERTEX,      -1,                    FALSE, _("Vertex"),              2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SUN,         SE_SUN,                 TRUE,  _("Sun"),                 13.0, 2);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON,        SE_MOON,                TRUE,  _("Moon"),                9.0,  2);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MERCURY,     SE_MERCURY,             TRUE,  _("Mercury"),             7.0,  2);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VENUS,       SE_VENUS,               TRUE,  _("Venus"),               7.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MARS,        SE_MARS,                TRUE,  _("Mars"),                7.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_JUPITER,     SE_JUPITER,             TRUE,  _("Jupiter"),             9.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SATURN,      SE_SATURN,              TRUE,  _("Saturn"),              7.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_URANUS,      SE_URANUS,              TRUE,  _("Uranus"),              5.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_NEPTUNE,     SE_NEPTUNE,             TRUE,  _("Neptune"),             5.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PLUTO,       SE_PLUTO,               TRUE,  _("Pluto"),               3.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CHIRON,      SE_CHIRON,              TRUE,  _("Chiron"),              2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CERES,       SE_CERES,               TRUE,  _("Ceres"),               2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PALLAS,      SE_PALLAS,              TRUE,  _("Pallas"),              2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_JUNO,        SE_JUNO,                TRUE,  _("Juno"),                2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VESTA,       SE_VESTA,               TRUE,  _("Vesta"),               2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_PHOLUS,      SE_PHOLUS,              TRUE,  _("Pholus"),              2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_NESSUS,      SE_AST_OFFSET + 7066,   TRUE,  _("Nessus"),              2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CHARIKLO,    SE_AST_OFFSET + 10199,  TRUE,  _("Chariklo"),            2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_NODE,   SE_MEAN_NODE,           TRUE,  _("Ascending Moon Node"), 2.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_APOGEE, SE_MEAN_APOG,           TRUE,  _("Dark Moon"),           2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASCENDANT,   -1,                     FALSE, _("Ascendant"),           9.0,  2);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MC,          -1,                     FALSE, _("Midheaven"),           5.0,  1);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_VERTEX,      -1,                     FALSE, _("Vertex"),              2.0,  0);
 
     gswe_sign_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_sign_info_unref);
 
