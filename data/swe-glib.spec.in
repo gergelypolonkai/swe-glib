@@ -76,6 +76,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/locale/hu/LC_MESSAGES/swe-glib.mo
 
 %files data
 %{_datadir}/swe-glib/*.se1
+%{_datadir}/swe-glib/seleapsec.txt
 
 %files doc
 %doc %{_datadir}/gtk-doc/html/*
