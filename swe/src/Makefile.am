@@ -1,7 +1,7 @@
-lib_LTLIBRARIES = libswe-1.76.la
-libswe_1_76_la_SOURCES = swedate.c swehouse.c swejpl.c swemmoon.c swemplan.c swepcalc.c sweph.c swepdate.c swephlib.c swecl.c swehel.c
-libswe_1_76_la_CFLAGS = $(CFLAGS) -Wall
-libswe_1_76_la_LIBADD = $(LIBS)
+lib_LTLIBRARIES = libswe-2.0.la
+libswe_2_0_la_SOURCES = swedate.c swehouse.c swejpl.c swemmoon.c swemplan.c swepcalc.c sweph.c swepdate.c swephlib.c swecl.c swehel.c
+libswe_2_0_la_CFLAGS = $(CFLAGS) -Wall
+libswe_2_0_la_LIBADD = $(LIBS)
 
 EXTRA_DIST = \
 	LICENSE               \

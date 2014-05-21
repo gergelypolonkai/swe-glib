@@ -3,6 +3,9 @@ m4_define([swe_glib_minor_version], [0])
 m4_define([swe_glib_micro_version], [3])
 m4_define([swe_glib_version], [swe_glib_major_version.swe_glib_minor_version.swe_glib_micro_version])
 m4_define([swe_glib_api_version], [swe_glib_major_version.0])
+m4_define([swe_major_version], [2])
+m4_define([swe_minor_version], [0])
+m4_define([swe_version], [swe_major_version.swe_minor_version])
 
 AC_INIT([SWE-GLib], [swe_glib_version], [gergely@polonkai.eu], [swe-glib])
 AM_INIT_AUTOMAKE([-Wall foreign])
@@ -26,6 +29,7 @@ AC_SUBST([SWE_GLIB_MICRO_VERSION], [swe_glib_micro_version])
 AC_SUBST([SWE_GLIB_VERSION], [swe_glib_version])
 AC_SUBST([SWE_GLIB_API_VERSION], [swe_glib_api_version])
 AC_SUBST([SWE_GLIB_API_VERSION_U], [AS_TR_SH([swe_glib_api_version])])
+AC_SUBST([SWE_VERSION], [swe_version])
 
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -68,7 +72,7 @@ PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.32.0])
 PKG_CHECK_MODULES([GOBJECT], [gobject-2.0 >= 2.32.0])
 AC_CONFIG_MACRO_DIR([m4])
 
-LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-1.76.la'
+LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-$(SWE_VERSION).la'
 AC_SUBST(LIBSWE_LIBS)
 
 LIBSWE_GLIB_LIBS='$(top_builddir)/src/libswe-glib-$(SWE_GLIB_API_VERSION).la'
