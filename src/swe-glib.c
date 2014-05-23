@@ -162,6 +162,7 @@ void gswe_init_with_dir(gchar *directory)
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_SEDNA,       SE_AST_OFFSET + 90377,  TRUE,  _("Sedna"),               2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ERIS,        SE_AST_OFFSET + 136199, TRUE,  _("Eris"),                2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_DEJANIRA,    SE_AST_OFFSET + 157,    TRUE,  _("Dejanira"),            2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CIRCE,       SE_AST_OFFSET + 34,     TRUE,  _("Circe"),               2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_NODE,   SE_MEAN_NODE,           TRUE,  _("Ascending Moon Node"), 2.0,  1);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_MOON_APOGEE, SE_MEAN_APOG,           TRUE,  _("Dark Moon"),           2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASCENDANT,   -1,                     FALSE, _("Ascendant"),           9.0,  2);

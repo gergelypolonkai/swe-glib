@@ -56,6 +56,7 @@
  * @GSWE_PLANET_SEDNA: dwarf planet Sedna
  * @GSWE_PLANET_ERIS: dwarf planet Eris
  * @GSWE_PLANET_DEJANIRA: dwarf planet Dejanira
+ * @GSWE_PLANET_CIRCE: asteroid Circe
  * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
  * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
  *                           or Lilith)
@@ -90,6 +91,7 @@ typedef enum {
     GSWE_PLANET_SEDNA,
     GSWE_PLANET_ERIS,
     GSWE_PLANET_DEJANIRA,
+    GSWE_PLANET_CIRCE,
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
     GSWE_PLANET_ASCENDANT,
