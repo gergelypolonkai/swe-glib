@@ -96,7 +96,9 @@ typedef enum {
     GSWE_PLANET_SEDNA,
     GSWE_PLANET_ERIS,
     GSWE_PLANET_DEJANIRA,
-    GSWE_PLANET_CIRCE
+    GSWE_PLANET_CIRCE,
+    GSWE_PLANET_ORCUS,
+    GSWE_PLANET_ASBOLUS
 } GswePlanet;
 
 /* Moon Apogee in astrology is often referred to as the Dark Moon, or Lilith */
