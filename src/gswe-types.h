@@ -105,6 +105,37 @@ typedef enum {
 #define GSWE_PLANET_LILITH GSWE_PLANET_MOON_APOGEE
 
 /**
+ * GSWE_PLANET_OFFSET_VIRTUAL_NODES:
+ *
+ * The offset in #GswePlanet for virtual nodes like the ascendant or vertex.
+ * This is for consistency only, I don’t think anyone would need it.
+ */
+#define GSWE_PLANET_OFFSET_VIRTUAL_NODES 0
+
+/**
+ * GSWE_PLANET_OFFSET_PLANETS:
+ *
+ * The offset in #GswePlanet for real planets in the Solar System. These are
+ * the objects classified as planets (including Pluto).
+ */
+#define GSWE_PLANET_OFFSET_PLANETS 10
+
+/**
+ * GSWE_PLANET_OFFSET_ASTEROIDS:
+ *
+ * The offset in #GswePlanet for asteroids and dwarf planets.
+ */
+#define GSWE_PLANET_OFFSET_ASTEROIDS 100
+
+/**
+ * GSWE_PLANET_OFFSET_CUSTOM:
+ *
+ * The offset in #GswePlanet for custom planets. This will be used to register
+ * custom planets later.
+ */
+#define GSWE_PLANET_OFFSET_CUSTOM 10000
+
+/**
  * GsweZodiac:
  * @GSWE_SIGN_NONE: no sign
  * @GSWE_SIGN_ARIES: the Aries sign (Ram)
