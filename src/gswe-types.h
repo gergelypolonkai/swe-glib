@@ -99,6 +99,9 @@ typedef enum {
     GSWE_PLANET_VERTEX
 } GswePlanet;
 
+/* Moon Apogee in astrology is often referred to as the Dark Moon, or Lilith */
+#define GSWE_PLANET_LILITH GSWE_PLANET_MOON_APOGEE
+
 /**
  * GsweZodiac:
  * @GSWE_SIGN_NONE: no sign
