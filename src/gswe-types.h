@@ -68,8 +68,13 @@
  * This enum holds the planet identifiers known by SWE-GLib.
  */
 typedef enum {
-    GSWE_PLANET_NONE,
-    GSWE_PLANET_SUN,
+    GSWE_PLANET_NONE = 0,
+    GSWE_PLANET_ASCENDANT,
+    GSWE_PLANET_MC,
+    GSWE_PLANET_VERTEX,
+    GSWE_PLANET_MOON_NODE,
+    GSWE_PLANET_MOON_APOGEE,
+    GSWE_PLANET_SUN = 11,
     GSWE_PLANET_MOON,
     GSWE_PLANET_MERCURY,
     GSWE_PLANET_VENUS,
@@ -80,7 +85,7 @@ typedef enum {
     GSWE_PLANET_URANUS,
     GSWE_PLANET_NEPTUNE,
     GSWE_PLANET_PLUTO,
-    GSWE_PLANET_CHIRON,
+    GSWE_PLANET_CHIRON = 101,
     GSWE_PLANET_CERES,
     GSWE_PLANET_PALLAS,
     GSWE_PLANET_JUNO,
@@ -91,12 +96,7 @@ typedef enum {
     GSWE_PLANET_SEDNA,
     GSWE_PLANET_ERIS,
     GSWE_PLANET_DEJANIRA,
-    GSWE_PLANET_CIRCE,
-    GSWE_PLANET_MOON_NODE,
-    GSWE_PLANET_MOON_APOGEE,
-    GSWE_PLANET_ASCENDANT,
-    GSWE_PLANET_MC,
-    GSWE_PLANET_VERTEX
+    GSWE_PLANET_CIRCE
 } GswePlanet;
 
 /* Moon Apogee in astrology is often referred to as the Dark Moon, or Lilith */
