@@ -34,6 +34,13 @@
 /**
  * GswePlanet:
  * @GSWE_PLANET_NONE: no planet
+ * @GSWE_PLANET_ASCENDANT: the ascendant
+ * @GSWE_PLANET_MC: midheaven (Medium Coeli)
+ * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
+ *                      primal vertical)
+ * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
+ * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
+ *                           or Lilith)
  * @GSWE_PLANET_SUN: the Sun
  * @GSWE_PLANET_MOON: the Moon
  * @GSWE_PLANET_MERCURY: planet Mercury
@@ -57,13 +64,8 @@
  * @GSWE_PLANET_ERIS: dwarf planet Eris
  * @GSWE_PLANET_DEJANIRA: dwarf planet Dejanira
  * @GSWE_PLANET_CIRCE: asteroid Circe
- * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
- * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
- *                           or Lilith)
- * @GSWE_PLANET_ASCENDANT: the ascendant
- * @GSWE_PLANET_MC: midheaven (Medium Coeli)
- * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
- *                      primal vertical)
+ * @GSWE_PLANET_ORCUS: asteroid Orcus
+ * @GSWE_PLANET_ASBOLUS: asteroid Asbolus
  *
  * This enum holds the planet identifiers known by SWE-GLib.
  */
