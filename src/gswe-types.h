@@ -66,6 +66,7 @@
  * @GSWE_PLANET_CIRCE: asteroid Circe
  * @GSWE_PLANET_ORCUS: asteroid Orcus
  * @GSWE_PLANET_ASBOLUS: asteroid Asbolus
+ * @GSWE_PLANET_HYGIEA: asteroid Hygiea
  *
  * This enum holds the planet identifiers known by SWE-GLib.
  */
@@ -100,7 +101,8 @@ typedef enum {
     GSWE_PLANET_DEJANIRA,
     GSWE_PLANET_CIRCE,
     GSWE_PLANET_ORCUS,
-    GSWE_PLANET_ASBOLUS
+    GSWE_PLANET_ASBOLUS,
+    GSWE_PLANET_HYGIEA
 } GswePlanet;
 
 /* Moon Apogee in astrology is often referred to as the Dark Moon, or Lilith */

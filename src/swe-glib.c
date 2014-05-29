@@ -172,6 +172,7 @@ void gswe_init_with_dir(gchar *directory)
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_CIRCE,       SE_AST_OFFSET + 34,     TRUE,  _("Circe"),               2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ORCUS,       SE_AST_OFFSET + 90482,  TRUE,  _("Orcus"),               2.0,  0);
     ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_ASBOLUS,     SE_AST_OFFSET + 8405,   TRUE,  _("Asbolus"),             2.0,  0);
+    ADD_PLANET(gswe_planet_info_table, planet_info, GSWE_PLANET_HYGIEA,      SE_AST_OFFSET + 10,     TRUE,  _("Hygiea"),              2.0,  0);
 
     gswe_sign_info_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)gswe_sign_info_unref);
 
