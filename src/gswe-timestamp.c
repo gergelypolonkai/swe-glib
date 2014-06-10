@@ -55,6 +55,7 @@ struct _GsweTimestampPrivate {
     gdouble gregorian_timezone_offset;
 
     gdouble julian_day;
+    gdouble julian_day_ut;
 };
 
 enum {
@@ -813,29 +814,23 @@ gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err)
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_FATAL, "Swiss Ephemeris error: %s", serr);
     } else {
         timestamp->priv->julian_day = dret[0];
+        timestamp->priv->julian_day_ut = dret[1];
         timestamp->priv->valid_dates |= VALID_JULIAN_DAY;
     }
 }
 
 /**
  * gswe_timestamp_set_julian_day:
- * @timestamp: A GsweTimestamp
+ * @timestamp: a #GsweTimestamp
  * @julian_day: The Julian day number, with hours included as fractions
  *
- * Sets the Julian day value of the timestamp. The Gregorian date will be
- * calculated as requested.
+ * Deprecated: This function is deprecated in version 2.1. In newly written
+ *             code use gswe_timestamp_set_julian_day_et()
  */
 void
 gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day)
 {
-    timestamp->priv->julian_day = julian_day;
-    timestamp->priv->valid_dates = VALID_JULIAN_DAY;
-
-    if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp, NULL);
-    }
-
-    gswe_timestamp_emit_changed(timestamp);
+    gswe_timestamp_set_julian_day_et(timestamp, julian_day, NULL);
 }
 
 /**
@@ -843,15 +838,151 @@ gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day)
  * @timestamp: a GsweTimestamp
  * @err: a #GError
  *
- * Gets the Julian day value of @timestamp. @err is populated if a calculations
- * error arises.
+ * Deprecated: This function is deprecated in version 2.1. In newly written
+ *             code use gswe_timestamp_get_julian_day_et()
  */
 gdouble
 gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err)
 {
+    return gswe_timestamp_get_julian_day_et(timestamp, err);
+}
+
+/**
+ * gswe_timestamp_set_julian_day_et:
+ * @timestamp: A GsweTimestamp
+ * @julian_day: The Julian day number, with hours included as fractions
+ * @err: a #GError
+ *
+ * Sets the Julian day value of the timestamp. The Gregorian date will be
+ * calculated as requested. Given Julian day must be given in Ephemeris Time
+ * (ET). See gswe_timestamp_set_julian_day_ut() for Universal Time (UT)
+ * version.
+ *
+ * Since: 2.1
+ */
+void
+gswe_timestamp_set_julian_day_et(GsweTimestamp *timestamp, gdouble julian_day, GError **err)
+{
+    GError *err_local = NULL;
+
+    timestamp->priv->julian_day = julian_day;
+    timestamp->priv->valid_dates = VALID_JULIAN_DAY;
+
+    // to get exact UT value, we must calculate gregorian date, and
+    // reverse-engineer the UT value from that. This is an overkill, but libswe
+    // doesn’t provide an API for that.
+    gswe_timestamp_calculate_gregorian(timestamp, &err_local);
+
+    if (err_local) {
+        if (err) {
+            *err = err_local;
+        }
+
+        return;
+    }
+
+    timestamp->priv->valid_dates = VALID_GREGORIAN;
+    gswe_timestamp_calculate_julian(timestamp, &err_local);
+
+    if (err_local) {
+        if (err) {
+            *err = err_local;
+        }
+
+        return;
+    }
+
+    if (timestamp->priv->instant_recalc == TRUE) {
+        gswe_timestamp_calculate_all(timestamp, err);
+    }
+
+    gswe_timestamp_emit_changed(timestamp);
+}
+
+/**
+ * gswe_timestamp_get_julian_day_et:
+ * @timestamp: a GsweTimestamp
+ * @err: a #GError
+ *
+ * Gets the Julian day value of @timestamp, Ephemeris Time (ET). For Universal
+ * Time (UT), see gswe_timestamp_get_julian_day_ut(). @err is populated if the
+ * calculations raises an error.
+ *
+ * Since: 2.1
+ */
+gdouble
+gswe_timestamp_get_julian_day_et(GsweTimestamp *timestamp, GError **err)
+{
     gswe_timestamp_calculate_julian(timestamp, err);
 
     return timestamp->priv->julian_day;
+}
+
+/**
+ * gswe_timestamp_set_julian_day_ut:
+ * @timestamp: a GsweTimestamp
+ * @julian_day: The Julian day number in Universal Time
+ * @err: a #GError
+ *
+ * Sets the Julian day value of the timestamp. The Julian day is considered to
+ * be in Universal Time (UT). For Ephemeris time, see
+ * gswe_timestamp_set_julian_day(). Should an error occur, @err is populated
+ * with the error details.
+ */
+void
+gswe_timestamp_set_julian_day_ut(GsweTimestamp *timestamp, gdouble julian_day, GError **err)
+{
+    GError *err_local = NULL;
+
+    timestamp->priv->julian_day_ut = julian_day;
+    timestamp->priv->valid_dates = VALID_JULIAN_DAY;
+
+    // to get exact ET value, we must calculate gregorian date, and
+    // reverse-engineer the ET value from that. This is an overkill, but libswe
+    // doesn’t provide an API for that.
+    gswe_timestamp_calculate_gregorian(timestamp, err);
+
+    if (err_local) {
+        if (err) {
+            *err = err_local;
+        }
+
+        return;
+    }
+
+    timestamp->priv->valid_dates = VALID_GREGORIAN;
+    gswe_timestamp_calculate_julian(timestamp, err);
+
+    if (err_local) {
+        if (err) {
+            *err = err_local;
+        }
+
+        return;
+    }
+
+    if (timestamp->priv->instant_recalc == TRUE) {
+        gswe_timestamp_calculate_all(timestamp, err);
+    }
+
+    gswe_timestamp_emit_changed(timestamp);
+}
+
+/**
+ * gswe_timestamp_get_julian_day_ut:
+ * @timestamp: a #GsweTimestamp
+ * @err: a #GError
+ *
+ * Gets the Julian day value of @timestamp, Universal Time (UT). For Ephemeris
+ * Time (ET) see gswe_timestamp_get_julian_day_et(). @err is populated if the
+ * calculations raise an error.
+ */
+gdouble
+gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp, GError **err)
+{
+    gswe_timestamp_calculate_julian(timestamp, err);
+
+    return timestamp->priv->julian_day_ut;
 }
 
 /**

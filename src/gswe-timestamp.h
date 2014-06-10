@@ -106,8 +106,19 @@ void gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp, gint gre
 gint gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp, GError **err);
 void gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp, gdouble gregorian_timezone_offset, GError **err);
 gdouble gswe_timestamp_get_gregorian_timezone(GsweTimestamp *timestamp);
+
+#ifndef GSWE_DISABLE_DEPRECATED
+G_DEPRECATED_FOR(gswe_timestamp_set_julian_day_et)
 void gswe_timestamp_set_julian_day(GsweTimestamp *timestamp, gdouble julian_day);
+
+G_DEPRECATED_FOR(gswe_timestamp_get_julian_day_et)
 gdouble gswe_timestamp_get_julian_day(GsweTimestamp *timestamp, GError **err);
+#endif
+
+void gswe_timestamp_set_julian_day_et(GsweTimestamp *timestamp, gdouble julian_day, GError **err);
+gdouble gswe_timestamp_get_julian_day_et(GsweTimestamp *timestamp, GError **err);
+void gswe_timestamp_set_julian_day_ut(GsweTimestamp *timestamp, gdouble julian_day, GError **err);
+gdouble gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp, GError **err);
 
 #endif /* __SWE_GLIB_GSWE_TIMESTAMP_H__ */
 
