@@ -119,6 +119,7 @@ void gswe_timestamp_set_julian_day_et(GsweTimestamp *timestamp, gdouble julian_d
 gdouble gswe_timestamp_get_julian_day_et(GsweTimestamp *timestamp, GError **err);
 void gswe_timestamp_set_julian_day_ut(GsweTimestamp *timestamp, gdouble julian_day, GError **err);
 gdouble gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp, GError **err);
+gdouble gswe_timestamp_get_sidereal_time(GsweTimestamp *timestamp, GError **err);
 
 #endif /* __SWE_GLIB_GSWE_TIMESTAMP_H__ */
 

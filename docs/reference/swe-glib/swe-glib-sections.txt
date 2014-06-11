@@ -268,6 +268,7 @@ gswe_timestamp_set_julian_day_et
 gswe_timestamp_get_julian_day_et
 gswe_timestamp_set_julian_day_ut
 gswe_timestamp_get_julian_day_ut
+gswe_timestamp_get_sidereal_time
 <SUBSECTION Standard>
 GSWE_IS_TIMESTAMP
 GSWE_IS_TIMESTAMP_CLASS

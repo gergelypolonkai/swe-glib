@@ -986,6 +986,38 @@ gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp, GError **err)
 }
 
 /**
+ * gswe_timestamp_get_sidereal_time:
+ * @timestamp: a GsweTimestamp
+ * @err: a #GError
+ *
+ * Gets the sidereal time on the Greenwich Meridian.
+ *
+ * Returns: the sidereal time in hours. To get the degrees, multiply this value
+ * by 15.
+ *
+ * Since: 2.1
+ */
+gdouble
+gswe_timestamp_get_sidereal_time(GsweTimestamp *timestamp, GError **err)
+{
+    GError *local_err = NULL;
+
+    gswe_timestamp_calculate_julian(timestamp, &local_err);
+
+    if (local_err) {
+        if (err) {
+            *err = local_err;
+        } else {
+            g_error_free(local_err);
+        }
+
+        return 0.0;
+    }
+
+    return swe_sidtime(timestamp->priv->julian_day_ut);
+}
+
+/**
  * gswe_timestamp_new:
  *
  * Creates a new GsweTimestamp object. The object is initialized with current
