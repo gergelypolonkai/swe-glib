@@ -523,7 +523,7 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
         return;
     }
 
-    jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+    jd = gswe_timestamp_get_julian_day_et(moment->priv->timestamp, err);
 
     // If Julian Day calculation yields error, we don't do anything. err is
     // already filled with the error message, so let's just return
@@ -679,7 +679,7 @@ gswe_moment_calculate_planet(GsweMoment *moment, GswePlanet planet, GError **err
     }
 
     swe_set_topo(moment->priv->coordinates.longitude, moment->priv->coordinates.latitude, moment->priv->coordinates.altitude);
-    jd = gswe_timestamp_get_julian_day(moment->priv->timestamp, err);
+    jd = gswe_timestamp_get_julian_day_et(moment->priv->timestamp, err);
 
     if (planet_data->planet_info->real_body == FALSE) {
         if (

@@ -102,7 +102,7 @@ gswe_moon_phase_data_calculate_by_jd(GsweMoonPhaseData *moon_phase_data, gdouble
     gdouble jdb,
             phase_percent;
 
-    jdb = gswe_timestamp_get_julian_day(gswe_full_moon_base_date, err);
+    jdb = gswe_timestamp_get_julian_day_et(gswe_full_moon_base_date, err);
 
     if ((err) && (*err)) {
         return;
@@ -152,7 +152,7 @@ gswe_moon_phase_data_calculate_by_timestamp(GsweMoonPhaseData *moon_phase_data, 
 {
     gdouble jd;
 
-    jd = gswe_timestamp_get_julian_day(timestamp, err);
+    jd = gswe_timestamp_get_julian_day_et(timestamp, err);
 
     if (*err) {
         return;
