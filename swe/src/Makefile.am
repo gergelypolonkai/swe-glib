@@ -20,6 +20,5 @@ EXTRA_DIST = \
 	fixstars.cat          \
 	sedeltat.txt.inactive \
 	sefstars.txt          \
-	seleapsec.txt         \
 	seorbel.txt           \
 	$(NULL)
