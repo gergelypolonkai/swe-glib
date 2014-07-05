@@ -13,7 +13,7 @@ test_timestamp_jd(void)
     timestamp = gswe_timestamp_new_from_gregorian_full(1983, 3, 7, 11, 54, 45, 0, 1);
     g_assert(timestamp);
 
-    jd = gswe_timestamp_get_julian_day(timestamp, NULL);
+    jd = gswe_timestamp_get_julian_day_et(timestamp, NULL);
 
     g_object_unref(timestamp);
 
