@@ -241,3 +241,98 @@ gswe_init(void)
     gswe_init_with_dir(PKGDATADIR);
 }
 
+/**
+ * gswe_find_planet_info_by_id:
+ * @planet: a planet ID registered with SWE-GLib
+ * @err: a GError
+ *
+ * Find the #GswePlanetInfo record registered with the id @planet.
+ */
+GswePlanetInfo *
+gswe_find_planet_info_by_id(GswePlanet planet, GError **err)
+{
+    GswePlanetInfo *ret = g_hash_table_lookup(gswe_planet_info_table, GINT_TO_POINTER(planet));
+
+    if (ret == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Planet %d is not registered", planet);
+    }
+
+    return ret;
+}
+
+/**
+ * gswe_find_sign_info_by_id:
+ * @sign: a sign ID registered with SWE-GLib
+ * @err: a GError
+ *
+ * Find the #GsweSignInfo record registered with the id @sign.
+ */
+GsweSignInfo *
+gswe_find_sign_info_by_id(GsweZodiac sign, GError **err)
+{
+    GsweSignInfo *ret = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER(sign));
+
+    if (ret == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_SIGN, "Sign %d is not registered", sign);
+    }
+
+    return ret;
+}
+
+/**
+ * gswe_find_house_system_info_by_id:
+ * @house_system: a house system ID registered with SWE-GLib
+ * @err: a GError
+ *
+ * Find the #GsweHouseSystemInfo record registered with the id @house_system.
+ */
+GsweHouseSystemInfo *
+gswe_find_house_system_info_by_id(GsweHouseSystem house_system, GError **err)
+{
+    GsweHouseSystemInfo *ret = g_hash_table_lookup(gswe_house_system_info_table, GINT_TO_POINTER(house_system));
+
+    if (ret == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_HSYS, "House system %d is not registered", house_system);
+    }
+
+    return ret;
+}
+
+/**
+ * gswe_find_aspect_info_by_id:
+ * @aspect: an aspect ID registered with SWE-GLib
+ * @err: a GError
+ *
+ * Find the #GsweAspectInfo record registered with the id @aspect.
+ */
+GsweAspectInfo *
+gswe_find_aspect_info_by_id(GsweAspect aspect, GError **err)
+{
+    GsweAspectInfo *ret = g_hash_table_lookup(gswe_aspect_info_table, GINT_TO_POINTER(aspect));
+
+    if (ret == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_ASPECT, "Aspect system %d is not registered", aspect);
+    }
+
+    return ret;
+}
+
+/**
+ * gswe_find_antiscion_axis_info_by_id:
+ * @antiscion_axis: an antiscion axis ID registered with SWE-GLib
+ * @err: a GError
+ *
+ * Find the #GsweAntiscionAxisInfo record registered with the id @antiscion_axis.
+ */
+GsweAntiscionAxisInfo *
+gswe_find_antiscion_axis_info_by_id(GsweAntiscionAxis antiscion_axis, GError **err)
+{
+    GsweAntiscionAxisInfo *ret = g_hash_table_lookup(gswe_antiscion_axis_info_table, GINT_TO_POINTER(antiscion_axis));
+
+    if (ret == NULL) {
+        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_ANTISCION_AXIS, "Antiscion axis system %d is not registered", antiscion_axis);
+    }
+
+    return ret;
+}
+

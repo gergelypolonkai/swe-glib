@@ -60,6 +60,7 @@ gswe_moon_phase_data_get_type
 <SECTION>
 <FILE>gswe-sign-info</FILE>
 GsweSignInfo
+gswe_find_sign_info_by_id
 gswe_sign_info_new
 gswe_sign_info_ref
 gswe_sign_info_unref
@@ -79,6 +80,7 @@ gswe_sign_info_get_type
 <SECTION>
 <FILE>gswe-planet-info</FILE>
 GswePlanetInfo
+gswe_find_planet_info_by_id
 gswe_planet_info_new
 gswe_planet_info_ref
 gswe_planet_info_unref
@@ -122,6 +124,7 @@ gswe_planet_data_get_type
 <SECTION>
 <FILE>gswe-aspect-info</FILE>
 GsweAspectInfo
+gswe_find_aspect_info_by_id
 gswe_aspect_info_new
 gswe_aspect_info_ref
 gswe_aspect_info_unref
@@ -165,6 +168,7 @@ gswe_aspect_data_get_type
 <SECTION>
 <FILE>gswe-antiscion-axis-info</FILE>
 GsweAntiscionAxisInfo
+gswe_find_antiscion_axis_info_by_id
 gswe_antiscion_axis_info_new
 gswe_antiscion_axis_info_ref
 gswe_antiscion_axis_info_unref
@@ -206,6 +210,7 @@ gswe_antiscion_data_get_type
 <SECTION>
 <FILE>gswe-house-system-info</FILE>
 GsweHouseSystemInfo
+gswe_find_house_system_info_by_id
 gswe_house_system_info_new
 gswe_house_system_info_ref
 gswe_house_system_info_unref

@@ -47,6 +47,7 @@
  * @GSWE_ERROR_UNKNOWN_PLANET: the referenced planet was not added with
  *                             gswe_moment_add_planet()
  * @GSWE_ERROR_UNKNOWN_ANTISCION_AXIS: the given axis is unknown to SWE-GLib
+ * @GSWE_ERROR_UNKNOWN_ASPECT: the given aspect is unknown to SWE-GLib
  *
  * Error codes returned by the SWE-GLib functions.
  */
@@ -61,6 +62,7 @@ typedef enum {
     GSWE_ERROR_UNKNOWN_SIGN,
     GSWE_ERROR_UNKNOWN_PLANET,
     GSWE_ERROR_UNKNOWN_ANTISCION_AXIS,
+    GSWE_ERROR_UNKNOWN_ASPECT,
 } GsweError;
 
 /**
@@ -74,6 +76,11 @@ typedef enum {
 GQuark gswe_error_quark(void);
 
 void gswe_init();
+GswePlanetInfo *gswe_find_planet_info_by_id(GswePlanet planet, GError **err);
+GsweSignInfo *gswe_find_sign_info_by_id(GsweZodiac sign, GError **err);
+GsweHouseSystemInfo *gswe_find_house_system_info_by_id(GsweHouseSystem house_system, GError **err);
+GsweAspectInfo *gswe_find_aspect_info_by_id(GsweAspect aspect, GError **err);
+GsweAntiscionAxisInfo *gswe_find_antiscion_axis_info_by_id(GsweAntiscionAxis antiscion_axis, GError **err);
 
 #endif /* __SWE_GLIB_H__ */
 
