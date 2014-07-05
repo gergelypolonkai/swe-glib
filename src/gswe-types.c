@@ -17,6 +17,13 @@
  */
 #include "gswe-types.h"
 
+/**
+ * GSWE_PLANET_LILITH:
+ *
+ * The Moon apogee is often called Lilith, or Dark Moon among astrologers.
+ * There is also an asteroid with the same name (1181 Lilith), which is
+ * currently not included in SWE-GLib.
+ */
 
 GsweCoordinates *
 gswe_coordinates_copy(GsweCoordinates *coordinates)
