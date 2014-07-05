@@ -400,7 +400,17 @@ gswe_timestamp_calculate_gregorian(GsweTimestamp *timestamp, GError **err)
     }
 
     swe_jdet_to_utc(timestamp->priv->julian_day, SE_GREG_CAL, &utc_year, &utc_month, &utc_day, &utc_hour, &utc_minute, &utc_second);
-    swe_utc_time_zone(utc_year, utc_month, utc_day, utc_hour, utc_minute, utc_second, 0 - timestamp->priv->gregorian_timezone_offset, &timestamp->priv->gregorian_year, &timestamp->priv->gregorian_month, &timestamp->priv->gregorian_day, &timestamp->priv->gregorian_hour, &timestamp->priv->gregorian_minute, &local_second);
+    swe_utc_time_zone(
+            utc_year, utc_month, utc_day,
+            utc_hour, utc_minute, utc_second,
+            0 - timestamp->priv->gregorian_timezone_offset,
+            &timestamp->priv->gregorian_year,
+            &timestamp->priv->gregorian_month,
+            &timestamp->priv->gregorian_day,
+            &timestamp->priv->gregorian_hour,
+            &timestamp->priv->gregorian_minute,
+            &local_second
+        );
     timestamp->priv->gregorian_second = floor(local_second);
     timestamp->priv->gregorian_microsecond = (local_second - floor(local_second)) * 1000;
 }
@@ -818,7 +828,17 @@ gswe_timestamp_calculate_julian(GsweTimestamp *timestamp, GError **err)
         return;
     }
 
-    swe_utc_time_zone(timestamp->priv->gregorian_year, timestamp->priv->gregorian_month, timestamp->priv->gregorian_day, timestamp->priv->gregorian_hour, timestamp->priv->gregorian_minute, timestamp->priv->gregorian_second + timestamp->priv->gregorian_microsecond / 1000.0, timestamp->priv->gregorian_timezone_offset, &utc_year, &utc_month, &utc_day, &utc_hour, &utc_minute, &utc_second);
+    swe_utc_time_zone(
+            timestamp->priv->gregorian_year,
+            timestamp->priv->gregorian_month,
+            timestamp->priv->gregorian_day,
+            timestamp->priv->gregorian_hour,
+            timestamp->priv->gregorian_minute,
+            timestamp->priv->gregorian_second + timestamp->priv->gregorian_microsecond / 1000.0,
+            timestamp->priv->gregorian_timezone_offset,
+            &utc_year, &utc_month, &utc_day,
+            &utc_hour, &utc_minute, &utc_second
+        );
 
     if ((retval = swe_utc_to_jd(utc_year, utc_month, utc_day, utc_hour, utc_minute, utc_second, SE_GREG_CAL, dret, serr)) == ERR) {
         g_set_error(err, GSWE_ERROR, GSWE_ERROR_SWE_FATAL, "Swiss Ephemeris error: %s", serr);
