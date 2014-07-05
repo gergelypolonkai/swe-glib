@@ -1083,8 +1083,6 @@ gswe_timestamp_new_from_gregorian_full(gint year, gint month, gint day, gint hou
 {
     GsweTimestamp *timestamp;
 
-    gswe_init();
-
     timestamp = GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP,
                 "gregorian-year",            year,
                 "gregorian-month",           month,
