@@ -224,7 +224,6 @@ void gswe_init_with_dir(gchar *directory)
     gswe_full_moon_base_date = gswe_timestamp_new_from_gregorian_full(2005, 5, 8, 3, 48, 0, 0, 0.0);
 
     gswe_ephe_path = g_strdup(directory);
-    g_print("Starting with %s\n", directory);
     swe_set_ephe_path(directory);
     gswe_initialized = TRUE;
 }
