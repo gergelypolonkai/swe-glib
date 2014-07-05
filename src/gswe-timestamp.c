@@ -94,8 +94,7 @@ static void
 gswe_timestamp_class_init(GsweTimestampClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
-    GDateTime *local_time = g_date_time_new_now_local();
-    GTimeZone *local_timezone = g_time_zone_new_local();
+    GDateTime *local_time = g_date_time_new_now_utc();
 
     g_type_class_add_private(klass, sizeof(GsweTimestampPrivate));
 
@@ -186,7 +185,18 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The time zone offset in hours, relative to UTC
      */
-    g_object_class_install_property(gobject_class, PROP_GREGORIAN_TIMEZONE_OFFSET, g_param_spec_double("gregorian-timezone-offset", "Gregorian timezone offset", "The offset relative to UTC in the Gregorian calendar", -24.0, 24.0, g_time_zone_get_offset(local_timezone, 1) / 3600.0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE));
+    g_object_class_install_property(
+            gobject_class,
+            PROP_GREGORIAN_TIMEZONE_OFFSET,
+            g_param_spec_double(
+                    "gregorian-timezone-offset",
+                    "Gregorian timezone offset",
+                    "The offset relative to UTC in the Gregorian calendar",
+                    -24.0, 24.0,
+                    0.0,
+                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+                )
+        );
 
     /**
      * GsweTimestamp:julian-day-valid:
