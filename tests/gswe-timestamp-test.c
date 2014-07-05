@@ -19,6 +19,7 @@ test_timestamp_jd(void)
 
     timestamp = gswe_timestamp_new_from_julian_day(jd);
     g_assert(timestamp);
+    g_assert(gswe_timestamp_get_gregorian_timezone(timestamp) == 1.0);
     g_assert(gswe_timestamp_get_gregorian_year(timestamp, NULL) == 1983);
     g_assert(gswe_timestamp_get_gregorian_month(timestamp, NULL) == 3);
     g_assert(gswe_timestamp_get_gregorian_day(timestamp, NULL) == 7);
