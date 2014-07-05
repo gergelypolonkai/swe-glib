@@ -1,0 +1,34 @@
+/* gswe-version.h: SWE-GLib version information
+ *
+ * Copyright © 2013  Gergely Polonkai
+ *
+ * SWE-GLib is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * SWE-GLib is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this library; if not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef __GSWE_VERSION_H__
+#define __GSWE_VERSION_H__
+
+#define GSWE_MAJOR_VERSION @SWE_GLIB_MAJOR_VERSION@
+#define GSWE_MINOR_VERSION @SWE_GLIB_MINOR_VERSION@
+#define GSWE_MICRO_VERSION @SWE_GLIB_MICRO_VERSION@
+
+gboolean gswe_check_version(guint required_major, guint required_minor, guint required_micro);
+
+#define GSWE_CHECK_VERSION(major,minor,micro)    \
+    (GSWE_MAJOR_VERSION > (major) || \
+     (GSWE_MAJOR_VERSION == (major) && GSWE_MINOR_VERSION > (minor)) || \
+     (GSWE_MAJOR_VERSION == (major) && GSWE_MINOR_VERSION == (minor) && \
+      GSWE_MICRO_VERSION >= (micro)))
+
+#endif /* __GSWE_VERSION_H__ */
+

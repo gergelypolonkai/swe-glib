@@ -89,6 +89,7 @@ Makefile.in
 /data/swe-glib.pc
 /data/swe-glib.spec
 /src/*.vapi
+/src/gswe-version.h
 
 # Documentation related files
 /docs/reference/*/*.args

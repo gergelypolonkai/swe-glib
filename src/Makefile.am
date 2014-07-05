@@ -21,7 +21,9 @@ INST_H_SRC_FILES = \
 	$(NULL)
 
 INST_H_BUILT_FILES = \
-	gswe-enumtypes.h
+	gswe-enumtypes.h \
+	gswe-version.h   \
+	$(NULL)
 
 PRIV_H_SRC_FILES = \
 	swe-glib-private.h                 \
@@ -55,6 +57,7 @@ libswe_glib_2_0_la_SOURCES = \
 	gswe-moment.c              \
 	gswe-timestamp.c           \
 	gswe-enumtypes.c           \
+	gswe-version.c             \
 	$(NULL)
 
 libswe_glib_2_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
