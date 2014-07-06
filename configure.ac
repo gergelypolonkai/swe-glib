@@ -89,10 +89,10 @@ AC_CONFIG_FILES([
     tests/Makefile
     data/swe-glib.pc
     data/swe-glib.spec
+    src/gswe-version.h
 ])
 AM_COND_IF([ENABLE_GTK_DOC], [
     AC_CONFIG_FILES([
-        src/gswe-version.h
         docs/reference/swe-glib/version.xml
         docs/reference/swe-glib/Makefile
     ])
