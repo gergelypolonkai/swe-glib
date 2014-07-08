@@ -76,11 +76,20 @@ typedef enum {
 GQuark gswe_error_quark(void);
 
 void gswe_init();
+
 GswePlanetInfo *gswe_find_planet_info_by_id(GswePlanet planet, GError **err);
+
 GsweSignInfo *gswe_find_sign_info_by_id(GsweZodiac sign, GError **err);
-GsweHouseSystemInfo *gswe_find_house_system_info_by_id(GsweHouseSystem house_system, GError **err);
+
+GsweHouseSystemInfo *gswe_find_house_system_info_by_id(
+        GsweHouseSystem house_system,
+        GError **err);
+
 GsweAspectInfo *gswe_find_aspect_info_by_id(GsweAspect aspect, GError **err);
-GsweAntiscionAxisInfo *gswe_find_antiscion_axis_info_by_id(GsweAntiscionAxis antiscion_axis, GError **err);
+
+GsweAntiscionAxisInfo *gswe_find_antiscion_axis_info_by_id(
+        GsweAntiscionAxis antiscion_axis,
+        GError **err);
 
 #endif /* __SWE_GLIB_H__ */
 

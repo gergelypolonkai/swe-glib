@@ -27,7 +27,8 @@ struct _GsweHouseSystemInfo {
     /* the house system's ID */
     GsweHouseSystem house_system;
 
-    /* the character value that represents this house system in the Swiss Ephemeris library */
+    /* the character value that represents this house system in the Swiss
+     * Ephemeris library */
     gchar sweph_id;
 
     /* the name of this house system */

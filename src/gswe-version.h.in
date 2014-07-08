@@ -22,7 +22,10 @@
 #define GSWE_MINOR_VERSION @SWE_GLIB_MINOR_VERSION@
 #define GSWE_MICRO_VERSION @SWE_GLIB_MICRO_VERSION@
 
-gboolean gswe_check_version(guint required_major, guint required_minor, guint required_micro);
+gboolean gswe_check_version(
+        guint required_major,
+        guint required_minor,
+        guint required_micro);
 
 #define GSWE_CHECK_VERSION(major,minor,micro)    \
     (GSWE_MAJOR_VERSION > (major) || \

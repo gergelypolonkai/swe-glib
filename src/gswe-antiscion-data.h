@@ -28,8 +28,8 @@ G_BEGIN_DECLS
 /**
  * GsweAntiscionData:
  *
- * <structname>GsweAntiscionData</structname> is an opaque structure whose members
- * cannot be accessed directly.
+ * <structname>GsweAntiscionData</structname> is an opaque structure whose
+ * members cannot be accessed directly.
  *
  * Since: 1.1
  */
@@ -39,21 +39,37 @@ GType gswe_antiscion_data_get_type(void);
 #define GSWE_TYPE_ANTISCION_DATA (gswe_antiscion_data_get_type())
 
 GsweAntiscionData *gswe_antiscion_data_new(void);
-GsweAntiscionData *gswe_antiscion_data_new_with_planets(GswePlanetData *planet1, GswePlanetData *planet2);
+
+GsweAntiscionData *gswe_antiscion_data_new_with_planets(
+        GswePlanetData *planet1,
+        GswePlanetData *planet2);
 
 GsweAntiscionData *gswe_antiscion_data_ref(GsweAntiscionData *antiscion_data);
+
 void gswe_antiscion_data_unref(GsweAntiscionData *antiscion_data);
 
 void gswe_antiscion_data_calculate(GsweAntiscionData *antiscion_data);
 
-void gswe_antiscion_data_set_planet1(GsweAntiscionData *antiscion_data, GswePlanetData *planet1);
-GswePlanetData *gswe_antiscion_data_get_planet1(GsweAntiscionData *antiscion_data);
+void gswe_antiscion_data_set_planet1(
+        GsweAntiscionData *antiscion_data,
+        GswePlanetData *planet1);
 
-void gswe_antiscion_data_set_planet2(GsweAntiscionData *antiscion_data, GswePlanetData *planet2);
-GswePlanetData *gswe_antiscion_data_get_planet2(GsweAntiscionData *antiscion_data);
+GswePlanetData *gswe_antiscion_data_get_planet1(
+        GsweAntiscionData *antiscion_data);
 
-GsweAntiscionAxis gswe_antiscion_data_get_axis(GsweAntiscionData *antiscion_data);
-GsweAntiscionAxisInfo *gswe_antiscion_data_get_antiscion_axis_info(GsweAntiscionData *antiscion_data);
+void gswe_antiscion_data_set_planet2(
+        GsweAntiscionData *antiscion_data,
+        GswePlanetData *planet2);
+
+GswePlanetData *gswe_antiscion_data_get_planet2(
+        GsweAntiscionData *antiscion_data);
+
+GsweAntiscionAxis gswe_antiscion_data_get_axis(
+        GsweAntiscionData *antiscion_data);
+
+GsweAntiscionAxisInfo *gswe_antiscion_data_get_antiscion_axis_info(
+        GsweAntiscionData *antiscion_data);
+
 gdouble gswe_antiscion_data_get_difference(GsweAntiscionData *antiscion_data);
 
 G_END_DECLS

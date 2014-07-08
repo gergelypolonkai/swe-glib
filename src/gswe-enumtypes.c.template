@@ -39,14 +39,21 @@ GType
 /*** END value-header ***/
 
 /*** BEGIN value-production ***/
-            { @VALUENAME@, "@VALUENAME@", "@valuenick@" },
+            {
+                @VALUENAME@,
+                "@VALUENAME@",
+                "@valuenick@"
+            },
 /*** END value-production ***/
 
 /*** BEGIN value-tail ***/
             { 0, NULL, NULL }
         };
 
-        GType g_define_type_id = g_@type@_register_static(g_intern_static_string("@EnumName@"), values);
+        GType g_define_type_id = g_@type@_register_static(
+                g_intern_static_string("@EnumName@"),
+                values
+            );
 
         g_once_init_leave(&g_define_type_id__volatile, g_define_type_id);
     }

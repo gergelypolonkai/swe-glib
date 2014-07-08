@@ -71,7 +71,10 @@
  * Returns: TRUE if the required version is satisfied; FALSE otherwise.
  */
 gboolean
-gswe_check_version(guint required_major, guint required_minor, guint required_micro)
+gswe_check_version(
+        guint required_major,
+        guint required_minor,
+        guint required_micro)
 {
     return (GSWE_CHECK_VERSION(required_major, required_minor, required_micro));
 }

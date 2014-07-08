@@ -30,7 +30,11 @@
  * The #GswePlanetInfo structure stores information about a planet.
  */
 
-G_DEFINE_BOXED_TYPE(GswePlanetInfo, gswe_planet_info, (GBoxedCopyFunc)gswe_planet_info_ref, (GBoxedFreeFunc)gswe_planet_info_unref);
+G_DEFINE_BOXED_TYPE(
+        GswePlanetInfo,
+        gswe_planet_info,
+        (GBoxedCopyFunc)gswe_planet_info_ref,
+        (GBoxedFreeFunc)gswe_planet_info_unref);
 
 /**
  * gswe_planet_info_new:
@@ -80,7 +84,8 @@ gswe_planet_info_free(GswePlanetInfo *planet_info)
  * gswe_planet_info_unref:
  * @planet_info: a #GswePlanetInfo
  *
- * Decreases reference count on @planet_info. If reference count reaches zero, @planet_info is freed.
+ * Decreases reference count on @planet_info. If reference count reaches zero,
+ * @planet_info is freed.
  */
 void
 gswe_planet_info_unref(GswePlanetInfo *planet_info)
@@ -150,7 +155,8 @@ gswe_planet_info_get_sweph_id(GswePlanetInfo *planet_info)
  * @real_body: a  boolean that indicates if this planet is an object recognized
  *             by Swiss Ephemeris
  *
- * Sets whether this planet is an object recognized by the Swiss Ephemeris library.
+ * Sets whether this planet is an object recognized by the Swiss Ephemeris
+ * library.
  */
 void
 gswe_planet_info_set_real_body(GswePlanetInfo *planet_info, gboolean real_body)
@@ -162,7 +168,8 @@ gswe_planet_info_set_real_body(GswePlanetInfo *planet_info, gboolean real_body)
  * gswe_planet_info_get_real_body:
  * @planet_info: (in): A #GswePlanetInfo
  *
- * Checks weather this planet is a real celestial body (e.g. it has a Swiss Ephemeris planet ID) or not.
+ * Checks weather this planet is a real celestial body (e.g. it has a Swiss
+ * Ephemeris planet ID) or not.
  *
  * Returns: TRUE if the planet has a Swiss Ephemeris planet ID; FALSE otherwise
  */
@@ -236,7 +243,8 @@ gswe_planet_info_get_name(GswePlanetInfo *planet_info)
  * @planet_info: a #GswePlanetInfo
  * @points: the new point value
  *
- * Sets the point value of @planet_info. This value is used in points calculations.
+ * Sets the point value of @planet_info. This value is used in points
+ * calculations.
  */
 void
 gswe_planet_info_set_points(GswePlanetInfo *planet_info, gint points)

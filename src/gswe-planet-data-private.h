@@ -35,7 +35,8 @@ struct _GswePlanetData {
     /* Number of the house in which the planet is in */
     gint house;
 
-    /* A GsweSignInfo structure, holding every information about the sign the planet is in */
+    /* A GsweSignInfo structure, holding every information about the sign the
+     * planet is in */
     GsweSignInfo *sign_info;
 
     /* An internal version number of the calculation */

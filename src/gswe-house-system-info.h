@@ -27,8 +27,8 @@ G_BEGIN_DECLS
 /**
  * GsweHouseSystemInfo:
  *
- * <structname>GsweHouseSystemInfo</structname> is an opaque structure whose members
- * cannot be accessed directly.
+ * <structname>GsweHouseSystemInfo</structname> is an opaque structure whose
+ * members cannot be accessed directly.
  *
  * Since: 1.1
  */
@@ -39,17 +39,31 @@ GType gswe_house_system_info_get_type(void);
 
 GsweHouseSystemInfo *gswe_house_system_info_new(void);
 
-GsweHouseSystemInfo *gswe_house_system_info_ref(GsweHouseSystemInfo *house_system_info);
+GsweHouseSystemInfo *gswe_house_system_info_ref(
+        GsweHouseSystemInfo *house_system_info);
+
 void gswe_house_system_info_unref(GsweHouseSystemInfo *house_system_info);
 
-void gswe_house_system_info_set_house_system(GsweHouseSystemInfo *house_system_info, GsweHouseSystem house_system);
-GsweHouseSystem gswe_house_system_info_get_house_system(GsweHouseSystemInfo *house_system_info);
+void gswe_house_system_info_set_house_system(
+        GsweHouseSystemInfo *house_system_info,
+        GsweHouseSystem house_system);
 
-void gswe_house_system_info_set_sweph_id(GsweHouseSystemInfo *house_system_info, gchar sweph_id);
-gchar gswe_house_system_info_get_sweph_id(GsweHouseSystemInfo *house_system_info);
+GsweHouseSystem gswe_house_system_info_get_house_system(
+        GsweHouseSystemInfo *house_system_info);
 
-void gswe_house_system_info_set_name(GsweHouseSystemInfo *house_system_info, const gchar *name);
-const gchar *gswe_house_system_info_get_name(GsweHouseSystemInfo *house_system_info);
+void gswe_house_system_info_set_sweph_id(
+        GsweHouseSystemInfo *house_system_info,
+        gchar sweph_id);
+
+gchar gswe_house_system_info_get_sweph_id(
+        GsweHouseSystemInfo *house_system_info);
+
+void gswe_house_system_info_set_name(
+        GsweHouseSystemInfo *house_system_info,
+        const gchar *name);
+
+const gchar *gswe_house_system_info_get_name(
+        GsweHouseSystemInfo *house_system_info);
 
 G_END_DECLS
 

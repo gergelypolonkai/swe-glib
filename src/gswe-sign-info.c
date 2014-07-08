@@ -30,7 +30,10 @@
  * The #GsweSignInfo stores information about a zodiac sign.
  */
 
-G_DEFINE_BOXED_TYPE(GsweSignInfo, gswe_sign_info, (GBoxedCopyFunc)gswe_sign_info_ref, (GBoxedFreeFunc)gswe_sign_info_unref);
+G_DEFINE_BOXED_TYPE(GsweSignInfo,
+        gswe_sign_info,
+        (GBoxedCopyFunc)gswe_sign_info_ref,
+        (GBoxedFreeFunc)gswe_sign_info_unref);
 
 static void
 gswe_sign_info_free(GsweSignInfo *sign_info)
@@ -80,7 +83,8 @@ gswe_sign_info_ref(GsweSignInfo *sign_info)
  * gswe_sign_info_unref:
  * @sign_info: a #GsweSignInfo
  *
- * Decreases reference count or @sign_info. If reference count reaches zero, @sign_info is freed.
+ * Decreases reference count or @sign_info. If reference count reaches zero,
+ * @sign_info is freed.
  */
 void
 gswe_sign_info_unref(GsweSignInfo *sign_info)

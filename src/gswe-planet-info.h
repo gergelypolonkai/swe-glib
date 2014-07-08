@@ -40,24 +40,37 @@ GType gswe_planet_info_get_type(void);
 GswePlanetInfo *gswe_planet_info_new(void);
 
 GswePlanetInfo *gswe_planet_info_ref(GswePlanetInfo *planet_info);
+
 void gswe_planet_info_unref(GswePlanetInfo *planet_info);
 
-void gswe_planet_info_set_planet(GswePlanetInfo *planet_info, GswePlanet planet);
+void gswe_planet_info_set_planet(
+        GswePlanetInfo *planet_info,
+        GswePlanet planet);
+
 GswePlanet gswe_planet_info_get_planet(GswePlanetInfo *planet_info);
 
-void gswe_planet_info_set_sweph_id(GswePlanetInfo *planet_info, gint32 sweph_id);
+void gswe_planet_info_set_sweph_id(
+        GswePlanetInfo *planet_info,
+        gint32 sweph_id);
+
 gint32 gswe_planet_info_get_sweph_id(GswePlanetInfo *planet_info);
 
-void gswe_planet_info_set_real_body(GswePlanetInfo *planet_info, gboolean real_body);
+void gswe_planet_info_set_real_body(
+        GswePlanetInfo *planet_info,
+        gboolean real_body);
+
 gboolean gswe_planet_info_get_real_body(GswePlanetInfo *planet_info);
 
 void gswe_planet_info_set_orb(GswePlanetInfo *planet_info, gdouble orb);
+
 gdouble gswe_planet_info_get_orb(GswePlanetInfo *planet_info);
 
 void gswe_planet_info_set_name(GswePlanetInfo *planet_info, const gchar *name);
+
 const gchar *gswe_planet_info_get_name(GswePlanetInfo *planet_info);
 
 void gswe_planet_info_set_points(GswePlanetInfo *planet_info, gint points);
+
 gint gswe_planet_info_get_points(GswePlanetInfo *planet_info);
 
 G_END_DECLS

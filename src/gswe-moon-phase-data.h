@@ -28,8 +28,8 @@ G_BEGIN_DECLS
 /**
  * GsweMoonPhaseData:
  *
- * <structname>GsweMoonPhaseData</structname> is an opaque structure whose members
- * cannot be accessed directly.
+ * <structname>GsweMoonPhaseData</structname> is an opaque structure whose
+ * members cannot be accessed directly.
  *
  * Since: 1.1
  */
@@ -38,13 +38,24 @@ typedef struct _GsweMoonPhaseData GsweMoonPhaseData;
 GsweMoonPhaseData *gswe_moon_phase_data_new(void);
 
 GsweMoonPhaseData *gswe_moon_phase_data_ref(GsweMoonPhaseData *moon_phase_data);
+
 void gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data);
 
-void gswe_moon_phase_data_calculate_by_jd(GsweMoonPhaseData *moon_phase_data, gdouble jd, GError **err);
-void gswe_moon_phase_data_calculate_by_timestamp(GsweMoonPhaseData *moon_phase_data, GsweTimestamp *timestamp, GError **err);
+void gswe_moon_phase_data_calculate_by_jd(
+        GsweMoonPhaseData *moon_phase_data,
+        gdouble jd,
+        GError **err);
 
-GsweMoonPhase gswe_moon_phase_data_get_phase(GsweMoonPhaseData *moon_phase_data);
-gdouble gswe_moon_phase_data_get_illumination(GsweMoonPhaseData *moon_phase_data);
+void gswe_moon_phase_data_calculate_by_timestamp(
+        GsweMoonPhaseData *moon_phase_data,
+        GsweTimestamp *timestamp,
+        GError **err);
+
+GsweMoonPhase gswe_moon_phase_data_get_phase(
+        GsweMoonPhaseData *moon_phase_data);
+
+gdouble gswe_moon_phase_data_get_illumination(
+        GsweMoonPhaseData *moon_phase_data);
 
 GType gswe_moon_phase_data_get_type(void);
 #define GSWE_TYPE_MOON_PHASE_DATA (gswe_moon_phase_data_get_type())

@@ -29,7 +29,12 @@
  * #GsweHouseSystemInfo stores information of a house system.
  */
 
-G_DEFINE_BOXED_TYPE(GsweHouseSystemInfo, gswe_house_system_info, (GBoxedCopyFunc)gswe_house_system_info_ref, (GBoxedFreeFunc)gswe_house_system_info_unref);
+G_DEFINE_BOXED_TYPE(
+        GsweHouseSystemInfo,
+        gswe_house_system_info,
+        (GBoxedCopyFunc)gswe_house_system_info_ref,
+        (GBoxedFreeFunc)gswe_house_system_info_unref
+    );
 
 static void
 gswe_house_system_info_free(GsweHouseSystemInfo *house_system_info)
@@ -98,7 +103,9 @@ gswe_house_system_info_unref(GsweHouseSystemInfo *house_system_info)
  * Sets up @house_system_info to represent @house_system.
  */
 void
-gswe_house_system_info_set_house_system(GsweHouseSystemInfo *house_system_info, GsweHouseSystem house_system)
+gswe_house_system_info_set_house_system(
+        GsweHouseSystemInfo *house_system_info,
+        GsweHouseSystem house_system)
 {
     house_system_info->house_system = house_system;
 }
@@ -126,7 +133,9 @@ gswe_house_system_info_get_house_system(GsweHouseSystemInfo *house_system_info)
  * marked by @sweph_id.
  */
 void
-gswe_house_system_info_set_sweph_id(GsweHouseSystemInfo *house_system_info, gchar sweph_id)
+gswe_house_system_info_set_sweph_id(
+        GsweHouseSystemInfo *house_system_info,
+        gchar sweph_id)
 {
     house_system_info->sweph_id = sweph_id;
 }
@@ -153,7 +162,9 @@ gswe_house_system_info_get_sweph_id(GsweHouseSystemInfo *house_system_info)
  * Sets the name of @house_system_info.
  */
 void
-gswe_house_system_info_set_name(GsweHouseSystemInfo *house_system_info, const gchar *name)
+gswe_house_system_info_set_name(
+        GsweHouseSystemInfo *house_system_info,
+        const gchar *name)
 {
     if (house_system_info->name) {
         g_free(house_system_info->name);

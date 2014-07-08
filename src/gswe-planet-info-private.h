@@ -26,10 +26,13 @@ struct _GswePlanetInfo {
     /* the planet ID */
     GswePlanet planet;
 
-    /* the planet ID according to the Swiss Ephemeris libarary (or -1, if the planet has no such ID) */
+    /* the planet ID according to the Swiss Ephemeris libarary (or -1, if the
+     * planet has no such ID) */
     gint32 sweph_id;
 
-    /* TRUE if the planet is a "real" celestial body on the sky. Please note that this will be true for Dark Moon (Lilith). Everything that has a planet ID in Swiss Ephemeris is treated as a real celestial body. */
+    /* TRUE if the planet is a "real" celestial body on the sky. Please note
+     * that this will be true for Dark Moon (Lilith). Everything that has a
+     * planet ID in Swiss Ephemeris is treated as a real celestial body. */
     gboolean real_body;
 
     /* the planet's “personal” orb */

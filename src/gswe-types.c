@@ -37,5 +37,9 @@ gswe_coordinates_copy(GsweCoordinates *coordinates)
     return ret;
 }
 
-G_DEFINE_BOXED_TYPE(GsweCoordinates, gswe_coordinates, (GBoxedCopyFunc)gswe_coordinates_copy, (GBoxedFreeFunc)g_free);
+G_DEFINE_BOXED_TYPE(
+        GsweCoordinates,
+        gswe_coordinates,
+        (GBoxedCopyFunc)gswe_coordinates_copy,
+        (GBoxedFreeFunc)g_free);
 

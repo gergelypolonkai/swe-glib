@@ -32,7 +32,8 @@ struct _GsweAspectInfo {
     /* the size of the aspect, in degrees */
     guint size;
 
-    /* the modifier of the orb (the maximum allowable difference from an exact orb) */
+    /* the modifier of the orb (the maximum allowable difference from an exact
+     * orb) */
     gdouble orb_modifier;
 
     /* shows whether this aspect is harmonic or not */

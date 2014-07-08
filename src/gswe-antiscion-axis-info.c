@@ -30,7 +30,12 @@
  * The #GsweAntiscionAxisInfo stores information about an antiscion axis.
  */
 
-G_DEFINE_BOXED_TYPE(GsweAntiscionAxisInfo, gswe_antiscion_axis_info, (GBoxedCopyFunc)gswe_antiscion_axis_info_ref, (GBoxedFreeFunc)gswe_antiscion_axis_info_unref);
+G_DEFINE_BOXED_TYPE(
+        GsweAntiscionAxisInfo,
+        gswe_antiscion_axis_info,
+        (GBoxedCopyFunc)gswe_antiscion_axis_info_ref,
+        (GBoxedFreeFunc)gswe_antiscion_axis_info_unref
+    );
 
 static void
 gswe_antiscion_axis_info_free(GsweAntiscionAxisInfo *antiscion_axis_info)
@@ -84,7 +89,8 @@ gswe_antiscion_axis_info_ref(GsweAntiscionAxisInfo *antiscion_axis_info)
  * gswe_antiscion_axis_info_unref:
  * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
  *
- * Decreases reference count on @antiscion_axis_info. If reference count reaches zero, @antiscion_axis_info is freed.
+ * Decreases reference count on @antiscion_axis_info. If reference count
+ * reaches zero, @antiscion_axis_info is freed.
  */
 void
 gswe_antiscion_axis_info_unref(GsweAntiscionAxisInfo *antiscion_axis_info)
@@ -102,7 +108,9 @@ gswe_antiscion_axis_info_unref(GsweAntiscionAxisInfo *antiscion_axis_info)
  * Sets the axis ID.
  */
 void
-gswe_antiscion_axis_info_set_axis(GsweAntiscionAxisInfo *antiscion_axis_info, GsweAntiscionAxis axis)
+gswe_antiscion_axis_info_set_axis(
+        GsweAntiscionAxisInfo *antiscion_axis_info,
+        GsweAntiscionAxis axis)
 {
     antiscion_axis_info->axis = axis;
 }
@@ -124,12 +132,15 @@ gswe_antiscion_axis_info_get_axis(GsweAntiscionAxisInfo *antiscion_axis_info)
 /**
  * gswe_antiscion_axis_info_set_start_sign_info:
  * @antiscion_axis_info: (in): a #GsweAntiscionAxisInfo
- * @sign_info: a #GsweSignInfo to set as the starting sign of @antiscion_axis_info
+ * @sign_info: a #GsweSignInfo to set as the starting sign of
+ *             @antiscion_axis_info
  *
  * Sets the starting sign of the axis.
  */
 void
-gswe_antiscion_axis_info_set_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info, GsweSignInfo *sign_info)
+gswe_antiscion_axis_info_set_start_sign_info(
+        GsweAntiscionAxisInfo *antiscion_axis_info,
+        GsweSignInfo *sign_info)
 {
     if (antiscion_axis_info->start_sign != NULL) {
         gswe_sign_info_unref(antiscion_axis_info->start_sign);
@@ -144,10 +155,12 @@ gswe_antiscion_axis_info_set_start_sign_info(GsweAntiscionAxisInfo *antiscion_ax
  *
  * Gets the starting sign of the axis.
  *
- * Returns: (transfer none): the #GsweSignInfo of the sign in which this axis starts
+ * Returns: (transfer none): the #GsweSignInfo of the sign in which this axis
+ *          starts
  */
 GsweSignInfo *
-gswe_antiscion_axis_info_get_start_sign_info(GsweAntiscionAxisInfo *antiscion_axis_info)
+gswe_antiscion_axis_info_get_start_sign_info(
+        GsweAntiscionAxisInfo *antiscion_axis_info)
 {
     return antiscion_axis_info->start_sign;
 }
@@ -165,13 +178,23 @@ gswe_antiscion_axis_info_get_start_sign_info(GsweAntiscionAxisInfo *antiscion_ax
  * be found.
  */
 void
-gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info, GsweZodiac sign, GError **err)
+gswe_antiscion_axis_info_set_start_sign(
+        GsweAntiscionAxisInfo *antiscion_axis_info,
+        GsweZodiac sign,
+        GError **err)
 {
     GsweSignInfo *sign_info;
 
-    if ((sign_info = g_hash_table_lookup(gswe_sign_info_table, GINT_TO_POINTER(sign))) == NULL) {
+    if ((sign_info = g_hash_table_lookup(
+                    gswe_sign_info_table,
+                    GINT_TO_POINTER(sign)
+                )) == NULL) {
         g_warning("Trying to fetch an unregistered sign");
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_SIGN, "The requested sign is not registered");
+        g_set_error(
+                err,
+                GSWE_ERROR, GSWE_ERROR_UNKNOWN_SIGN,
+                "The requested sign is not registered"
+            );
 
         return;
     }
@@ -192,7 +215,8 @@ gswe_antiscion_axis_info_set_start_sign(GsweAntiscionAxisInfo *antiscion_axis_in
  * Returns: the corresponding sign ID
  */
 GsweZodiac
-gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_info)
+gswe_antiscion_axis_info_get_start_sign(
+        GsweAntiscionAxisInfo *antiscion_axis_info)
 {
     if (antiscion_axis_info->start_sign) {
         return antiscion_axis_info->start_sign->sign;
@@ -209,7 +233,9 @@ gswe_antiscion_axis_info_get_start_sign(GsweAntiscionAxisInfo *antiscion_axis_in
  * Sets the name of the axis
  */
 void
-gswe_antiscion_axis_info_set_name(GsweAntiscionAxisInfo *antiscion_axis_info, const gchar *name)
+gswe_antiscion_axis_info_set_name(
+        GsweAntiscionAxisInfo *antiscion_axis_info,
+        const gchar *name)
 {
     if (antiscion_axis_info->name != NULL) {
         g_free(antiscion_axis_info->name);
@@ -240,7 +266,9 @@ gswe_antiscion_axis_info_get_name(GsweAntiscionAxisInfo *antiscion_axis_info)
  * Sets the offset at which the axis starts.
  */
 void
-gswe_antiscion_axis_info_set_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_info, gdouble sign_offset)
+gswe_antiscion_axis_info_set_sign_offset(
+        GsweAntiscionAxisInfo *antiscion_axis_info,
+        gdouble sign_offset)
 {
     antiscion_axis_info->sign_offset = sign_offset;
 }
@@ -254,7 +282,8 @@ gswe_antiscion_axis_info_set_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_i
  * Returns: the offset, in degrees
  */
 gdouble
-gswe_antiscion_axis_info_get_sign_offset(GsweAntiscionAxisInfo *antiscion_axis_info)
+gswe_antiscion_axis_info_get_sign_offset(
+        GsweAntiscionAxisInfo *antiscion_axis_info)
 {
     return antiscion_axis_info->sign_offset;
 }

@@ -38,7 +38,11 @@
  * Moon, including its illumination percentage.
  */
 
-G_DEFINE_BOXED_TYPE(GsweMoonPhaseData, gswe_moon_phase_data, (GBoxedCopyFunc)gswe_moon_phase_data_ref, (GBoxedFreeFunc)gswe_moon_phase_data_unref);
+G_DEFINE_BOXED_TYPE(
+        GsweMoonPhaseData,
+        gswe_moon_phase_data,
+        (GBoxedCopyFunc)gswe_moon_phase_data_ref,
+        (GBoxedFreeFunc)gswe_moon_phase_data_unref);
 
 /**
  * gswe_moon_phase_data_new:
@@ -78,7 +82,8 @@ gswe_moon_phase_data_ref(GsweMoonPhaseData *moon_phase_data)
  * gswe_moon_phase_data_unref:
  * @moon_phase_data: (in): a #GsweMoonPhaseData
  *
- * Decreases reference count on @moon_phase_data by one. If reference count drops to zero, @moon_phase_data is freed.
+ * Decreases reference count on @moon_phase_data by one. If reference count
+ * drops to zero, @moon_phase_data is freed.
  */
 void
 gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
@@ -97,7 +102,10 @@ gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
  * Calculates the moon at a given time, specified by @jd.
  */
 void
-gswe_moon_phase_data_calculate_by_jd(GsweMoonPhaseData *moon_phase_data, gdouble jd, GError **err)
+gswe_moon_phase_data_calculate_by_jd(
+        GsweMoonPhaseData *moon_phase_data,
+        gdouble jd,
+        GError **err)
 {
     gdouble jdb,
             phase_percent;
@@ -148,7 +156,10 @@ gswe_moon_phase_data_calculate_by_jd(GsweMoonPhaseData *moon_phase_data, gdouble
  * Calculates the moon at a given time, specified by @timestamp.
  */
 void
-gswe_moon_phase_data_calculate_by_timestamp(GsweMoonPhaseData *moon_phase_data, GsweTimestamp *timestamp, GError **err)
+gswe_moon_phase_data_calculate_by_timestamp(
+        GsweMoonPhaseData *moon_phase_data,
+        GsweTimestamp *timestamp,
+        GError **err)
 {
     gdouble jd;
 

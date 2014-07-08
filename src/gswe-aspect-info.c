@@ -37,7 +37,12 @@
  * possible; until then, you should never use such functions.</para></warning>
  */
 
-G_DEFINE_BOXED_TYPE(GsweAspectInfo, gswe_aspect_info, (GBoxedCopyFunc)gswe_aspect_info_ref, (GBoxedFreeFunc)gswe_aspect_info_unref);
+G_DEFINE_BOXED_TYPE(
+        GsweAspectInfo,
+        gswe_aspect_info,
+        (GBoxedCopyFunc)gswe_aspect_info_ref,
+        (GBoxedFreeFunc)gswe_aspect_info_unref
+    );
 
 static void
 gswe_aspect_info_free(GsweAspectInfo *aspect_info)
@@ -194,7 +199,9 @@ gswe_aspect_info_get_size(GsweAspectInfo *aspect_info)
  * between two positions exceeds this limit, the aspect is not considered.
  */
 void
-gswe_aspect_info_set_orb_modifier(GsweAspectInfo *aspect_info, gdouble orb_modifier)
+gswe_aspect_info_set_orb_modifier(
+        GsweAspectInfo *aspect_info,
+        gdouble orb_modifier)
 {
     aspect_info->orb_modifier = orb_modifier;
 }
@@ -217,7 +224,8 @@ gswe_aspect_info_get_orb_modifier(GsweAspectInfo *aspect_info)
 /**
  * gswe_aspect_info_set_harmonic:
  * @aspect_info: (in): a #GsweAspectInfo
- * @harmonic: TRUE, if @aspect_info should be considered harmonic; FALSE otherwise
+ * @harmonic: TRUE, if @aspect_info should be considered harmonic; FALSE
+ *            otherwise
  *
  * Sets the harmonic state of @aspect_info.
  */
@@ -244,11 +252,13 @@ gswe_aspect_info_get_harmonic(GsweAspectInfo *aspect_info)
 /**
  * gswe_aspect_info_set_major:
  * @aspect_info: (in): a #GsweAspectInfo
- * @major: TRUE, if @aspect_info should be considered major (Ptolemaic); FALSE otherwise
+ * @major: TRUE, if @aspect_info should be considered major (Ptolemaic); FALSE
+ *         otherwise
  *
  * Sets the major state of @aspect_info.
  *
- * <note><para>As all Ptolemaic aspects are registered during gswe_init(), you should never set @major to TRUE on new aspects.</para></note>
+ * <note><para>As all Ptolemaic aspects are registered during gswe_init(), you
+ * should never set @major to TRUE on new aspects.</para></note>
  */
 void
 gswe_aspect_info_set_major(GsweAspectInfo *aspect_info, gboolean major)

@@ -35,7 +35,8 @@ struct _GsweAspectData {
     /* the #GsweAspectInfo structure associated with the aspect */
     GsweAspectInfo *aspect_info;
 
-    /* the difference in percent between an exact aspect and this given aspect */
+    /* the difference in percent between an exact aspect and this given
+     * aspect */
     gdouble difference;
 
     /* reference count */

@@ -35,7 +35,11 @@
  * is in.
  */
 
-G_DEFINE_BOXED_TYPE(GswePlanetData, gswe_planet_data, (GBoxedCopyFunc)gswe_planet_data_ref, (GBoxedFreeFunc)gswe_planet_data_unref);
+G_DEFINE_BOXED_TYPE(
+        GswePlanetData,
+        gswe_planet_data,
+        (GBoxedCopyFunc)gswe_planet_data_ref,
+        (GBoxedFreeFunc)gswe_planet_data_unref);
 
 static void
 gswe_planet_data_free(GswePlanetData *planet_data)
@@ -89,7 +93,8 @@ gswe_planet_data_ref(GswePlanetData *planet_data)
  * gswe_planet_data_unref:
  * @planet_data: a #GswePlanetData
  *
- * Decreases reference count on @planet_data by one. If reference count drops to zero, @planet_data is freed.
+ * Decreases reference count on @planet_data by one. If reference count drops
+ * to zero, @planet_data is freed.
  */
 void
 gswe_planet_data_unref(GswePlanetData *planet_data)
@@ -110,12 +115,21 @@ gswe_planet_data_unref(GswePlanetData *planet_data)
  * GSWE_ERROR_UNKNOWN_PLANET, and the planet ID is not set.
  */
 void
-gswe_planet_data_set_planet(GswePlanetData *planet_data, GswePlanet planet, GError **err)
+gswe_planet_data_set_planet(
+        GswePlanetData *planet_data,
+        GswePlanet planet,
+        GError **err)
 {
     GswePlanetInfo *planet_info;
 
-    if ((planet_info = g_hash_table_lookup(gswe_planet_info_table, GINT_TO_POINTER(planet))) == NULL) {
-        g_set_error(err, GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET, "Planet is unknown");
+    if ((planet_info = g_hash_table_lookup(
+                    gswe_planet_info_table,
+                    GINT_TO_POINTER(planet)
+                )) == NULL) {
+        g_set_error(err,
+                GSWE_ERROR, GSWE_ERROR_UNKNOWN_PLANET,
+                "Planet is unknown"
+            );
 
         return;
     }
@@ -157,7 +171,9 @@ gswe_planet_data_get_planet(GswePlanetData *planet_data)
  * Sets @planet_info as the planet information for @planet_data.
  */
 void
-gswe_planet_data_set_planet_info(GswePlanetData *planet_data, GswePlanetInfo *planet_info)
+gswe_planet_data_set_planet_info(
+        GswePlanetData *planet_data,
+        GswePlanetInfo *planet_info)
 {
     if (planet_data == NULL) {
         return;
@@ -247,7 +263,8 @@ gswe_planet_data_get_house(GswePlanetData *planet_data)
  * gswe_planet_data_get_sign:
  * @planet_data: a #GswePlanetData
  *
- * Gets the zodiac sign in which the planet is currently in. If the planet's data is not calculated yet, this function yields GSWE_PLANET_NONE.
+ * Gets the zodiac sign in which the planet is currently in. If the planet's
+ * data is not calculated yet, this function yields GSWE_PLANET_NONE.
  *
  * Returns: a #GsweZodiac, which @planet_data is currently in
  */

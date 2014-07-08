@@ -22,13 +22,15 @@
 #include "gswe-house-data.h"
 
 struct _GsweHouseData {
-    /* the number of the house (usually in the range [1;12]. Sometimes may be [1;36]) */
+    /* the number of the house (usually in the range [1;12]. Sometimes may be
+     * [1;36]) */
     guint house;
 
     /* the position of the house's cusp on the sky */
     gdouble cusp_position;
 
-    /* the #GsweSignInfo structure associated with the sign in which the house cusp is in */
+    /* the #GsweSignInfo structure associated with the sign in which the house
+     * cusp is in */
     GsweSignInfo *sign_info;
 
     /* reference count */

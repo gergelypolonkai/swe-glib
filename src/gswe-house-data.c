@@ -33,7 +33,12 @@
  * #GsweHouseData is a structure that represents a house's position.
  */
 
-G_DEFINE_BOXED_TYPE(GsweHouseData, gswe_house_data, (GBoxedCopyFunc)gswe_house_data_ref, (GBoxedFreeFunc)gswe_house_data_unref);
+G_DEFINE_BOXED_TYPE(
+        GsweHouseData,
+        gswe_house_data,
+        (GBoxedCopyFunc)gswe_house_data_ref,
+        (GBoxedFreeFunc)gswe_house_data_unref
+    );
 
 static void
 gswe_house_data_free(GsweHouseData *house_data)
@@ -83,7 +88,8 @@ gswe_house_data_ref(GsweHouseData *house_data)
  * gswe_house_data_unref:
  * @house_data: a #GsweHouseData
  *
- * Decreases reference count on @house_data by one. If reference count drops to zero, @house_data is freed.
+ * Decreases reference count on @house_data by one. If reference count drops to
+ * zero, @house_data is freed.
  */
 void
 gswe_house_data_unref(GsweHouseData *house_data)

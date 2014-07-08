@@ -33,7 +33,8 @@ struct _GsweAntiscionData {
     /* the #GsweAntiscionAxisInfo structure associated with this antiscion */
     GsweAntiscionAxisInfo *antiscion_axis_info;
 
-    /* the difference in degrees between an exact antiscion and this given antiscion */
+    /* the difference in degrees between an exact antiscion and this given
+     * antiscion */
     gdouble difference;
 
     /* reference count */
