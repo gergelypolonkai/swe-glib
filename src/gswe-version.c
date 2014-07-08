@@ -33,18 +33,24 @@
  * GSWE_MAJOR_VERSION:
  *
  * The major version number of the SWE-GLib library.
+ *
+ * Since: 2.1
  */
 
 /**
  * GSWE_MINOR_VERSION:
  *
  * The minor version number of the SWE-GLib library.
+ *
+ * Since: 2.1
  */
 
 /**
  * GSWE_MICRO_VERSION:
  *
  * The micro version number of the SWE-GLib library.
+ *
+ * Since: 2.1
  */
 
 /**
@@ -57,6 +63,8 @@
  * against.
  *
  * Returns: TRUE if the required version is satisfied; FALSE otherwise.
+ *
+ * Since: 2.1
  */
 
 /**
@@ -69,6 +77,8 @@
  * version.
  *
  * Returns: TRUE if the required version is satisfied; FALSE otherwise.
+ *
+ * Since: 2.1
  */
 gboolean
 gswe_check_version(

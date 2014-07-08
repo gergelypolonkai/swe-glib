@@ -665,6 +665,8 @@ gswe_init(void)
  * @err: a GError
  *
  * Find the #GswePlanetInfo record registered with the id @planet.
+ *
+ * Since: 2.1
  */
 GswePlanetInfo *
 gswe_find_planet_info_by_id(GswePlanet planet, GError **err)
@@ -691,6 +693,8 @@ gswe_find_planet_info_by_id(GswePlanet planet, GError **err)
  * @err: a GError
  *
  * Find the #GsweSignInfo record registered with the id @sign.
+ *
+ * Since: 2.1
  */
 GsweSignInfo *
 gswe_find_sign_info_by_id(GsweZodiac sign, GError **err)
@@ -717,6 +721,8 @@ gswe_find_sign_info_by_id(GsweZodiac sign, GError **err)
  * @err: a GError
  *
  * Find the #GsweHouseSystemInfo record registered with the id @house_system.
+ *
+ * Since: 2.1
  */
 GsweHouseSystemInfo *
 gswe_find_house_system_info_by_id(GsweHouseSystem house_system, GError **err)
@@ -743,6 +749,8 @@ gswe_find_house_system_info_by_id(GsweHouseSystem house_system, GError **err)
  * @err: a GError
  *
  * Find the #GsweAspectInfo record registered with the id @aspect.
+ *
+ * Since: 2.1
  */
 GsweAspectInfo *
 gswe_find_aspect_info_by_id(GsweAspect aspect, GError **err)
@@ -770,6 +778,8 @@ gswe_find_aspect_info_by_id(GsweAspect aspect, GError **err)
  *
  * Find the #GsweAntiscionAxisInfo record registered with the id
  * @antiscion_axis.
+ *
+ * Since: 2.1
  */
 GsweAntiscionAxisInfo *
 gswe_find_antiscion_axis_info_by_id(

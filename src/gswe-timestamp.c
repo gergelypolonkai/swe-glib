@@ -1205,6 +1205,8 @@ gswe_timestamp_get_julian_day_et(GsweTimestamp *timestamp, GError **err)
  * be in Universal Time (UT). For Ephemeris time, see
  * gswe_timestamp_set_julian_day(). Should an error occur, @err is populated
  * with the error details.
+ *
+ * Since: 2.1
  */
 void
 gswe_timestamp_set_julian_day_ut(
@@ -1256,6 +1258,8 @@ gswe_timestamp_set_julian_day_ut(
  * Gets the Julian day value of @timestamp, Universal Time (UT). For Ephemeris
  * Time (ET) see gswe_timestamp_get_julian_day_et(). @err is populated if the
  * calculations raise an error.
+ *
+ * Since: 2.1
  */
 gdouble
 gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp, GError **err)
