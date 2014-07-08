@@ -131,7 +131,7 @@ void gswe_init_with_dir(gchar *directory)
 
     gswe_initializing = TRUE;
 
-    /* Before 2.34, g_type_init() must have been called. Let's do it! */
+    /* Before 2.36, g_type_init() must have been called. Let's do it! */
 #if !GLIB_CHECK_VERSION(2, 36, 0)
     g_type_init();
 #endif
