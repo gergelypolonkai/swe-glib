@@ -67,4 +67,6 @@ GsweAntiscionAxisInfo *gswe_find_antiscion_axis_info_by_id(
         GsweAntiscionAxis antiscion_axis,
         GError **err);
 
+GList *gswe_all_house_systems(void);
+
 #endif /* __SWE_GLIB_H__ */

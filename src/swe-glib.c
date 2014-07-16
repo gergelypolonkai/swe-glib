@@ -828,3 +828,17 @@ gswe_find_antiscion_axis_info_by_id(
     return ret;
 }
 
+/**
+ * gswe_all_house_systems:
+ *
+ * Returns: (transfer container): All #GsweHouseSystemInfo registered with
+ * SWE-GLib. This list should not be modified nor freed and is only valid until
+ * a new house system is registered.
+ *
+ * Since: 2.1.0
+ */
+GList *
+gswe_all_house_systems(void)
+{
+    return g_hash_table_get_values(gswe_house_system_info_table);
+}

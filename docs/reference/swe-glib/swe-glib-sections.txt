@@ -211,6 +211,7 @@ gswe_antiscion_data_get_type
 <FILE>gswe-house-system-info</FILE>
 GsweHouseSystemInfo
 gswe_find_house_system_info_by_id
+gswe_all_house_systems
 gswe_house_system_info_new
 gswe_house_system_info_ref
 gswe_house_system_info_unref
