@@ -831,9 +831,9 @@ gswe_find_antiscion_axis_info_by_id(
 /**
  * gswe_all_house_systems:
  *
- * Returns: (transfer container): All #GsweHouseSystemInfo registered with
- * SWE-GLib. This list should not be modified nor freed and is only valid until
- * a new house system is registered.
+ * Returns: (element-type GsweHouseSystemInfo) (transfer container): All
+ * #GsweHouseSystemInfo registered with SWE-GLib. This list should not be
+ * modified nor freed and is only valid until a new house system is registered.
  *
  * Since: 2.1.0
  */
