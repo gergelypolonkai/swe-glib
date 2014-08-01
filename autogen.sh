@@ -59,3 +59,5 @@ fi
 echo "Running automake"
 automake --gnu --add-missing --copy -Wno-portability || exit $?
 
+"$srcdir/configure" "$@"
+
