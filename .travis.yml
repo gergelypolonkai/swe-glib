@@ -1,3 +1,3 @@
 language: c
 install: sudo apt-get install libglib2.0-dev gobject-introspection gnome-common && ./autogen.sh
-script: ./configure && make
+script: ./configure && make && make check
