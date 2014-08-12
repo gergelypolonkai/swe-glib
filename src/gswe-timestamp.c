@@ -79,10 +79,12 @@ enum {
     PROP_GREGORIAN_SECOND,
     PROP_GREGORIAN_MICROSECOND,
     PROP_GREGORIAN_TIMEZONE_OFFSET,
-    PROP_JULIAN_DAY_VALID
+    PROP_JULIAN_DAY_VALID,
+    PROP_COUNT
 };
 
 static guint gswe_timestamp_signals[SIGNAL_LAST] = { 0 };
+static GParamSpec *gswe_timestamp_props[PROP_COUNT];
 
 static void gswe_timestamp_dispose(
         GObject *gobject);
@@ -150,15 +152,16 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * Otherwise, the values are recalculated only upon request (e.g. on
      * calling gswe_timestamp_get_julian_day()).
      */
+    gswe_timestamp_props[PROP_INSTANT_RECALC] = g_param_spec_boolean(
+            "instant-recalc",
+            "Instant recalculation",
+            "Instantly recalculate values upon parameter change",
+            FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_INSTANT_RECALC,
-            g_param_spec_boolean(
-                    "instant-recalc",
-                    "Instant recalculation",
-                    "Instantly recalculate values upon parameter change",
-                    FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_INSTANT_RECALC]
         );
 
     /**
@@ -169,16 +172,16 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * Otherwise, the Gregorian date components will be recalculated upon
      * request.
      */
+    gswe_timestamp_props[PROP_GREGORIAN_VALID] = g_param_spec_boolean(
+            "gregorian-valid",
+            "Gregorian date is valid",
+            "TRUE if the Gregorian date components are considered as valid.",
+            TRUE, G_PARAM_READABLE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_VALID,
-            g_param_spec_boolean(
-                    "gregorian-valid",
-                    "Gregorian date is valid",
-                    "TRUE if the Gregorian date components "
-                        "are considered as valid.",
-                    TRUE, G_PARAM_READABLE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_VALID]
         );
 
     /**
@@ -186,16 +189,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian year of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_YEAR] = g_param_spec_int(
+            "gregorian-year",
+            "Gregorian year",
+            "The year according to the Gregorian calendar",
+            G_MININT, G_MAXINT, g_date_time_get_year(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_YEAR,
-            g_param_spec_int(
-                    "gregorian-year",
-                    "Gregorian year",
-                    "The year according to the Gregorian calendar",
-                    G_MININT, G_MAXINT, g_date_time_get_year(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_YEAR]
         );
 
     /**
@@ -203,16 +207,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian month of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_MONTH] = g_param_spec_int(
+            "gregorian-month",
+            "Gregorian month",
+            "The month according to the Gregorian calendar",
+            1, 12, g_date_time_get_month(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_MONTH,
-            g_param_spec_int(
-                    "gregorian-month",
-                    "Gregorian month",
-                    "The month according to the Gregorian calendar",
-                    1, 12, g_date_time_get_month(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_MONTH]
         );
 
     /**
@@ -220,16 +225,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian day of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_DAY] = g_param_spec_int(
+            "gregorian-day",
+            "Gregorian day",
+            "The day according to the Gregorian calendar",
+            1, 31, g_date_time_get_day_of_month(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_DAY,
-            g_param_spec_int(
-                    "gregorian-day",
-                    "Gregorian day",
-                    "The day according to the Gregorian calendar",
-                    1, 31, g_date_time_get_day_of_month(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_DAY]
         );
 
     /**
@@ -237,16 +243,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian hour of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_HOUR] = g_param_spec_int(
+            "gregorian-hour",
+            "Gregorian hour",
+            "The hour according to the Gregorian calendar",
+            0, 23, g_date_time_get_hour(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_HOUR,
-            g_param_spec_int(
-                    "gregorian-hour",
-                    "Gregorian hour",
-                    "The hour according to the Gregorian calendar",
-                    0, 23, g_date_time_get_hour(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_HOUR]
         );
 
     /**
@@ -254,16 +261,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian minute of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_MINUTE] = g_param_spec_int(
+            "gregorian-minute",
+            "Gregorian minute",
+            "The minute according to the Gregorian calendar",
+            0, 59, g_date_time_get_minute(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_MINUTE,
-            g_param_spec_int(
-                    "gregorian-minute",
-                    "Gregorian minute",
-                    "The minute according to the Gregorian calendar",
-                    0, 59, g_date_time_get_minute(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_MINUTE]
         );
 
     /**
@@ -271,16 +279,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian second of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_SECOND] = g_param_spec_int(
+            "gregorian-second",
+            "Gregorian second",
+            "The second according to the Gregorian calendar",
+            0, 61, g_date_time_get_second(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_SECOND,
-            g_param_spec_int(
-                    "gregorian-second",
-                    "Gregorian second",
-                    "The second according to the Gregorian calendar",
-                    0, 61, g_date_time_get_second(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_SECOND]
         );
 
     /**
@@ -288,16 +297,17 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The Gregorian microsecond of the timestamp
      */
+    gswe_timestamp_props[PROP_GREGORIAN_MICROSECOND] = g_param_spec_int(
+            "gregorian-microsecond",
+            "Gregorian microsecond",
+            "The microsecond according to the Gregorian calendar",
+            0, G_MAXINT, g_date_time_get_microsecond(local_time),
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_MICROSECOND,
-            g_param_spec_int(
-                    "gregorian-microsecond",
-                    "Gregorian microsecond",
-                    "The microsecond according to the Gregorian calendar",
-                    0, G_MAXINT, g_date_time_get_microsecond(local_time),
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_MICROSECOND]
         );
 
     /**
@@ -305,17 +315,18 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      *
      * The time zone offset in hours, relative to UTC
      */
+    gswe_timestamp_props[PROP_GREGORIAN_TIMEZONE_OFFSET] = g_param_spec_double(
+            "gregorian-timezone-offset",
+            "Gregorian timezone offset",
+            "The offset relative to UTC in the Gregorian calendar",
+            -24.0, 24.0,
+            0.0,
+            G_PARAM_CONSTRUCT | G_PARAM_READWRITE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_GREGORIAN_TIMEZONE_OFFSET,
-            g_param_spec_double(
-                    "gregorian-timezone-offset",
-                    "Gregorian timezone offset",
-                    "The offset relative to UTC in the Gregorian calendar",
-                    -24.0, 24.0,
-                    0.0,
-                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE
-                )
+            gswe_timestamp_props[PROP_GREGORIAN_TIMEZONE_OFFSET]
         );
 
     /**
@@ -325,16 +336,16 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * currently considered as valid, thus, no recalculation is needed.
      * Otherwise, the Julian day components will be recalculated upon request.
      */
+    gswe_timestamp_props[PROP_JULIAN_DAY_VALID] = g_param_spec_boolean(
+            "julian-day-valid",
+            "Julian day is valid",
+            "TRUE if the Julian day components are considered as valid.",
+            TRUE, G_PARAM_READABLE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_JULIAN_DAY_VALID,
-            g_param_spec_boolean(
-                    "julian-day-valid",
-                    "Julian day is valid",
-                    "TRUE if the Julian day components "
-                        "are considered as valid.",
-                    TRUE, G_PARAM_READABLE
-                )
+            gswe_timestamp_props[PROP_JULIAN_DAY_VALID]
         );
 
     g_date_time_unref(local_time);
