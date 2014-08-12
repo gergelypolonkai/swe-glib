@@ -376,11 +376,10 @@ gswe_timestamp_finalize(GObject *gobject)
 }
 
 static void
-gswe_timestamp_set_property(
-        GObject *object,
-        guint prop_id,
-        const GValue *value,
-        GParamSpec *pspec)
+gswe_timestamp_set_property(GObject *object,
+                            guint prop_id,
+                            const GValue *value,
+                            GParamSpec *pspec)
 {
     GsweTimestamp *timestamp = GSWE_TIMESTAMP(object);
 
