@@ -100,120 +100,109 @@ GsweTimestamp *gswe_timestamp_new(void);
 
 GsweTimestamp *gswe_timestamp_new_from_julian_day(gdouble julian_day);
 
-GsweTimestamp * gswe_timestamp_new_from_gregorian_full(
-        gint year, gint month, gint day,
-        gint hour, gint minute, gint second, gint microsecond,
-        gdouble time_zone_offset);
+GsweTimestamp * gswe_timestamp_new_from_gregorian_full(gint    year,
+                                                       gint    month,
+                                                       gint    day,
+                                                       gint    hour,
+                                                       gint    minute,
+                                                       gint    second,
+                                                       gint    microsecond,
+                                                       gdouble time_zone_offset);
 
-void gswe_timestamp_set_gregorian_full(
-        GsweTimestamp *timestamp,
-        gint year, gint month, gint day,
-        gint hour, gint minute, gint second, gint microsecond,
-        gdouble time_zone_offset,
-        GError **err);
+void gswe_timestamp_set_gregorian_full(GsweTimestamp *timestamp,
+                                       gint          year,
+                                       gint          month,
+                                       gint          day,
+                                       gint          hour,
+                                       gint          minute,
+                                       gint          second,
+                                       gint          microsecond,
+                                       gdouble       time_zone_offset,
+                                       GError        **err);
 
-void gswe_timestamp_set_instant_recalc(
-        GsweTimestamp *timestamp,
-        gboolean instant_recalc,
-        GError **err);
+void gswe_timestamp_set_instant_recalc(GsweTimestamp *timestamp,
+                                       gboolean      instant_recalc,
+                                       GError        **err);
 
 gboolean gswe_timestamp_get_instant_recalc(GsweTimestamp *timestamp);
 
-void gswe_timestamp_set_gregorian_year(
-        GsweTimestamp *timestamp,
-        gint gregorian_year,
-        GError **err);
+void gswe_timestamp_set_gregorian_year(GsweTimestamp *timestamp,
+                                       gint          gregorian_year,
+                                       GError        **err);
 
 gint gswe_timestamp_get_gregorian_year(GsweTimestamp *timestamp, GError **err);
 
-void gswe_timestamp_set_gregorian_month(
-        GsweTimestamp *timestamp,
-        gint gregorian_month,
-        GError **err);
+void gswe_timestamp_set_gregorian_month(GsweTimestamp *timestamp,
+                                        gint          gregorian_month,
+                                        GError        **err);
 
 gint gswe_timestamp_get_gregorian_month(GsweTimestamp *timestamp, GError **err);
 
-void gswe_timestamp_set_gregorian_day(
-        GsweTimestamp *timestamp,
-        gint gregorian_day,
-        GError **err);
+void gswe_timestamp_set_gregorian_day(GsweTimestamp *timestamp,
+                                      gint          gregorian_day,
+                                      GError        **err);
 
 gint gswe_timestamp_get_gregorian_day(GsweTimestamp *timestamp, GError **err);
 
-void gswe_timestamp_set_gregorian_hour(
-        GsweTimestamp *timestamp,
-        gint gregorian_hour,
-        GError **err);
+void gswe_timestamp_set_gregorian_hour(GsweTimestamp *timestamp,
+                                       gint          gregorian_hour,
+                                       GError        **err);
 
 gint gswe_timestamp_get_gregorian_hour(GsweTimestamp *timestamp, GError **err);
 
-void gswe_timestamp_set_gregorian_minute(
-        GsweTimestamp *timestamp,
-        gint gregorian_minute,
-        GError **err);
+void gswe_timestamp_set_gregorian_minute(GsweTimestamp *timestamp,
+                                         gint          gregorian_minute,
+                                         GError        **err);
 
-gint gswe_timestamp_get_gregorian_minute(
-        GsweTimestamp *timestamp,
-        GError **err);
+gint gswe_timestamp_get_gregorian_minute(GsweTimestamp *timestamp,
+                                         GError        **err);
 
-void gswe_timestamp_set_gregorian_second(
-        GsweTimestamp *timestamp,
-        gint gregorian_second,
-        GError **err);
+void gswe_timestamp_set_gregorian_second(GsweTimestamp *timestamp,
+                                         gint          gregorian_second,
+                                         GError        **err);
 
-gint gswe_timestamp_get_gregorian_second(
-        GsweTimestamp *timestamp,
-        GError **err);
+gint gswe_timestamp_get_gregorian_second(GsweTimestamp *timestamp,
+                                         GError        **err);
 
-void gswe_timestamp_set_gregorian_microsecond(
-        GsweTimestamp *timestamp,
-        gint gregorian_microsecond,
-        GError **err);
+void gswe_timestamp_set_gregorian_microsecond(GsweTimestamp *timestamp,
+                                              gint          gregorian_microsecond,
+                                              GError        **err);
 
-gint gswe_timestamp_get_gregorian_microsecond(
-        GsweTimestamp *timestamp,
-        GError **err);
+gint gswe_timestamp_get_gregorian_microsecond(GsweTimestamp *timestamp,
+                                              GError        **err);
 
-void gswe_timestamp_set_gregorian_timezone(
-        GsweTimestamp *timestamp,
-        gdouble gregorian_timezone_offset,
-        GError **err);
+void gswe_timestamp_set_gregorian_timezone(GsweTimestamp *timestamp,
+                                           gdouble       gregorian_timezone_offset,
+                                           GError        **err);
 
 gdouble gswe_timestamp_get_gregorian_timezone(GsweTimestamp *timestamp);
 
 #ifndef GSWE_DISABLE_DEPRECATED
 G_DEPRECATED_FOR(gswe_timestamp_set_julian_day_et)
-void gswe_timestamp_set_julian_day(
-        GsweTimestamp *timestamp,
-        gdouble julian_day);
+void gswe_timestamp_set_julian_day(GsweTimestamp *timestamp,
+                                   gdouble       julian_day);
 
 G_DEPRECATED_FOR(gswe_timestamp_get_julian_day_et)
-gdouble gswe_timestamp_get_julian_day(
-        GsweTimestamp *timestamp,
-        GError **err);
+gdouble gswe_timestamp_get_julian_day(GsweTimestamp *timestamp,
+                                      GError        **err);
 #endif
 
-void gswe_timestamp_set_julian_day_et(
-        GsweTimestamp *timestamp,
-        gdouble julian_day,
-        GError **err);
+void gswe_timestamp_set_julian_day_et(GsweTimestamp *timestamp,
+                                      gdouble       julian_day,
+                                      GError        **err);
 
-gdouble gswe_timestamp_get_julian_day_et(
-        GsweTimestamp *timestamp,
-        GError **err);
+gdouble gswe_timestamp_get_julian_day_et(GsweTimestamp *timestamp,
+                                         GError        **err);
 
-void gswe_timestamp_set_julian_day_ut(
-        GsweTimestamp *timestamp,
-        gdouble julian_day,
-        GError **err);
+void gswe_timestamp_set_julian_day_ut(GsweTimestamp *timestamp,
+                                      gdouble       julian_day,
+                                      GError        **err);
 
-gdouble gswe_timestamp_get_julian_day_ut(
-        GsweTimestamp *timestamp,
-        GError **err);
+gdouble gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp,
+                                         GError        **err);
 
-gdouble gswe_timestamp_get_sidereal_time(
-        GsweTimestamp *timestamp,
-        GError **err);
+gdouble gswe_timestamp_get_sidereal_time(GsweTimestamp *timestamp,
+                                         GError        **err);
 
 #endif /* __SWE_GLIB_GSWE_TIMESTAMP_H__ */
 
