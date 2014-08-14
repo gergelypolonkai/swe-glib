@@ -204,5 +204,10 @@ gdouble gswe_timestamp_get_julian_day_ut(GsweTimestamp *timestamp,
 gdouble gswe_timestamp_get_sidereal_time(GsweTimestamp *timestamp,
                                          GError        **err);
 
+void gswe_timestamp_set_now_local(GsweTimestamp *timestamp,
+                                                 GError        **err);
+
+GsweTimestamp *gswe_timestamp_new_from_now_local(void);
+
 #endif /* __SWE_GLIB_GSWE_TIMESTAMP_H__ */
 

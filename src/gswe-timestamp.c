@@ -1595,3 +1595,69 @@ gswe_timestamp_new_from_julian_day(gdouble julian_day)
     return timestamp;
 }
 
+/**
+ * gswe_timestamp_set_now_local:
+ * @timestamp: the #GsweTimestamp to operate on
+ * @err: a #GError to store errors
+ *
+ * Sets the date and time in @timestamp to the current time in the local time
+ * zone. This also changes the timezone to the local time zone.
+ */
+void
+gswe_timestamp_set_now_local(GsweTimestamp *timestamp,
+                             GError        **err)
+{
+    GDateTime *datetime;
+    gint      year,
+              month,
+              day,
+              hour,
+              minute,
+              seconds,
+              microsec;
+    gdouble   timezone;
+
+    datetime = g_date_time_new_now_local();
+    year     = g_date_time_get_year(datetime);
+    month    = g_date_time_get_month(datetime);
+    day      = g_date_time_get_day_of_month(datetime);
+    hour     = g_date_time_get_hour(datetime);
+    minute   = g_date_time_get_minute(datetime);
+    seconds  = g_date_time_get_seconds(datetime);
+    microsec = g_date_time_get_microsecond(datetime);
+    timezone = (gdouble)g_date_time_get_utc_offset(datetime) / 3600.0;
+    g_date_time_unref(datetime);
+
+    gswe_timestamp_set_gregorian_full(
+            timestamp,
+            year, month, day,
+            hour, minute, seconds, microsec,
+            timezone,
+            err
+        );
+}
+
+/**
+ * gswe_timestamp_new_from_now_local:
+ *
+ * Create a new #GsweTimestamp initialised with the current local date and time.
+ *
+ * Returns: (transfer full): a new #GsweTimestamp object, or NULL upon an error.
+ */
+GsweTimestamp *
+gswe_timestamp_new_from_now_local(void)
+{
+    GsweTimestamp *ret;
+    GError        *err = NULL;
+
+    ret = gswe_timestamp_new();
+    gswe_timestamp_set_now_local(ret, &err);
+
+    if (err) {
+        g_clear_error(&err);
+
+        return NULL;
+    }
+
+    return ret;
+}
