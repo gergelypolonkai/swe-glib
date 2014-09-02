@@ -843,13 +843,20 @@ gswe_moment_add_all_planets(GsweMoment *moment)
 }
 
 static void
-gswe_moment_calculate_planet(
-        GsweMoment *moment,
-        GswePlanet planet,
-        GError **err)
+gswe_moment_calculate_planet(GsweMoment *moment,
+                             GswePlanet planet,
+                             GError     **err)
 {
-    // TODO: g_list_find_custom may return NULL here. SEGFAULT possibility!
-    GswePlanetData *planet_data = (GswePlanetData *)(g_list_find_custom(
+    GswePlanetData *planet_data;
+    gpointer       data         = g_list_find_custom(
+            moment->priv->planet_list,
+            &planet,
+            (GCompareFunc)find_planet_by_id
+        );
+
+    g_return_if_fail(data != NULL);
+
+    planet_data = (GswePlanetData *)(g_list_find_custom(
                 moment->priv->planet_list,
                 &planet,
                 (GCompareFunc)find_planet_by_id
