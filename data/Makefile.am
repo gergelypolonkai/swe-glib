@@ -58,6 +58,18 @@ sweph_DATA = \
 	sweph-data/seplm48.se1 \
 	sweph-data/seplm54.se1 \
 	sweph-data/seleapsec.txt \
+	data/sweph-data/s136199.se1  \
+	data/sweph-data/s136199s.se1 \
+	data/sweph-data/se00010s.se1 \
+	data/sweph-data/se00034s.se1 \
+	data/sweph-data/se00157s.se1 \
+	data/sweph-data/se07066s.se1 \
+	data/sweph-data/se08405s.se1 \
+	data/sweph-data/se10199s.se1 \
+	data/sweph-data/se90377.se1  \
+	data/sweph-data/se90377s.se1 \
+	data/sweph-data/se90482.se1  \
+	data/sweph-data/se90482s.se1 \
 	$(NULL)
 
 EXTRA_DIST = \

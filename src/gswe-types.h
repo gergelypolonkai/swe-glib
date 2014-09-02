@@ -71,12 +71,14 @@
  * This enum holds the planet identifiers known by SWE-GLib.
  */
 typedef enum {
+    // Theoretical/non-existing points
     GSWE_PLANET_NONE = 0,
     GSWE_PLANET_ASCENDANT,
     GSWE_PLANET_MC,
     GSWE_PLANET_VERTEX,
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
+    // Actual astrological planets
     GSWE_PLANET_SUN = 11,
     GSWE_PLANET_MOON,
     GSWE_PLANET_MERCURY,
@@ -88,21 +90,22 @@ typedef enum {
     GSWE_PLANET_URANUS,
     GSWE_PLANET_NEPTUNE,
     GSWE_PLANET_PLUTO,
-    GSWE_PLANET_CHIRON = 101,
-    GSWE_PLANET_CERES,
-    GSWE_PLANET_PALLAS,
-    GSWE_PLANET_JUNO,
-    GSWE_PLANET_VESTA,
-    GSWE_PLANET_PHOLUS,
-    GSWE_PLANET_NESSUS,
-    GSWE_PLANET_CHARIKLO,
-    GSWE_PLANET_SEDNA,
-    GSWE_PLANET_ERIS,
-    GSWE_PLANET_DEJANIRA,
-    GSWE_PLANET_CIRCE,
-    GSWE_PLANET_ORCUS,
-    GSWE_PLANET_ASBOLUS,
-    GSWE_PLANET_HYGIEA
+    // Dwarves and asteroids
+    GSWE_PLANET_CHIRON = 101, // Included in ephemerides files
+    GSWE_PLANET_CERES,        // Included in ephemerides files
+    GSWE_PLANET_PALLAS,       // Included in ephemerides files
+    GSWE_PLANET_JUNO,         // Included in ephemerides files
+    GSWE_PLANET_VESTA,        // Included in ephemerides files
+    GSWE_PLANET_PHOLUS,       // Included in ephemerides files
+    GSWE_PLANET_NESSUS,       // 7066
+    GSWE_PLANET_CHARIKLO,     // 10199
+    GSWE_PLANET_SEDNA,        // 90377
+    GSWE_PLANET_ERIS,         // 136199
+    GSWE_PLANET_DEJANIRA,     // 157
+    GSWE_PLANET_CIRCE,        // 34
+    GSWE_PLANET_ORCUS,        // 90482
+    GSWE_PLANET_ASBOLUS,      // 8405
+    GSWE_PLANET_HYGIEA        // 10
 } GswePlanet;
 
 /* Moon Apogee in astrology is often referred to as the Dark Moon, or Lilith */
