@@ -1143,7 +1143,11 @@ gswe_moment_get_planet(GsweMoment *moment, GswePlanet planet, GError **err)
 static void
 add_points(GswePlanetData *planet_data, GsweMoment *moment)
 {
-    guint point;
+    guint          point;
+    GsweSignInfo   *sign_info;
+    GswePlanetInfo *planet_info;
+    GsweElement    element;
+    GsweQuality    quality;
 
     gswe_moment_calculate_planet(
             moment,
@@ -1151,23 +1155,37 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
             NULL
         );
 
-    point = GPOINTER_TO_INT(g_hash_table_lookup(
+    sign_info = gswe_planet_data_get_sign_info(planet_data);
+
+    if (G_UNLIKELY(sign_info == NULL)) {
+        g_error("Planet data calculation failed");
+    }
+
+    planet_info = gswe_planet_data_get_planet_info(planet_data);
+
+    if (G_UNLIKELY(planet_info == NULL)) {
+        g_error("Planet data calculation failed. No planet info.");
+    }
+
+    element = gswe_sign_info_get_element(sign_info);
+    point   = GPOINTER_TO_INT(g_hash_table_lookup(
                 moment->priv->element_points,
-                GINT_TO_POINTER(planet_data->sign_info->element)
-            )) + planet_data->planet_info->points;
+                GINT_TO_POINTER(element)
+        )) + gswe_planet_info_get_points(planet_info);
     g_hash_table_replace(
             moment->priv->element_points,
-            GINT_TO_POINTER(planet_data->sign_info->element),
+            GINT_TO_POINTER(element),
             GINT_TO_POINTER(point)
         );
 
-    point = GPOINTER_TO_INT(g_hash_table_lookup(
+    quality = gswe_sign_info_get_quality(sign_info);
+    point   = GPOINTER_TO_INT(g_hash_table_lookup(
                 moment->priv->quality_points,
-                GINT_TO_POINTER(planet_data->sign_info->quality)
-            )) + planet_data->planet_info->points;
+                GINT_TO_POINTER(quality)
+        )) + gswe_planet_info_get_points(planet_info);
     g_hash_table_replace(
             moment->priv->quality_points,
-            GINT_TO_POINTER(planet_data->sign_info->quality),
+            GINT_TO_POINTER(quality),
             GINT_TO_POINTER(point)
         );
 }
