@@ -1156,7 +1156,17 @@ add_points(GswePlanetData *planet_data, GsweMoment *moment)
         );
 
     sign_info = gswe_planet_data_get_sign_info(planet_data);
+
+    if (G_UNLIKELY(sign_info == NULL)) {
+        g_error("Planet data calculation failed");
+    }
+
     planet_info = gswe_planet_data_get_planet_info(planet_data);
+
+    if (G_UNLIKELY(planet_info == NULL)) {
+        g_error("Planet data calculation failed. No planet info.");
+    }
+
     element = gswe_sign_info_get_element(sign_info);
     point   = GPOINTER_TO_INT(g_hash_table_lookup(
                 moment->priv->element_points,
