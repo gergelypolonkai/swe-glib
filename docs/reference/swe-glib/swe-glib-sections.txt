@@ -81,6 +81,7 @@ gswe_sign_info_get_type
 <FILE>gswe-planet-info</FILE>
 GswePlanetInfo
 gswe_find_planet_info_by_id
+gswe_all_planets
 gswe_planet_info_new
 gswe_planet_info_ref
 gswe_planet_info_unref
@@ -125,6 +126,7 @@ gswe_planet_data_get_type
 <FILE>gswe-aspect-info</FILE>
 GsweAspectInfo
 gswe_find_aspect_info_by_id
+gswe_all_aspects
 gswe_aspect_info_new
 gswe_aspect_info_ref
 gswe_aspect_info_unref
@@ -169,6 +171,7 @@ gswe_aspect_data_get_type
 <FILE>gswe-antiscion-axis-info</FILE>
 GsweAntiscionAxisInfo
 gswe_find_antiscion_axis_info_by_id
+gswe_all_antiscion_axes
 gswe_antiscion_axis_info_new
 gswe_antiscion_axis_info_ref
 gswe_antiscion_axis_info_unref

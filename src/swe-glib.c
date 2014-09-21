@@ -831,9 +831,10 @@ gswe_find_antiscion_axis_info_by_id(
 /**
  * gswe_all_house_systems:
  *
- * Returns: (element-type GsweHouseSystemInfo) (transfer container): All
- * #GsweHouseSystemInfo registered with SWE-GLib. This list should not be
- * modified nor freed and is only valid until a new house system is registered.
+ * Returns: (element-type GsweHouseSystemInfo) (transfer container):
+ * All #GsweHouseSystemInfo registered with SWE-GLib. The elements of
+ * this list should not be modified nor freed. The list is only valid
+ * until a new house system is registered.
  *
  * Since: 2.1.0
  */
@@ -841,4 +842,52 @@ GList *
 gswe_all_house_systems(void)
 {
     return g_hash_table_get_values(gswe_house_system_info_table);
+}
+
+/**
+ * gswe_all_planets:
+ *
+ * Returns: (element-type GswePlanetInfo) (transfer container): All
+ * #GswePlanetInfo registered with SWE-GLib. The elements of this list
+ * should not be modified nor freed. The list is only valid until a
+ * new planet is registered.
+ *
+ * Since: 2.1.0
+ */
+GList *
+gswe_all_planets(void)
+{
+    return g_hash_table_get_values(gswe_planet_info_table);
+}
+
+/**
+ * gswe_all_aspects:
+ *
+ * Returns: (element-type GsweAspectInfo) (transfer container): All
+ * #GsweAspectInfo registered with SWE-GLib. The elements of this list
+ * should not be modified nor freed. The list is only valid until a
+ * new aspect is registered.
+ *
+ * Since: 2.1.0
+ */
+GList *
+gswe_all_aspects(void)
+{
+    return g_hash_table_get_values(gswe_aspect_info_table);
+}
+
+/**
+ * gswe_all_antiscion_axes:
+ *
+ * Returns: (element-type GsweAntiscionAxisInfo) (transfer container):
+ * All #GsweAntiscionAxisInfo registered with SWE-GLib. The elements
+ * of this list should not be modified nor freed. The list is only
+ * valid until a new antiscion axis is registered.
+ *
+ * Since: 2.1.0
+ */
+GList *
+gswe_all_antiscion_axes(void)
+{
+    return g_hash_table_get_values(gswe_antiscion_axis_info_table);
 }

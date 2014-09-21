@@ -69,4 +69,10 @@ GsweAntiscionAxisInfo *gswe_find_antiscion_axis_info_by_id(
 
 GList *gswe_all_house_systems(void);
 
+GList *gswe_all_planets(void);
+
+GList *gswe_all_aspects(void);
+
+GList *gswe_all_antiscion_axes(void);
+
 #endif /* __SWE_GLIB_H__ */
