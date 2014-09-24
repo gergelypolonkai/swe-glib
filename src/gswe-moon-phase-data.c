@@ -165,7 +165,7 @@ gswe_moon_phase_data_calculate_by_timestamp(
 
     jd = gswe_timestamp_get_julian_day_et(timestamp, err);
 
-    if (*err) {
+    if (err && *err) {
         return;
     }
 
