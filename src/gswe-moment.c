@@ -915,15 +915,17 @@ gswe_moment_calculate_planet(GsweMoment *moment,
                     x2,
                     serr
                 )) < 0) {
+        g_warning("Swiss Ephemeris error: %s", serr);
         g_set_error(
                 err,
                 GSWE_ERROR, GSWE_ERROR_SWE_FATAL,
-                "Swiss Ephemeris error: %s",
+                "Swiss Ephemeris fatal error: %s",
                 serr
             );
 
         return;
     } else if (ret != (SEFLG_SPEED | SEFLG_TOPOCTR)) {
+        g_warning("Swiss Ephemeris non-fatal error: %s", serr);
         g_set_error(
                 err,
                 GSWE_ERROR, GSWE_ERROR_SWE_NONFATAL,
