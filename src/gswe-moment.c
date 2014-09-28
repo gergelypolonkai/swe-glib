@@ -94,7 +94,8 @@ enum {
     PROP_0,
     PROP_TIMESTAMP,
     PROP_COORDINATES,
-    PROP_HOUSE_SYSTEM
+    PROP_HOUSE_SYSTEM,
+    PROP_COUNT
 };
 
 struct GsweAspectFinder {
@@ -119,6 +120,8 @@ static void gswe_moment_get_property(
         guint prop_id,
         GValue *value,
         GParamSpec *pspec);
+
+static GParamSpec *properties[PROP_COUNT];
 
 G_DEFINE_TYPE(GsweMoment, gswe_moment, G_TYPE_OBJECT);
 
@@ -158,16 +161,21 @@ gswe_moment_class_init(GsweMomentClass *klass)
      *
      * The timestamp associated with this moment
      */
+    properties[PROP_TIMESTAMP] = g_param_spec_object(
+            "timestamp",
+            "Timestamp",
+            "Timestamp of this moment",
+            GSWE_TYPE_TIMESTAMP,
+            G_PARAM_STATIC_NICK
+            | G_PARAM_STATIC_NAME
+            | G_PARAM_STATIC_BLURB
+            | G_PARAM_READABLE
+            | G_PARAM_WRITABLE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_TIMESTAMP,
-            g_param_spec_object(
-                    "timestamp",
-                    "Timestamp",
-                    "Timestamp of this moment",
-                    GSWE_TYPE_TIMESTAMP,
-                    G_PARAM_READWRITE
-                )
+            properties[PROP_TIMESTAMP]
         );
 
     /**
@@ -175,16 +183,21 @@ gswe_moment_class_init(GsweMomentClass *klass)
      *
      * The geographical coordinates associated with this moment
      */
+    properties[PROP_COORDINATES] = g_param_spec_boxed(
+            "coordinates",
+            "Coordinates",
+            "Geographical coordinates",
+            GSWE_TYPE_COORDINATES,
+            G_PARAM_STATIC_NICK
+            | G_PARAM_STATIC_NAME
+            | G_PARAM_STATIC_BLURB
+            | G_PARAM_READABLE
+            | G_PARAM_WRITABLE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_COORDINATES,
-            g_param_spec_boxed(
-                    "coordinates",
-                    "Coordinates",
-                    "Geographical coordinates",
-                    GSWE_TYPE_COORDINATES,
-                    G_PARAM_READWRITE
-                )
+            properties[PROP_COORDINATES]
         );
 
     /**
@@ -192,17 +205,22 @@ gswe_moment_class_init(GsweMomentClass *klass)
      *
      * The house system associated with this moment
      */
+    properties[PROP_HOUSE_SYSTEM] = g_param_spec_enum(
+            "house-system",
+            "House System",
+            "Astrological house system",
+            GSWE_TYPE_HOUSE_SYSTEM,
+            GSWE_HOUSE_SYSTEM_PLACIDUS,
+            G_PARAM_STATIC_NICK
+            | G_PARAM_STATIC_NAME
+            | G_PARAM_STATIC_BLURB
+            | G_PARAM_READABLE
+            | G_PARAM_WRITABLE
+        );
     g_object_class_install_property(
             gobject_class,
             PROP_HOUSE_SYSTEM,
-            g_param_spec_enum(
-                    "house-system",
-                    "House System",
-                    "Astrological house system",
-                    GSWE_TYPE_HOUSE_SYSTEM,
-                    GSWE_HOUSE_SYSTEM_PLACIDUS,
-                    G_PARAM_READWRITE
-                )
+            properties[PROP_HOUSE_SYSTEM]
         );
 }
 
@@ -387,6 +405,10 @@ gswe_moment_get_property(
 void
 gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
 {
+    if (moment->priv->timestamp == timestamp) {
+        return;
+    }
+
     if (moment->priv->timestamp != NULL) {
         g_signal_handlers_disconnect_by_func(
                 moment->priv->timestamp,
@@ -408,6 +430,7 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
 
     /* Emit the changed signal to notify registrants of the change */
     gswe_moment_emit_changed(moment);
+    g_object_notify_by_pspec(G_OBJECT(moment), properties[PROP_TIMESTAMP]);
 }
 
 /**
@@ -447,11 +470,22 @@ gswe_moment_set_coordinates(
         gdouble latitude,
         gdouble altitude)
 {
+    GsweCoordinates *current_coords = &(moment->priv->coordinates);
+
+    if (
+                (current_coords->longitude == longitude)
+                && (current_coords->latitude == latitude)
+                && (current_coords->altitude == altitude)
+            ) {
+        return;
+    }
+
     moment->priv->coordinates.longitude = longitude;
     moment->priv->coordinates.latitude = latitude;
     moment->priv->coordinates.altitude = altitude;
     moment->priv->revision++;
     gswe_moment_emit_changed(moment);
+    g_object_notify_by_pspec(G_OBJECT(moment), properties[PROP_COORDINATES]);
 }
 
 /**
@@ -481,9 +515,12 @@ gswe_moment_get_coordinates(GsweMoment *moment)
 void
 gswe_moment_set_house_system(GsweMoment *moment, GsweHouseSystem house_system)
 {
-    moment->priv->house_system = house_system;
-    moment->priv->revision++;
-    gswe_moment_emit_changed(moment);
+    if (moment->priv->house_system != house_system) {
+        moment->priv->house_system = house_system;
+        moment->priv->revision++;
+        gswe_moment_emit_changed(moment);
+        g_object_notify_by_pspec(G_OBJECT(moment), properties[PROP_HOUSE_SYSTEM]);
+    }
 }
 
 /**
