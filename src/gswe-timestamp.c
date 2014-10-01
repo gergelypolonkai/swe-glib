@@ -716,62 +716,115 @@ gswe_timestamp_set_gregorian_full(
         gdouble time_zone_offset,
         GError **err)
 {
-    timestamp->priv->gregorian_year = year;
-    timestamp->priv->gregorian_month = month;
-    timestamp->priv->gregorian_day = day;
-    timestamp->priv->gregorian_hour = hour;
-    timestamp->priv->gregorian_minute = minute;
-    timestamp->priv->gregorian_second = second;
-    timestamp->priv->gregorian_microsecond = microsecond;
-    timestamp->priv->gregorian_timezone_offset = time_zone_offset;
-    timestamp->priv->valid_dates = VALID_GREGORIAN;
+    gboolean changed = FALSE;
 
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_VALID]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_JULIAN_DAY_VALID]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_YEAR]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_MONTH]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_DAY]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_HOUR]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_MINUTE]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_SECOND]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_MICROSECOND]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_TIMEZONE_OFFSET]
-        );
+    if (timestamp->priv->gregorian_year != year) {
+        timestamp->priv->gregorian_year = year;
 
-    if (timestamp->priv->instant_recalc == TRUE) {
-        gswe_timestamp_calculate_all(timestamp, err);
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_YEAR]
+            );
+
+        changed = TRUE;
     }
 
-    gswe_timestamp_emit_changed(timestamp);
+    if (timestamp->priv->gregorian_month != month) {
+        timestamp->priv->gregorian_month = month;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_MONTH]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_day != day) {
+        timestamp->priv->gregorian_day = day;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_DAY]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_hour != hour) {
+        timestamp->priv->gregorian_hour = hour;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_HOUR]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_minute != minute) {
+        timestamp->priv->gregorian_minute = minute;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_MINUTE]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_second != second) {
+        timestamp->priv->gregorian_second = second;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_SECOND]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_microsecond != microsecond) {
+        timestamp->priv->gregorian_microsecond = microsecond;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_MICROSECOND]
+            );
+
+        changed = TRUE;
+    }
+
+    if (timestamp->priv->gregorian_timezone_offset != time_zone_offset) {
+        timestamp->priv->gregorian_timezone_offset = time_zone_offset;
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_TIMEZONE_OFFSET]
+            );
+
+        changed = TRUE;
+    }
+
+    if (changed) {
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_GREGORIAN_VALID]
+            );
+
+        g_object_notify_by_pspec(
+                G_OBJECT(timestamp),
+                gswe_timestamp_props[PROP_JULIAN_DAY_VALID]
+            );
+
+        timestamp->priv->valid_dates = VALID_GREGORIAN;
+
+        if (timestamp->priv->instant_recalc == TRUE) {
+            gswe_timestamp_calculate_all(timestamp, err);
+        }
+
+        gswe_timestamp_emit_changed(timestamp);
+    }
 }
 
 /**
@@ -791,8 +844,13 @@ gswe_timestamp_set_gregorian_year(
         gint gregorian_year,
         GError **err)
 {
+    if (timestamp->priv->gregorian_year == gregorian_year) {
+        return;
+    }
+
     timestamp->priv->gregorian_year = gregorian_year;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
+
     g_object_notify_by_pspec(
             G_OBJECT(timestamp),
             gswe_timestamp_props[PROP_GREGORIAN_VALID]
@@ -847,6 +905,10 @@ gswe_timestamp_set_gregorian_month(
         gint gregorian_month,
         GError **err)
 {
+    if (timestamp->priv->gregorian_month == gregorian_month) {
+        return;
+    }
+
     timestamp->priv->gregorian_month = gregorian_month;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -903,6 +965,10 @@ gswe_timestamp_set_gregorian_day(
         gint gregorian_day,
         GError **err)
 {
+    if (timestamp->priv->gregorian_day == gregorian_day) {
+        return;
+    }
+
     timestamp->priv->gregorian_day = gregorian_day;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -959,6 +1025,10 @@ gswe_timestamp_set_gregorian_hour(
         gint gregorian_hour,
         GError **err)
 {
+    if (timestamp->priv->gregorian_hour == gregorian_hour) {
+        return;
+    }
+
     timestamp->priv->gregorian_hour = gregorian_hour;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -1015,6 +1085,10 @@ gswe_timestamp_set_gregorian_minute(
         gint gregorian_minute,
         GError **err)
 {
+    if (timestamp->priv->gregorian_minute == gregorian_minute) {
+        return;
+    }
+
     timestamp->priv->gregorian_minute = gregorian_minute;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -1071,6 +1145,10 @@ gswe_timestamp_set_gregorian_second(
         gint gregorian_second,
         GError **err)
 {
+    if (timestamp->priv->gregorian_second == gregorian_second) {
+        return;
+    }
+
     timestamp->priv->gregorian_second = gregorian_second;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -1127,6 +1205,10 @@ gswe_timestamp_set_gregorian_microsecond(
         gint gregorian_microsecond,
         GError **err)
 {
+    if (timestamp->priv->gregorian_microsecond == gregorian_microsecond) {
+        return;
+    }
+
     timestamp->priv->gregorian_microsecond = gregorian_microsecond;
     timestamp->priv->valid_dates = VALID_GREGORIAN;
     g_object_notify_by_pspec(
@@ -1183,6 +1265,10 @@ gswe_timestamp_set_gregorian_timezone(
         gdouble gregorian_timezone_offset,
         GError **err)
 {
+    if (timestamp->priv->gregorian_timezone_offset == gregorian_timezone_offset) {
+        return;
+    }
+
     gswe_timestamp_calculate_julian(timestamp, NULL);
     timestamp->priv->gregorian_timezone_offset = gregorian_timezone_offset;
     timestamp->priv->valid_dates &= ~VALID_GREGORIAN;
