@@ -83,6 +83,7 @@ struct _GsweMomentPrivate {
     guint aspect_revision;
     GList *antiscia_list;
     guint antiscia_revision;
+    gulong timestamp_signal_handler;
 };
 
 enum {
@@ -269,10 +270,9 @@ gswe_moment_dispose(GObject *gobject)
 {
     GsweMoment *moment = GSWE_MOMENT(gobject);
 
-    g_signal_handlers_disconnect_by_func(
+    g_signal_handler_disconnect(
             moment->priv->timestamp,
-            gswe_moment_timestamp_changed,
-            NULL
+            moment->priv->timestamp_signal_handler
         );
 
     g_clear_object(&moment->priv->timestamp);
@@ -410,10 +410,9 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
     }
 
     if (moment->priv->timestamp != NULL) {
-        g_signal_handlers_disconnect_by_func(
+        g_signal_handler_disconnect(
                 moment->priv->timestamp,
-                gswe_moment_timestamp_changed,
-                NULL
+                moment->priv->timestamp_signal_handler
             );
         g_clear_object(&moment->priv->timestamp);
     }
@@ -421,7 +420,7 @@ gswe_moment_set_timestamp(GsweMoment *moment, GsweTimestamp *timestamp)
     moment->priv->revision++;
     moment->priv->timestamp = timestamp;
     g_object_ref(timestamp);
-    g_signal_connect(
+    moment->priv->timestamp_signal_handler = g_signal_connect(
             G_OBJECT(timestamp),
             "changed",
             G_CALLBACK(gswe_moment_timestamp_changed),
