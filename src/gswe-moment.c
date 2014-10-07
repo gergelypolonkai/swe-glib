@@ -88,6 +88,7 @@ struct _GsweMomentPrivate {
 
 enum {
     SIGNAL_CHANGED,
+    SIGNAL_PLANET_ADDED,
     SIGNAL_LAST
 };
 
@@ -155,6 +156,27 @@ gswe_moment_class_init(GsweMomentClass *klass)
             g_cclosure_marshal_generic,
             G_TYPE_NONE,
             0
+        );
+
+    /**
+     * GsweMoment::planet-added:
+     * @moment: the GsweMoment object that received the signal
+     * @planet: the planet that was just added to @moment
+     *
+     * The ::planet-added signal is emitted each time a planet is
+     * added to @moment.
+     */
+    gswe_moment_signals[SIGNAL_PLANET_ADDED] = g_signal_new(
+            "planet-added",
+            G_TYPE_FROM_CLASS(klass),
+            G_SIGNAL_RUN_FIRST,
+            0,
+            NULL,
+            NULL,
+            g_cclosure_marshal_generic,
+            G_TYPE_NONE,
+            1,
+            GSWE_TYPE_PLANET
         );
 
     /**
@@ -856,6 +878,8 @@ gswe_moment_add_planet(GsweMoment *moment, GswePlanet planet, GError **err)
             moment->priv->planet_list,
             planet_data
         );
+
+    g_signal_emit(moment, gswe_moment_signals[SIGNAL_PLANET_ADDED], 0, planet);
 }
 
 static void
