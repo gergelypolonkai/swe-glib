@@ -139,7 +139,7 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      */
     gswe_timestamp_signals[SIGNAL_CHANGED] = g_signal_new(
             "changed",
-            G_OBJECT_CLASS_TYPE(gobject_class),
+            G_TYPE_FROM_CLASS(klass),
             G_SIGNAL_RUN_FIRST,
             0, NULL, NULL,
             g_cclosure_marshal_generic, G_TYPE_NONE, 0);

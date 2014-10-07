@@ -141,12 +141,12 @@ gswe_moment_class_init(GsweMomentClass *klass)
      * GsweMoment::changed:
      * @moment: the GsweMoment object that received the signal
      *
-     * The ::changed signal is emitted each time the time or coordinates are
-     * changed
+     * The ::changed signal is emitted each time the time, coordinates
+     * or the house system changes.
      */
     gswe_moment_signals[SIGNAL_CHANGED] = g_signal_new(
             "changed",
-            G_OBJECT_CLASS_TYPE(gobject_class),
+            G_TYPE_FROM_CLASS(klass),
             G_SIGNAL_RUN_FIRST,
             0,
             NULL,
