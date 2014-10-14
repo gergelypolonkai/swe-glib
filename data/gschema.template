@@ -1,0 +1,22 @@
+/*** BEGIN file-header ***/
+<schemalist>
+/*** END file-header ***/
+
+/*** BEGIN file-production ***/
+/*** END file-production ***/
+
+/*** BEGIN value-header ***/
+    <enum id="eu.polonkai.gergely.swe-glib.@EnumName@">
+/*** END value-header ***/
+
+/*** BEGIN value-production ***/
+        <value nick="@valuenick@" value="@valuenum@"/>
+/*** END value-production ***/
+
+/*** BEGIN value-tail ***/
+    </enum>
+/*** END value-tail ***/
+
+/*** BEGIN file-tail ***/
+</schemalist>
+/*** END file-tail ***/

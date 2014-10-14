@@ -70,6 +70,9 @@ AC_PATH_PROG([GTESTER], [gtester])
 AC_PATH_PROG([GTESTER_REPORT], [gtester-report])
 PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.32.0])
 PKG_CHECK_MODULES([GOBJECT], [gobject-2.0 >= 2.32.0])
+PKG_CHECK_MODULES([GIO], [gio-2.0 >= 2.26])
+
+GLIB_GSETTINGS
 AC_CONFIG_MACRO_DIR([m4])
 
 LIBSWE_LIBS='$(top_builddir)/swe/src/libswe-$(SWE_VERSION).la'

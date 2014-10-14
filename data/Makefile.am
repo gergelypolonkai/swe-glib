@@ -1,6 +1,14 @@
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = swe-glib.pc $(NULL)
 
+eu.polonkai.gergely.swe-glib.gschema.xml: gschema.template $(top_builddir)/src/gswe-types.h
+	$(GLIB_MKENUMS) --comments "<!-- @comment@ -->" --template $(filter %.template,$^) $(filter-out %.template,$^) > \
+	$@.tmp && mv $@.tmp $@
+
+gsettings_SCHEMAS = eu.polonkai.gergely.swe-glib.gschema.xml
+
+@GSETTINGS_RULES@
+
 swephdir = $(pkgdatadir)
 sweph_DATA = \
 	sweph-data/seas_00.se1 \
@@ -74,5 +82,7 @@ sweph_DATA = \
 
 EXTRA_DIST = \
 			  $(sweph_DATA) \
-			  swe-glib.spec
+			  swe-glib.spec \
+			  gschema.template
 
+DISTCLEANFILES = $(gsettings_SCHEMAS)

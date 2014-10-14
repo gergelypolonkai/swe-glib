@@ -14,6 +14,7 @@
 /.dirstamp
 *.gir
 *.typelib
+*.gschema.valid
 ChangeLog
 
 # Files created by the build tools
@@ -90,6 +91,7 @@ Makefile.in
 /data/swe-glib.spec
 /src/*.vapi
 /src/gswe-version.h
+/data/*.gschema.xml
 
 # Documentation related files
 /docs/reference/*/*.args
