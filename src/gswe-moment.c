@@ -328,16 +328,28 @@ gswe_moment_finalize(GObject *gobject)
 
     g_clear_object(&moment->priv->timestamp);
 
-    g_list_free_full(moment->priv->house_list, (GDestroyNotify)gswe_house_data_unref);
+    g_list_free_full(
+            moment->priv->house_list,
+            (GDestroyNotify)gswe_house_data_unref
+        );
     moment->priv->house_list = NULL;
 
-    g_list_free_full(moment->priv->planet_list, (GDestroyNotify)gswe_planet_data_unref);
+    g_list_free_full(
+            moment->priv->planet_list,
+            (GDestroyNotify)gswe_planet_data_unref
+        );
     moment->priv->planet_list = NULL;
 
-    g_list_free_full(moment->priv->aspect_list, (GDestroyNotify)gswe_aspect_data_unref);
+    g_list_free_full(
+            moment->priv->aspect_list,
+            (GDestroyNotify)gswe_aspect_data_unref
+        );
     moment->priv->aspect_list = NULL;
 
-    g_list_free_full(moment->priv->antiscia_list, (GDestroyNotify)gswe_antiscion_data_unref);
+    g_list_free_full(
+            moment->priv->antiscia_list,
+            (GDestroyNotify)gswe_antiscion_data_unref
+        );
     moment->priv->antiscia_list = NULL;
 
     g_hash_table_remove_all(moment->priv->element_points);
@@ -350,9 +362,6 @@ gswe_moment_finalize(GObject *gobject)
     moment->priv->aspect_revision = 0;
     moment->priv->antiscia_revision = 0;
     moment->priv->revision = 1;
-
-    gswe_moon_phase_data_unref(moment->priv->moon_phase);
-    moment->priv->moon_phase = gswe_moon_phase_data_new();
 
     G_OBJECT_CLASS(gswe_moment_parent_class)->finalize(gobject);
 }
