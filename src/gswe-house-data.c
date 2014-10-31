@@ -94,6 +94,10 @@ gswe_house_data_ref(GsweHouseData *house_data)
 void
 gswe_house_data_unref(GsweHouseData *house_data)
 {
+    if (house_data == NULL) {
+        return;
+    }
+
     if (--house_data->refcount == 0) {
         gswe_house_data_free(house_data);
     }
