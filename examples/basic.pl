@@ -1,10 +1,14 @@
+#!/bin/env perl
 package SweGlib;
 
+use utf8;
 use strict;
 use POSIX;
 use Glib::Object::Introspection;
 
 use Data::Dumper;
+
+binmode STDOUT, ':encoding(UTF-8)';
 
 Glib::Object::Introspection->setup(basename => 'SweGlib', version => '2.0', package => 'SweGlib');
 
@@ -51,4 +55,3 @@ foreach my $antiscion (@{$all_antiscia}) {
         printf("%s is antiscion of %s on axis %s (±%.2f%%)\n", $planet1->get_planet_info()->get_name(), $planet2->get_planet_info()->get_name(), $antiscion->get_antiscion_axis_info()->get_name(), $antiscion->get_difference());
     }
 }
-
