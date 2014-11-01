@@ -220,6 +220,10 @@ gswe_antiscion_data_ref(GsweAntiscionData *antiscion_data)
 void
 gswe_antiscion_data_unref(GsweAntiscionData *antiscion_data)
 {
+    if (antiscion_data == NULL) {
+        return;
+    }
+
     if (--antiscion_data->refcount == 0) {
         gswe_antiscion_data_free(antiscion_data);
     }

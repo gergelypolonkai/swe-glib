@@ -99,6 +99,10 @@ gswe_planet_data_ref(GswePlanetData *planet_data)
 void
 gswe_planet_data_unref(GswePlanetData *planet_data)
 {
+    if (planet_data == NULL) {
+        return;
+    }
+
     if (--planet_data->refcount == 0) {
         gswe_planet_data_free(planet_data);
     }

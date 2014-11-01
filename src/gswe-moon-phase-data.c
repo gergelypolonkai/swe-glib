@@ -88,6 +88,10 @@ gswe_moon_phase_data_ref(GsweMoonPhaseData *moon_phase_data)
 void
 gswe_moon_phase_data_unref(GsweMoonPhaseData *moon_phase_data)
 {
+    if (moon_phase_data == NULL) {
+        return;
+    }
+
     if (--moon_phase_data->refcount == 0) {
         g_free(moon_phase_data);
     }

@@ -203,6 +203,10 @@ gswe_aspect_data_ref(GsweAspectData *aspect_data)
 void
 gswe_aspect_data_unref(GsweAspectData *aspect_data)
 {
+    if (aspect_data == NULL) {
+        return;
+    }
+
     if (--aspect_data->refcount == 0) {
         gswe_aspect_data_free(aspect_data);
     }
