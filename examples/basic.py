@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from gi.repository import SweGlib
 import math
+import codecs
+import sys
+
+sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 
 SweGlib.init()
 
@@ -37,5 +41,4 @@ for antiscion in all_antiscia:
         planet1 = antiscion.get_planet1()
         planet2 = antiscion.get_planet2()
 
-        print "%s is antiscion of %s on axis %s (±%.2f%%)" % (planet1.get_planet_info().get_name(), planet2.get_planet_info().get_name(), antiscion.get_antiscion_axis_info().get_name(), antiscion.get_difference())
-
+        print u"%s is antiscion of %s on axis %s (±%.2f%%)" % (planet1.get_planet_info().get_name(), planet2.get_planet_info().get_name(), antiscion.get_antiscion_axis_info().get_name(), antiscion.get_difference())

@@ -1,4 +1,8 @@
-var Swe = imports.gi.SweGlib;
+const GLib = imports.gi.GLib;
+const Swe = imports.gi.SweGlib;
+const Format = imports.format;
+
+String.prototype.format = Format.format;
 
 Swe.init();
 
@@ -20,7 +24,7 @@ for (var i = 0; i < all_planets.length; i++) {
     var minute = Math.floor((sign_position - degree) * 60);
     var second = Math.floor(((sign_position - degree) * 60 - minute) * 60)
 
-    log(planet.get_planet_info().get_name() + ": " + position + " (" + degree + "°" + minute + "′" + second + "″ " + planet.get_sign_info().get_name() + ")");
+    print("%s: %.6f (%d°%d′%d″ %s)".format(planet.get_planet_info().get_name(), position, degree, minute, second, planet.get_sign_info().get_name()));
 }
 
 var all_aspects = moment.get_all_aspects();
@@ -31,7 +35,7 @@ for (var i = 0; i < all_aspects.length; i++) {
         var planet1 = aspect.get_planet1();
         var planet2 = aspect.get_planet2();
 
-        log(planet1.get_planet_info().get_name() + " in " + aspect.get_aspect_info().get_name() + " with " + planet2.get_planet_info().get_name() + "(±" + aspect.get_difference() + "%)");
+        print("%s in %s with %s (±%.2f%%)".format(planet1.get_planet_info().get_name(), aspect.get_aspect_info().get_name(), planet2.get_planet_info().get_name(), aspect.get_difference()));
     }
 }
 
@@ -43,7 +47,6 @@ for (var i = 0; i < all_antiscia.length; i++) {
         var planet1 = antiscion.get_planet1();
         var planet2 = antiscion.get_planet2();
 
-        log(planet1.get_planet_info().get_name() + " is antiscion of " + planet2.get_planet_info().get_name() + " on axis " + antiscion.get_antiscion_axis_info().get_name() + " (±" + antiscion.get_difference() + "%)");
+        print("%s is antiscion of %s on axis %s (±%.2f%%)".format(planet1.get_planet_info().get_name(), planet2.get_planet_info().get_name(), antiscion.get_antiscion_axis_info().get_name(), antiscion.get_difference().toFixed(2)));
     }
 }
-
