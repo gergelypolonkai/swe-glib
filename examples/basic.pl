@@ -6,8 +6,6 @@ use strict;
 use POSIX;
 use Glib::Object::Introspection;
 
-use Data::Dumper;
-
 binmode STDOUT, ':encoding(UTF-8)';
 
 Glib::Object::Introspection->setup(basename => 'SweGlib', version => '2.0', package => 'SweGlib');
