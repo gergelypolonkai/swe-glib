@@ -58,6 +58,7 @@ Makefile.in
 /tests/*-test.log
 /tests/*-test.trs
 /tests/test-suite.log
+/swe-glib-lcov*
 
 # Translation related files
 /ABOUT-NLS

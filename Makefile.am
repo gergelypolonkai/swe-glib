@@ -1,3 +1,5 @@
+include $(top_srcdir)/swe-glib.mk
+
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = swe swe/src swe/doc src po data tests
 
@@ -9,11 +11,11 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
 intltool_extra = intltool-extract.in intltool-merge.in intltool-update.in
 
-EXTRA_DIST = $(intltool_extra) $(header_DATA) autogen.sh
+EXTRA_DIST += $(intltool_extra) $(header_DATA) autogen.sh
 
-DISTCLEANFILES = intltool-extract intltool-merge intltool-update
+DISTCLEANFILES += intltool-extract intltool-merge intltool-update
 
-MAINTAINERCLEANFILES = ChangeLog
+MAINTAINERCLEANFILES += ChangeLog
 
 distclean-local:
 	if test "$(srcdir)" = "."; then :; else \

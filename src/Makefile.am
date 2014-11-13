@@ -1,4 +1,7 @@
 ## Process this file with automake to produce Makefile.in
+
+include $(top_srcdir)/swe-glib.mk
+
 AM_CPPFLAGS = -DG_LOG_DOMAIN=\"SWE-GLib\" -DLOCALEDIR=\"$(localedir)\" -D__SWE_GLIB_BUILDING__ -DPKGDATADIR=\"$(pkgdatadir)\"
 
 lib_LTLIBRARIES = libswe-glib-2.0.la
