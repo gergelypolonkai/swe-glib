@@ -56,6 +56,8 @@ gswe_antiscion_data_free(GsweAntiscionData *antiscion_data)
     if (antiscion_data->antiscion_axis_info) {
         gswe_antiscion_axis_info_unref(antiscion_data->antiscion_axis_info);
     }
+
+    g_free(antiscion_data);
 }
 
 /**
