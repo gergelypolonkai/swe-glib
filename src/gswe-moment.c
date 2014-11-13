@@ -309,23 +309,6 @@ gswe_moment_finalize(GObject *gobject)
 {
     GsweMoment *moment = GSWE_MOMENT(gobject);
 
-    g_list_free_full(
-            moment->priv->house_list,
-            (GDestroyNotify)gswe_house_data_unref
-        );
-    g_list_free_full(
-            moment->priv->planet_list,
-            (GDestroyNotify)gswe_planet_data_unref
-        );
-    g_list_free_full(
-            moment->priv->aspect_list,
-            (GDestroyNotify)gswe_aspect_data_unref
-        );
-    g_list_free_full(
-            moment->priv->antiscia_list,
-            (GDestroyNotify)gswe_antiscion_data_unref
-        );
-
     g_clear_object(&moment->priv->timestamp);
 
     g_list_free_full(
