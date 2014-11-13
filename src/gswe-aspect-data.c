@@ -230,7 +230,7 @@ gswe_aspect_data_set_planet1(
 
     aspect_data->planet1 = gswe_planet_data_ref(planet1);
 
-    if (aspect_data->planet2) {
+    if (planet1 && aspect_data->planet2) {
         gswe_aspect_data_calculate(aspect_data);
     }
 }
@@ -268,7 +268,7 @@ gswe_aspect_data_set_planet2(
 
     aspect_data->planet2 = gswe_planet_data_ref(planet2);
 
-    if (aspect_data->planet1) {
+    if (aspect_data->planet1 && planet2) {
         gswe_aspect_data_calculate(aspect_data);
     }
 }
