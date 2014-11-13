@@ -107,7 +107,7 @@ AS_IF([ test "x$use_gcov" = "xyes"], [
   AC_CHECK_PROG(LTP_GENHTML, genhtml, genhtml)
 
   AS_IF([ test "$LTP" ], [
-    AC_CACHE_CHECK([for ltp version], sw_glib_cv_ltp_version, [
+    AC_CACHE_CHECK([for ltp version], swe_glib_cv_ltp_version, [
       swe_glib_cv_ltp_version=invalid
       ltp_version=`$LTP -v 2>/dev/null | $SED -e 's/^.* //'`
       for ltp_check_version in $ltp_version_list; do
