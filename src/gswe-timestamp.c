@@ -1687,14 +1687,6 @@ gswe_timestamp_new_from_gregorian_full(
                 NULL));
 
     timestamp->priv->valid_dates = VALID_GREGORIAN;
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_GREGORIAN_VALID]
-        );
-    g_object_notify_by_pspec(
-            G_OBJECT(timestamp),
-            gswe_timestamp_props[PROP_JULIAN_DAY_VALID]
-        );
 
     return timestamp;
 }
