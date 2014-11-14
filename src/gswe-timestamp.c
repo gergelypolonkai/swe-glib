@@ -385,7 +385,11 @@ gswe_timestamp_set_property(GObject *object,
 
     switch (prop_id) {
         case PROP_INSTANT_RECALC:
-            gswe_timestamp_calculate_all(timestamp, NULL);
+            timestamp->priv->instant_recalc = g_value_get_boolean(value);
+
+            if (timestamp->priv->instant_recalc) {
+                gswe_timestamp_calculate_all(timestamp, NULL);
+            }
 
             break;
 
