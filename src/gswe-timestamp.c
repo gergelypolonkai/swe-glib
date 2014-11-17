@@ -1701,9 +1701,11 @@ gswe_timestamp_new_from_gregorian_full(
 GsweTimestamp *
 gswe_timestamp_new_from_julian_day(gdouble julian_day)
 {
-    GsweTimestamp *timestamp = gswe_timestamp_new();
+    GsweTimestamp *timestamp;
 
-    gswe_timestamp_set_julian_day_et(timestamp, julian_day, NULL);
+    timestamp = GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP,
+                "julian-day", julian_day,
+                NULL));
 
     return timestamp;
 }
