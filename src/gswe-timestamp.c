@@ -79,6 +79,7 @@ enum {
     PROP_GREGORIAN_SECOND,
     PROP_GREGORIAN_MICROSECOND,
     PROP_GREGORIAN_TIMEZONE_OFFSET,
+    PROP_JULIAN_DAY,
     PROP_JULIAN_DAY_VALID,
     PROP_COUNT
 };
@@ -330,6 +331,24 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
         );
 
     /**
+     * GsweTimestamp:julian-day:
+     *
+     * The Julian Day represented by #GsweTimestamp
+     */
+    gswe_timestamp_props[PROP_JULIAN_DAY] = g_param_spec_double(
+            "julian-day",
+            "Julian Day",
+            "The Julian Day represented by this object",
+            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+            G_PARAM_STATIC_STRINGS | G_PARAM_READWRITE
+        );
+    g_object_class_install_property(
+            gobject_class,
+            PROP_JULIAN_DAY,
+            gswe_timestamp_props[PROP_JULIAN_DAY]
+        );
+
+    /**
      * GsweTimestamp:julian-day-valid:
      *
      * If TRUE, the Julian day value stored in the GsweTimestamp object is
@@ -465,6 +484,15 @@ gswe_timestamp_set_property(GObject *object,
 
             break;
 
+        case PROP_JULIAN_DAY:
+            gswe_timestamp_set_julian_day_et(
+                    timestamp,
+                    g_value_get_double(value),
+                    NULL
+                );
+
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
 
@@ -542,6 +570,14 @@ gswe_timestamp_get_property(
             g_value_set_double(
                     value,
                     timestamp->priv->gregorian_timezone_offset);
+
+            break;
+
+        case PROP_JULIAN_DAY:
+            g_value_set_double(
+                    value,
+                    timestamp->priv->julian_day
+                );
 
             break;
 
