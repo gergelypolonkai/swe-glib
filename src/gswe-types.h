@@ -308,6 +308,20 @@ typedef enum {
 } GsweMoonPhase;
 
 /**
+ * GsweTimestampValidityFlags:
+ * @GSWE_VALID_NONE: No valid timestamp
+ * @GSWE_VALID_GREGORIAN: Gregorian timestamp is valid
+ * @GSWE_VALID_JULIAN_DAY: Julian Day is valid
+ *
+ * Flags to show the valid values in a #GsweTimestamp
+ */
+typedef enum {
+    GSWE_VALID_NONE       = 0,
+    GSWE_VALID_GREGORIAN  = (1 << 0),
+    GSWE_VALID_JULIAN_DAY = (1 << 1)
+} GsweTimestampValidityFlags;
+
+/**
  * GsweCoordinates:
  * @longitude: longitude part of the coordinates
  * @latitude: latitude part of the coordinates
@@ -325,4 +339,3 @@ GType gswe_coordinates_get_type(void);
 #define GSWE_TYPE_COORDINATES (gswe_coordinates_get_type())
 
 #endif /* __SWE_GLIB_GSWE_TYPES_H__ */
-

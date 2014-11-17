@@ -249,6 +249,7 @@ gswe_house_data_get_type
 <TITLE>GsweTimestamp</TITLE>
 GsweTimestamp
 GsweTimestampClass
+GsweTimestampValidityFlags
 gswe_timestamp_new
 gswe_timestamp_new_from_julian_day
 gswe_timestamp_new_from_gregorian_full
