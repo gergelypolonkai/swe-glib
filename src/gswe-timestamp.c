@@ -76,6 +76,7 @@ enum {
     PROP_GREGORIAN_TIMEZONE_OFFSET,
     PROP_JULIAN_DAY,
     PROP_JULIAN_DAY_VALID,
+    PROP_VALIDITY,
     PROP_COUNT
 };
 
@@ -167,12 +168,15 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * currently considered as valid, thus, no recalculation is needed.
      * Otherwise, the Gregorian date components will be recalculated upon
      * request.
+     *
+     * Deprecated:2.1:Use the 'timestamp-validity' property
+     * instead. This property will be removed in a future release.
      */
     gswe_timestamp_props[PROP_GREGORIAN_VALID] = g_param_spec_boolean(
             "gregorian-valid",
             "Gregorian date is valid",
             "TRUE if the Gregorian date components are considered as valid.",
-            TRUE, G_PARAM_READABLE
+            TRUE, G_PARAM_READABLE | G_PARAM_DEPRECATED
         );
     g_object_class_install_property(
             gobject_class,
@@ -349,17 +353,40 @@ gswe_timestamp_class_init(GsweTimestampClass *klass)
      * If TRUE, the Julian day value stored in the GsweTimestamp object is
      * currently considered as valid, thus, no recalculation is needed.
      * Otherwise, the Julian day components will be recalculated upon request.
+     *
+     * Deprecated:2.1:Use the 'timestamp-validity' property
+     * instead. This property will be removed in a future release.
      */
     gswe_timestamp_props[PROP_JULIAN_DAY_VALID] = g_param_spec_boolean(
             "julian-day-valid",
             "Julian day is valid",
             "TRUE if the Julian day components are considered as valid.",
-            TRUE, G_PARAM_READABLE
+            TRUE, G_PARAM_READABLE | G_PARAM_DEPRECATED
         );
     g_object_class_install_property(
             gobject_class,
             PROP_JULIAN_DAY_VALID,
             gswe_timestamp_props[PROP_JULIAN_DAY_VALID]
+        );
+
+    /**
+     * GsweTimestamp:timestamp-validity:
+     *
+     * The timestamp validity flags. This value reflects the currently
+     * valid timestamps in #GsweTimestamp.
+     */
+    gswe_timestamp_props[PROP_VALIDITY] = g_param_spec_flags(
+            "timestamp-validity",
+            "Timestamp validity",
+            "Timestamp validity flags",
+            GSWE_TYPE_TIMESTAMP_VALIDITY_FLAGS,
+            GSWE_VALID_NONE,
+            G_PARAM_STATIC_STRINGS | G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY
+        );
+    g_object_class_install_property(
+            gobject_class,
+            PROP_VALIDITY,
+            gswe_timestamp_props[PROP_VALIDITY]
         );
 
     g_date_time_unref(local_time);
@@ -488,6 +515,11 @@ gswe_timestamp_set_property(GObject *object,
 
             break;
 
+        case PROP_VALIDITY:
+            timestamp->priv->valid_dates = g_value_get_flags(value);
+
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
 
@@ -582,6 +614,11 @@ gswe_timestamp_get_property(
                     ((timestamp->priv->valid_dates & GSWE_VALID_JULIAN_DAY)
                         == GSWE_VALID_JULIAN_DAY)
                 );
+
+            break;
+
+        case PROP_VALIDITY:
+            g_value_set_flags(value, timestamp->priv->valid_dates);
 
             break;
 
@@ -1679,9 +1716,8 @@ gswe_timestamp_new_from_gregorian_full(
                 "gregorian-second",          second,
                 "gregorian-microsecond",     microsecond,
                 "gregorian-timezone-offset", time_zone_offset,
+                "timestamp-validity",        GSWE_VALID_GREGORIAN,
                 NULL));
-
-    timestamp->priv->valid_dates = GSWE_VALID_GREGORIAN;
 
     return timestamp;
 }
@@ -1701,9 +1737,15 @@ gswe_timestamp_new_from_gregorian_full(
 GsweTimestamp *
 gswe_timestamp_new_from_julian_day(gdouble julian_day)
 {
-    GsweTimestamp *timestamp = gswe_timestamp_new();
+    GsweTimestamp *timestamp;
 
-    gswe_timestamp_set_julian_day_et(timestamp, julian_day, NULL);
+    gswe_init();
+
+    timestamp = GSWE_TIMESTAMP(g_object_new(GSWE_TYPE_TIMESTAMP,
+            "julian-day",         julian_day,
+            "timestamp-validity", GSWE_VALID_JULIAN_DAY,
+            NULL
+        ));
 
     return timestamp;
 }
