@@ -24,4 +24,22 @@
     } \
   } G_STMT_END
 
+/* g_assert_null() and g_assert_nonnull() were defined in 2.36 and
+ * 2.40. Requiring a newer GLib just because of this would be an
+ * overkill, so let's just backport them:
+ */
+#ifndef g_assert_null
+#define g_assert_null(expr)     do { if G_LIKELY ((expr) == NULL) ; else \
+                                    g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+                                            "'" #expr "' should be NULL"); \
+                                } while (0)
+#endif
+
+#ifndef g_assert_nonnull
+#define g_assert_nonnull(expr)  do { if G_LIKELY ((expr) != NULL) ; else \
+                                    g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+                                            "'" #expr "' should not be NULL"); \
+                                } while (0)
+#endif
+
 #endif /* __SWE_GLIB_TEST_ASSERTS_H__ */
