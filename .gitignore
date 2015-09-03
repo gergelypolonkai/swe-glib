@@ -16,6 +16,10 @@
 *.typelib
 *.gschema.valid
 ChangeLog
+*.gcno
+*.gcda
+glib-lcov.info
+glib-lcov/
 
 # Files created by the build tools
 Makefile
