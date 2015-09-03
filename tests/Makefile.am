@@ -5,7 +5,7 @@ BUILT_EXTRA_DIST =
 CLEANFILES = *.log *.trs
 DISTCLEANFILES =
 MAINTAINERCLEANFILES =
-EXTRA_DIST =
+EXTRA_DIST = test-asserts.h
 TEST_PROGS =
 
 noinst_LTLIBRARIES =
@@ -182,10 +182,9 @@ check_DATA += $(all_test_data)
 
 # End of glib.mk
 
-LDADD = $(top_builddir)/src/libswe-glib-2.0.la
+LDADD = $(top_builddir)/src/libswe-glib-2.0.la $(GLIB_LIBS) $(GOBJECT_LIBS)
 DEFS = -DG_LOG_DOMAIN=\"SWE-GLib\"
-AM_CPPFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) $(LIBSWE_CFLAGS) -I$(top_srcdir)/src
-AM_CFLAGS = -g
+AM_CFLAGS = -g $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) $(LIBSWE_CFLAGS) -I$(top_srcdir)/src
 
 test_programs = gswe-timestamp-test
 TESTS += $(test_programs)
