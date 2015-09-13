@@ -7,6 +7,7 @@ EXTRA_DIST = \
 	LICENSE               \
 	README                \
 	swemptab.c            \
+	swemptab.h            \
 	swedate.h             \
 	swedll.h              \
 	swehouse.h            \
