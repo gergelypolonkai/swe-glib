@@ -1,5 +1,7 @@
 # SWE-GLib
 
+[![Build Status](https://travis-ci.org/gergelypolonkai/swe-glib.svg?branch=master)](https://travis-ci.org/gergelypolonkai/swe-glib)
+
 SWE-GLib is a GLib style wrapper library around Astrodienst's
 [Swiss Ephemeris library](http://www.astro.com/swisseph/).
 
