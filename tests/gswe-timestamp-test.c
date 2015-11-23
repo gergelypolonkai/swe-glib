@@ -249,7 +249,7 @@ test_timestamp_conv_gregjd(void)
     gswe_assert_fuzzy_equals(
             jdet,
             td[1].jdet,
-            0.000001
+            0.0001
         );
 
     g_clear_object(&timestamp);

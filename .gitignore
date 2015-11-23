@@ -59,7 +59,8 @@ Makefile.in
 /tests/*-test.trs
 /swe-glib-lcov*
 test-suite.log
-/tests/gswe-timestamp-test.gc??
+*.gcno
+*.gcda
 
 # Translation related files
 /ABOUT-NLS
