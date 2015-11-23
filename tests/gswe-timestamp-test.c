@@ -225,7 +225,48 @@ test_timestamp_jdut(void)
 
 static void
 test_timestamp_instant(void)
-{}
+{
+    GsweTimestamp *timestamp;
+    gboolean instrecalc, greg_valid, jul_valid;
+    GError *err = NULL;
+
+    timestamp = gswe_timestamp_new_from_now_local();
+    g_assert_nonnull(timestamp);
+
+    g_object_get(
+        timestamp,
+        "instant-recalc", &instrecalc,
+        "gregorian-valid", &greg_valid,
+        "julian-day-valid", &jul_valid,
+        NULL);
+    g_assert_false(instrecalc);
+    g_assert_true(greg_valid);
+    g_assert_false(jul_valid);
+
+    g_object_set(timestamp, "instant-recalc", TRUE, NULL);
+    g_object_get(
+        timestamp,
+        "instant-recalc", &instrecalc,
+        "gregorian-valid", &greg_valid,
+        "julian-day-valid", &jul_valid,
+        NULL);
+    g_assert_true(instrecalc);
+    g_assert_true(greg_valid);
+    g_assert_true(jul_valid);
+
+    g_object_set(timestamp, "instant-recalc", FALSE, NULL);
+    gswe_timestamp_set_now_local(timestamp, &err);
+    g_assert_null(err);
+    g_object_get(
+        timestamp,
+        "instant-recalc", &instrecalc,
+        "gregorian-valid", &greg_valid,
+        "julian-day-valid", &jul_valid,
+        NULL);
+    g_assert_false(instrecalc);
+    g_assert_true(greg_valid);
+    g_assert_false(jul_valid);
+}
 
 static void
 test_timestamp_conv_gregjd(void)
