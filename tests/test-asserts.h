@@ -42,4 +42,25 @@
                                 } while (0)
 #endif
 
+/* g_assert_true() and g_assert_false() were defined in 2.38. Requiring
+ * a newer GLib just because of this would be an overkill, so let's just
+ * backport them:
+ */
+#ifndef g_assert_true
+#define g_assert_true(expr) G_STMT_START { \
+                                if G_LIKELY (expr) ; else \
+                                    g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+                                        "'" #expr "' should be TRUE"); \
+                            } G_STMT_END
+#endif
+
+#ifndef g_assert_false
+#define g_assert_false(expr) G_STMT_START { \
+                                 if G_LIKELY (!(expr)) ; else \
+                                     g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+                                         "'" #expr "' should be FALSE"); \
+                                 } G_STMT_END
+
+#endif
+
 #endif /* __SWE_GLIB_TEST_ASSERTS_H__ */
