@@ -1740,7 +1740,7 @@ gswe_timestamp_set_now_local(GsweTimestamp *timestamp,
     minute   = g_date_time_get_minute(datetime);
     seconds  = g_date_time_get_seconds(datetime);
     microsec = g_date_time_get_microsecond(datetime);
-    timezone = (gdouble)g_date_time_get_utc_offset(datetime) / 3600.0;
+    timezone = (gdouble)g_date_time_get_utc_offset(datetime) / 3600000000.0;
     g_date_time_unref(datetime);
 
     gswe_timestamp_set_gregorian_full(
