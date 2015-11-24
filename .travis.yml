@@ -11,3 +11,7 @@ before_script: ./autogen.sh
 script:
   - make
   - make check
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov
