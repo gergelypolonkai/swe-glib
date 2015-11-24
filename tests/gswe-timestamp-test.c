@@ -308,6 +308,21 @@ static void
 test_timestamp_now(void)
 {}
 
+static void
+test_timestamp_invalid_property(void)
+{
+    GsweTimestamp *timestamp = gswe_timestamp_new();
+    void *test_prop;
+
+    g_test_expect_message("GLib-GObject", G_LOG_LEVEL_WARNING, "*no property named 'bad-property'*");
+    g_object_set(timestamp, "bad-property", NULL, NULL);
+    g_test_assert_expected_messages();
+
+    g_test_expect_message("GLib-GObject", G_LOG_LEVEL_WARNING, "*no property named 'other-bad-property'*");
+    g_object_get(timestamp, "other-bad-property", &test_prop, NULL);
+    g_test_assert_expected_messages();
+}
+
 int
 main(int argc, char **argv)
 {
@@ -322,6 +337,7 @@ main(int argc, char **argv)
     g_test_add_func("/gswe/timestamp/conv/jd_greg", test_timestamp_conv_jdgreg);
     g_test_add_func("/gswe/timestamp/sidereal", test_timestamp_sidereal);
     g_test_add_func("/gswe/timestamp/now", test_timestamp_now);
+    g_test_add_func("/gswe/timestamp/bad_property", test_timestamp_invalid_property);
 
     return g_test_run();
 }
