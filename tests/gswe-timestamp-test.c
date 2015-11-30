@@ -278,7 +278,7 @@ static void
 test_timestamp_conv_gregjd(void)
 {
     GsweTimestamp *timestamp;
-    gdouble jdet;
+    gdouble jdet, tz_jdet;
     GError *err = NULL;
 
     /* Create timestamp from testdata */
@@ -298,6 +298,11 @@ test_timestamp_conv_gregjd(void)
             td[1].jdet,
             0.0001
         );
+
+    /* Julian Day should not change if only the timezone changes */
+    td[1].tz += 1.0;
+    tz_jdet = gswe_timestamp_get_julian_day_ut(timestamp, &err);
+    g_assert_cmpfloat(jdet, ==, tz_jdet);
 
     g_clear_object(&timestamp);
 }
