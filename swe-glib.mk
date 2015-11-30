@@ -1,4 +1,7 @@
 # SWE-GLib - GLib wrapper around the Swiss Ephemeris library
+#
+# Most of this file is got from GLib, especially the code coverage measurement
+# parts
 
 GTESTER = gtester
 GTESTER_REPORT = gtester-report
@@ -7,7 +10,7 @@ NULL =
 # initialize variables for unconditional += appending
 BUILT_SOURCES =
 BUILT_EXTRA_DIST =
-CLEANFILES = *.log *.trs
+CLEANFILES = *.log *.trs *.gcda
 DISTCLEANFILES =
 MAINTAINERCLEANFILES =
 EXTRA_DIST =
@@ -33,9 +36,7 @@ else
 test-nonrecursive:
 endif
 
-.PHONY: test-nonrecursive
-
-.PHONY: lcov genlcov lcov-clean
+.PHONY: test-nonrecursive lcov genlcov lcov-clean
 # use recursive makes in order to ignore errors during check
 lcov:
 	-$(MAKE) $(AM_MAKEFLAGS) -k check
@@ -47,7 +48,7 @@ lcov:
 genlcov:
 	$(AM_V_GEN) rm -f $(top_builddir)/tests/.libs/libmoduletestplugin_*.gcda; \
 	  $(LTP) --quiet --directory $(top_builddir) --capture --output-file swe-glib-lcov.info --test-name SWE_GLIB_PERF --no-checksum --compat-libtool --ignore-errors source; \
-	  $(LTP) --quiet --output-file swe-glib-lcov.info --remove swe-glib-lcov.info docs/reference/\* /tmp/\*  gio/tests/gdbus-object-manager-example/\* ; \
+	  $(LTP) --quiet --output-file swe-glib-lcov.info --remove swe-glib-lcov.info docs/reference/\* /tmp/\* ; \
 	  LANG=C $(LTP_GENHTML) --quiet --prefix $(top_builddir) --output-directory swe-glib-lcov --title "SWE-GLib Code Coverage" --legend --frames --show-details swe-glib-lcov.info --ignore-errors source
 	@echo "file://$(abs_top_builddir)/swe-glib-lcov/index.html"
 
@@ -59,47 +60,6 @@ lcov-clean:
 # run tests in cwd as part of make check
 check-local: test-nonrecursive
 
-# We support a fairly large range of possible variables.  It is expected that all types of files in a test suite
-# will belong in exactly one of the following variables.
-#
-# First, we support the usual automake suffixes, but in lowercase, with the customary meaning:
-#
-#   test_programs, test_scripts, test_data, test_ltlibraries
-#
-# The above are used to list files that are involved in both uninstalled and installed testing.  The
-# test_programs and test_scripts are taken to be actual testcases and will be run as part of the test suite.
-# Note that _data is always used with the nobase_ automake variable name to ensure that installed test data is
-# installed in the same way as it appears in the package layout.
-#
-# In order to mark a particular file as being only for one type of testing, use 'installed' or 'uninstalled',
-# like so:
-#
-#   installed_test_programs, uninstalled_test_programs
-#   installed_test_scripts, uninstalled_test_scripts
-#   installed_test_data, uninstalled_test_data
-#   installed_test_ltlibraries, uninstalled_test_ltlibraries
-#
-# Additionally, we support 'extra' infixes for programs and scripts.  This is used for support programs/scripts
-# that should not themselves be run as testcases (but exist to be used from other testcases):
-#
-#   test_extra_programs, installed_test_extra_programs, uninstalled_test_extra_programs
-#   test_extra_scripts, installed_test_extra_scripts, uninstalled_test_extra_scripts
-#
-# Additionally, for _scripts and _data, we support the customary dist_ prefix so that the named script or data
-# file automatically end up in the tarball.
-#
-#   dist_test_scripts, dist_test_data, dist_test_extra_scripts
-#   dist_installed_test_scripts, dist_installed_test_data, dist_installed_test_extra_scripts
-#   dist_uninstalled_test_scripts, dist_uninstalled_test_data, dist_uninstalled_test_extra_scripts
-#
-# Note that no file is automatically disted unless it appears in one of the dist_ variables.  This follows the
-# standard automake convention of not disting programs scripts or data by default.
-#
-# test_programs, test_scripts, uninstalled_test_programs and uninstalled_test_scripts (as well as their disted
-# variants) will be run as part of the in-tree 'make check'.  These are all assumed to be runnable under
-# gtester.  That's a bit strange for scripts, but it's possible.
-
-# we use test -z "$(TEST_PROGS)" above, so make sure we have no extra whitespace...
 TEST_PROGS += $(strip $(test_programs) $(test_scripts) $(uninstalled_test_programs) $(uninstalled_test_scripts) \
                       $(dist_test_scripts) $(dist_uninstalled_test_scripts))
 
