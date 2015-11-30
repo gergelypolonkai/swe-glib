@@ -46,8 +46,7 @@ lcov:
 # placing the objects files in the .libs/ directory separate from the *.c
 # we also have to delete tests/.libs/libmoduletestplugin_*.gcda
 genlcov:
-	$(AM_V_GEN) rm -f $(top_builddir)/tests/.libs/libmoduletestplugin_*.gcda; \
-	  $(LTP) --quiet --directory $(top_builddir) --capture --output-file swe-glib-lcov.info --test-name SWE_GLIB_PERF --no-checksum --compat-libtool --ignore-errors source; \
+	$(AM_V_GEN) $(LTP) --quiet --directory $(top_builddir) --capture --output-file swe-glib-lcov.info --test-name SWE_GLIB_PERF --no-checksum --compat-libtool --ignore-errors source; \
 	  $(LTP) --quiet --output-file swe-glib-lcov.info --remove swe-glib-lcov.info docs/reference/\* /tmp/\* ; \
 	  LANG=C $(LTP_GENHTML) --quiet --prefix $(top_builddir) --output-directory swe-glib-lcov --title "SWE-GLib Code Coverage" --legend --frames --show-details swe-glib-lcov.info --ignore-errors source
 	@echo "file://$(abs_top_builddir)/swe-glib-lcov/index.html"

@@ -488,10 +488,13 @@ gswe_timestamp_set_property(GObject *object,
 
             break;
 
+        /* LCOV_EXCL_START Unless a property ID is missing from above,
+         * we will never arrive here */
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
 
             break;
+        /* LCOV_EXCL_STOP */
     }
 }
 
@@ -585,10 +588,13 @@ gswe_timestamp_get_property(
 
             break;
 
+        /* LCOV_EXCL_START Unless a property ID is missing from above,
+         * we will never arrive here */
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
 
             break;
+        /* LCOV_EXCL_STOP */
     }
 }
 
