@@ -26,6 +26,7 @@ static struct testdata_t td[] = {
     { 0 }
 };
 
+/* Test Gregorian date values */
 static void
 test_timestamp_gregorian(void)
 {
@@ -141,6 +142,7 @@ test_timestamp_gregorian(void)
     g_clear_object(&timestamp);
 }
 
+/* Check timezone mangling */
 static void
 test_timestamp_timezone(void)
 {
@@ -191,6 +193,7 @@ test_timestamp_timezone(void)
     g_clear_object(&timestamp);
 }
 
+/* Test Julian Day (Ephemeris Time) properties */
 static void
 test_timestamp_jdet(void)
 {
@@ -219,10 +222,12 @@ test_timestamp_jdet(void)
     g_clear_object(&timestamp);
 }
 
+/* Test Julian Day (Universal Time) properties */
 static void
 test_timestamp_jdut(void)
 {}
 
+/* Test instant-recalc property */
 static void
 test_timestamp_instant(void)
 {
@@ -268,6 +273,7 @@ test_timestamp_instant(void)
     g_assert_false(jul_valid);
 }
 
+/* Test Gregorian Date to Julian Day conversion */
 static void
 test_timestamp_conv_gregjd(void)
 {
@@ -296,14 +302,17 @@ test_timestamp_conv_gregjd(void)
     g_clear_object(&timestamp);
 }
 
+/* Julian Day to Gregorian Date conversion */
 static void
 test_timestamp_conv_jdgreg(void)
 {}
 
+/* Sidereal time tests */
 static void
 test_timestamp_sidereal(void)
 {}
 
+/* timestamp_now_* tests */
 static void
 test_timestamp_now(void)
 {}
