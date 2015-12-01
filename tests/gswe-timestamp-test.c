@@ -219,6 +219,17 @@ test_timestamp_jdet(void)
     g_assert_null(err);
     gswe_assert_fuzzy_equals(jdet, td[1].jdet, 0.000001);
 
+    /* Set via property */
+    g_object_set(timestamp,
+                 "julian-day", td[0].jdet,
+                 NULL);
+    jdet = gswe_timestamp_get_julian_day_et(timestamp, &err);
+    gswe_assert_fuzzy_equals(jdet, td[0].jdet, 0.000001);
+    g_object_get(timestamp,
+                 "julian-day", &jdet,
+                 NULL);
+    gswe_assert_fuzzy_equals(jdet, td[0].jdet, 0.000001);
+
     g_clear_object(&timestamp);
 }
 
@@ -310,7 +321,50 @@ test_timestamp_conv_gregjd(void)
 /* Julian Day to Gregorian Date conversion */
 static void
 test_timestamp_conv_jdgreg(void)
-{}
+{
+    GsweTimestamp *timestamp;
+    guint year, month, day, hour, minute, second, ms;
+    gdouble tz;
+    gboolean gregorian_valid, julian_valid;
+    GError *err = NULL;
+
+    timestamp = gswe_timestamp_new_from_julian_day(td[0].jdet);
+    g_assert_nonnull(timestamp);
+    g_object_get(timestamp,
+                 "gregorian-valid", &gregorian_valid,
+                 "julian-day-valid", &julian_valid,
+                 "gregorian-timezone-offset", &tz,
+                 NULL);
+    g_assert_true(julian_valid);
+    g_assert_cmpfloat(0.0, ==, tz);
+
+    gswe_timestamp_set_gregorian_timezone(timestamp, td[0].tz, &err);
+    g_object_get(
+            timestamp,
+            "gregorian-year",            &year,
+            "gregorian-month",           &month,
+            "gregorian-day",             &day,
+            "gregorian-hour",            &hour,
+            "gregorian-minute",          &minute,
+            "gregorian-second",          &second,
+            "gregorian-microsecond",     &ms,
+            "gregorian-timezone-offset", &tz,
+            NULL
+        );
+    g_assert_cmpint(year,    ==, td[0].year);
+    g_assert_cmpuint(month,  ==, td[0].month);
+    g_assert_cmpuint(day,    ==, td[0].day);
+    g_assert_cmpuint(hour,   ==, td[0].hour);
+    gswe_assert_fuzzy_equals(minute, td[0].minute, 1);
+
+    /* The following lines are commented out, as they will always fail
+     * with the current precision of the test data.
+
+    g_assert_cmpuint(minute, ==, td[0].minute);
+    g_assert_cmpuint(second, ==, td[0].second);
+    g_assert_cmpuint(ms, ==, td[0].ms);
+    */
+    g_assert_cmpfloat(tz, ==, td[0].tz); }
 
 /* Sidereal time tests */
 static void

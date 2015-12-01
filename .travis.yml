@@ -15,5 +15,4 @@ script:
 before_install:
   - pip install --user codecov
 after_success:
-  - make lcov
   - codecov
