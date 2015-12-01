@@ -15,4 +15,5 @@ script:
 before_install:
   - pip install --user codecov
 after_success:
-  - codecov
+  - find -type f -name '*.gcno'
+  - codecov --gcov-root src
