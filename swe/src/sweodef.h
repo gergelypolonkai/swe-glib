@@ -75,6 +75,20 @@
 # define MY_TRUE 1	/* for use in other defines, before TRUE is defined */
 # define MY_FALSE 0	/* for use in other defines, before TRUE is defined */
 
+/* TLS support
+ *
+ * Sun Studio C/C++, IBM XL C/C++, GNU C and Intel C/C++ (Linux systems) -> __thread
+ * Borland, VC++ -> __declspec(thread)
+ */
+#if !defined( __APPLE__ ) && !defined(WIN32) && !defined(DOS32)
+#if defined( __GNUC__ )
+#define TLS     __thread
+#else
+#define TLS     __declspec(thread)
+#endif
+#else
+#define TLS
+#endif
 
 #ifdef _WIN32		/* Microsoft VC 5.0 does not define MSDOS anymore */
 # undef MSDOS
@@ -135,12 +149,10 @@
 #  ifndef TURBO_C
 #    define MS_C	/* assume Microsoft C compiler */
 #  endif
-# define MYFAR far
 # define UNIX_FS MY_FALSE
 #else
 # ifdef MACOS
 #  define HPUNIX MY_FALSE
-#  define MYFAR
 #  define UNIX_FS MY_FALSE
 # else
 #  define MSDOS MY_FALSE
@@ -148,7 +160,6 @@
 #  ifndef _HPUX_SOURCE
 #    define _HPUX_SOURCE
 #  endif
-#  define MYFAR
 #  define UNIX_FS MY_TRUE
 # endif
 #endif

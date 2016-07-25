@@ -551,16 +551,10 @@ extern "C" {
 
 #if defined(DOS32) || !MSDOS || defined(WIN32)
 			/* use compiler switch to define DOS32 */
-#  ifndef FAR 
-#    define FAR
-#  endif
 #  define MALLOC malloc  
 #  define CALLOC calloc  
 #  define FREE free  
 #else
-#  ifndef FAR
-#    define FAR far
-#  endif
 #  ifdef __BORLANDC__
 #    include <alloc.h>
 #    define MALLOC farmalloc  
@@ -575,10 +569,10 @@ extern "C" {
 
 /* DLL defines */
 #ifdef MAKE_DLL
-  #if defined (PASCAL)
-    #define PASCAL_CONV PASCAL 
+  #if defined (PASCAL) || defined(__stdcall)
+    #define CALL_CONV __stdcall 
   #else
-    #define PASCAL_CONV 
+    #define CALL_CONV 
   #endif
   #ifdef MAKE_DLL16 /* 16bit DLL */
     /* We compiled the 16bit DLL for Windows 3.x using Borland C/C++ Ver:3.x
@@ -592,7 +586,7 @@ extern "C" {
     #define EXP32  __declspec( dllexport )
   #endif
 #else 
-  #define PASCAL_CONV 
+  #define CALL_CONV 
   #define EXP16 
   #define EXP32 
 #endif  
@@ -603,7 +597,7 @@ extern "C" {
  * exported functions
  ***********************************************************/
 
-#define ext_def(x)	extern EXP32 x FAR PASCAL_CONV EXP16
+#define ext_def(x)	extern EXP32 x CALL_CONV EXP16
 			/* ext_def(x) evaluates to x on Unix */
 
 ext_def(int32) swe_heliacal_ut(double tjdstart_ut, double *geopos, double *datm, double *dobs, char *ObjectName, int32 TypeEvent, int32 iflag, double *dret, char *serr);
@@ -669,7 +663,7 @@ ext_def(double) swe_get_ayanamsa(double tjd_et);
 ext_def(double) swe_get_ayanamsa_ut(double tjd_ut);
 
 
-ext_def( char *) swe_get_ayanamsa_name(int32 isidmode);
+ext_def(const char *) swe_get_ayanamsa_name(int32 isidmode);
 
 /*ext_def(void) swe_set_timeout(int32 tsec);*/
 
