@@ -33,6 +33,7 @@
 #include "gswe-timestamp.h"
 #include "gswe-moment.h"
 #include "gswe-enumtypes.h"
+#include "gswe-lots.h"
 
 typedef enum {
     GSWE_ERROR_SUCCESS,

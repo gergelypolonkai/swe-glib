@@ -25,6 +25,7 @@ INST_H_SRC_FILES = \
 
 INST_H_BUILT_FILES = \
 	gswe-enumtypes.h \
+	gswe-lots.h      \
 	gswe-version.h   \
 	$(NULL)
 
@@ -61,6 +62,7 @@ libswe_glib_2_0_la_SOURCES = \
 	gswe-timestamp.c           \
 	gswe-enumtypes.c           \
 	gswe-version.c             \
+	gswe-lots.c                \
 	$(NULL)
 
 libswe_glib_2_0_la_CFLAGS = $(GLIB_CFLAGS) $(GOBJECT_CFLAGS) -Wall
