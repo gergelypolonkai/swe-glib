@@ -203,6 +203,13 @@ void gswe_init_with_dir(gchar *directory)
             1
         );
     ADD_PLANET(gswe_planet_info_table, planet_info,
+               GSWE_PLANET_MOON_SOUTH_NODE,
+               SE_MEAN_NODE,
+               TRUE,
+               _("Descending Moon Node"),
+               2.0,
+               0);
+    ADD_PLANET(gswe_planet_info_table, planet_info,
             GSWE_PLANET_MOON_APOGEE,
             SE_MEAN_APOG,
             TRUE,

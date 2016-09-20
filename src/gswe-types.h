@@ -39,6 +39,7 @@
  * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
  *                      primal vertical)
  * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
+ * @GSWE_PLANET_MOON_SOUTH_NODE: the mean descending (south) Moon node
  * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
  *                           or Lilith)
  * @GSWE_PLANET_SUN: the Sun
@@ -78,6 +79,7 @@ typedef enum {
     GSWE_PLANET_VERTEX,
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
+    GSWE_PLANET_MOON_SOUTH_NODE,
 
     /* Actual astrological planets */
     GSWE_PLANET_SUN = 11,

@@ -1012,6 +1012,12 @@ gswe_moment_calculate_planet(GsweMoment *moment,
             );
     }
 
+    // The south node is actually on the opposite side of the chart,
+    // so let’s invert the position.
+    if (planet == GSWE_PLANET_MOON_SOUTH_NODE) {
+        x2[0] = fmod(x2[0] + 180.0, 180.0);
+    }
+
     calculate_data_by_position(moment, planet, x2[0], &calc_err);
 
     if (calc_err != NULL) {
