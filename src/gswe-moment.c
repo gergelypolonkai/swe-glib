@@ -805,13 +805,38 @@ gswe_moment_calculate_house_positions(GsweMoment *moment, GError **err)
                 err
             );
     }
+    if (gswe_moment_has_planet(moment, GSWE_PLANET_DESCENDANT)) {
+        calculate_data_by_position(
+                moment,
+                GSWE_PLANET_DESCENDANT,
+                fmod(ascmc[0] + 180.0, 180.0),
+                err
+            );
+    }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_MC)) {
         calculate_data_by_position(moment, GSWE_PLANET_MC, ascmc[1], err);
     }
+    if (gswe_moment_has_planet(moment, GSWE_PLANET_IC)) {
+        calculate_data_by_position(
+                moment,
+                GSWE_PLANET_IC,
+                fmod(ascmc[2] + 180.0, 180.0),
+                err
+            );
+    }
 
     if (gswe_moment_has_planet(moment, GSWE_PLANET_VERTEX)) {
         calculate_data_by_position(moment, GSWE_PLANET_VERTEX, ascmc[3], err);
+    }
+
+    if (gswe_moment_has_planet(moment, GSWE_PLANET_ANTIVERTEX)) {
+        calculate_data_by_position(
+                moment,
+                GSWE_PLANET_ANTIVERTEX,
+                fmod(ascmc[3] + 180.0, 180.0),
+                err
+            );
     }
 }
 

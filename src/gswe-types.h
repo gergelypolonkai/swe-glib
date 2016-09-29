@@ -35,9 +35,12 @@
  * GswePlanet:
  * @GSWE_PLANET_NONE: no planet
  * @GSWE_PLANET_ASCENDANT: the ascendant
+ * @GSWE_PLANET_DESCENDANT: the descendant
  * @GSWE_PLANET_MC: midheaven (Medium Coeli)
+ * @GSWE_PLANET_IC: Immum Coeli
  * @GSWE_PLANET_VERTEX: the Vertex (the point where the ecliptic meats the
  *                      primal vertical)
+ * @GSWE_PLANET_ANTIVERTEX: the Antivertex (the point opposing the Vertex)
  * @GSWE_PLANET_MOON_NODE: the mean ascending (north) Moon node
  * @GSWE_PLANET_MOON_SOUTH_NODE: the mean descending (south) Moon node
  * @GSWE_PLANET_MOON_APOGEE: the mean Moon apogee (sometimes called Dark Moon,
@@ -80,6 +83,9 @@ typedef enum {
     GSWE_PLANET_MOON_NODE,
     GSWE_PLANET_MOON_APOGEE,
     GSWE_PLANET_MOON_SOUTH_NODE,
+    GSWE_PLANET_DESCENDANT,
+    GSWE_PLANET_IC,
+    GSWE_PLANET_ANTIVERTEX,
 
     /* Actual astrological planets */
     GSWE_PLANET_SUN = 11,

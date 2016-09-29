@@ -179,6 +179,14 @@ void gswe_init_with_dir(gchar *directory)
             2
         );
     ADD_PLANET(gswe_planet_info_table, planet_info,
+               GSWE_PLANET_DESCENDANT,
+               -1,
+               FALSE,
+               _("Descendant"),
+               0.0,
+               0
+        );
+    ADD_PLANET(gswe_planet_info_table, planet_info,
             GSWE_PLANET_MC,
             -1,
             FALSE,
@@ -187,12 +195,28 @@ void gswe_init_with_dir(gchar *directory)
             1
         );
     ADD_PLANET(gswe_planet_info_table, planet_info,
+               GSWE_PLANET_IC,
+               -1,
+               FALSE,
+               _("Immum Coeli"),
+               0.0,
+               0
+        );
+    ADD_PLANET(gswe_planet_info_table, planet_info,
             GSWE_PLANET_VERTEX,
             -1,
             FALSE,
             _("Vertex"),
             2.0,
             0
+        );
+    ADD_PLANET(gswe_planet_info_table, planet_info,
+               GSWE_PLANET_ANTIVERTEX,
+               -1,
+               FALSE,
+               _("Anti-vertex"),
+               0.0,
+               0
         );
     ADD_PLANET(gswe_planet_info_table, planet_info,
             GSWE_PLANET_MOON_NODE,
@@ -204,6 +228,9 @@ void gswe_init_with_dir(gchar *directory)
         );
     ADD_PLANET(gswe_planet_info_table, planet_info,
                GSWE_PLANET_MOON_SOUTH_NODE,
+               // As this is just the opposing point of the mean node,
+               // we actually calculate that, and simply add 180
+               // degrees when queried.
                SE_MEAN_NODE,
                TRUE,
                _("Descending Moon Node"),
